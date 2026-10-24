@@ -194,14 +194,32 @@ const MENTORSHIP = [
 ];
 
 // ===== Transformacije =====
-// Slike pre/posle su 3:5 (uspravne, celo telo). Nove se dodaju kao još jedan
-// objekat u nizu; sa jednom transformacijom sekcija je prikazuje šire.
+// Slike pre/posle su 3:5 (uspravne). Nova transformacija je još jedan objekat
+// u nizu. featured: prikazuje se šire, preko celog reda. name i detail nisu
+// obavezni; bez njih ispod slika nema natpisa.
 const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/marko-prije.jpg',
     after: 'images/transformacije/marko-poslije.jpg',
     name: { sr: 'Marko Simović', en: 'Marko Simović' },
-    detail: { sr: 'Trener AthLean Fast', en: 'AthLean Fast coach' }
+    detail: { sr: 'Trener AthLean Fast', en: 'AthLean Fast coach' },
+    featured: true
+  },
+  {
+    before: 'images/transformacije/transformacija-1-prije.jpg',
+    after: 'images/transformacije/transformacija-1-poslije.jpg'
+  },
+  {
+    before: 'images/transformacije/transformacija-2-prije.jpg',
+    after: 'images/transformacije/transformacija-2-poslije.jpg'
+  },
+  {
+    before: 'images/transformacije/transformacija-3-prije.jpg',
+    after: 'images/transformacije/transformacija-3-poslije.jpg'
+  },
+  {
+    before: 'images/transformacije/transformacija-4-prije.jpg',
+    after: 'images/transformacije/transformacija-4-poslije.jpg'
   }
 ];
 

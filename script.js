@@ -44,9 +44,8 @@ const t = entry => entry[currentLang] || entry.sr;
 function renderTransformations() {
   const el = document.getElementById('transformationsGrid');
   if (!el) return;
-  el.classList.toggle('transformations--single', TRANSFORMATIONS.length === 1);
   el.innerHTML = TRANSFORMATIONS.map(item => `
-    <figure class="transformation">
+    <figure class="transformation${item.featured ? ' transformation--featured' : ''}">
       <div class="transformation-pair">
         <div class="transformation-shot">
           <img src="${esc(item.before)}" alt="${esc(t(MSG.before))}" loading="lazy" decoding="async">
@@ -57,10 +56,10 @@ function renderTransformations() {
           <span class="shot-label shot-label--after">${esc(t(MSG.after))}</span>
         </div>
       </div>
-      <figcaption class="transformation-caption">
+      ${item.name ? `<figcaption class="transformation-caption">
         <strong>${esc(t(item.name))}</strong>
-        <span>${esc(t(item.detail))}</span>
-      </figcaption>
+        ${item.detail ? `<span>${esc(t(item.detail))}</span>` : ''}
+      </figcaption>` : ''}
     </figure>`).join('');
 }
 

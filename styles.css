@@ -682,17 +682,21 @@ button {
 }
 
 /* ===== TRANSFORMATIONS ===== */
+/* Two to a row, so each pair of photos is big enough to see the change. */
 .transformations {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-/* One transformation on its own: centred and wider, so the photos are
-   big enough to see the change. */
-.transformations.transformations--single {
-  grid-template-columns: minmax(0, 760px);
-  justify-content: center;
+/* The coach's own: a row to itself, centred. */
+.transformation--featured {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 760px;
 }
 
 .transformation {
