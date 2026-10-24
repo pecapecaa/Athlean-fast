@@ -107,9 +107,25 @@ async function run() {
     await page.close();
   }
 
-  // ---- 6. Contact details come from one place and reach every page.
+  // ---- 6. Each before/after photo is one frame with a line to move.
   {
-    console.log('\n6. Contact details');
+    console.log('\n6. Transformations');
+    const page = await browser.newPage();
+    await page.goto(BASE + '/');
+    const frames = await page.$$eval('#transformationsGrid .compare', els => els.length);
+    check('every transformation is a before/after frame', frames === await page.evaluate(() => TRANSFORMATIONS.length), String(frames));
+    const range = page.locator('#transformationsGrid .compare-range').first();
+    await range.focus();
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
+    const pos = await page.$eval('#transformationsGrid .compare', el => el.style.getPropertyValue('--pos'));
+    check('the arrow keys move the line', pos === '52%', pos);
+    await page.close();
+  }
+
+  // ---- 7. Contact details come from one place and reach every page.
+  {
+    console.log('\n7. Contact details');
     const page = await browser.newPage();
     for (const url of ['/', `/nivo?n=${LEVEL}`]) {
       await page.goto(BASE + url);

@@ -12,6 +12,7 @@ let currentLang = 'sr';
 const MSG = {
   before: { sr: 'Prije', en: 'Before' },
   after: { sr: 'Poslije', en: 'After' },
+  compare: { sr: 'Prije i poslije: pomjeri liniju', en: 'Before and after: move the line' },
   fillContact: { sr: 'Popuni ime, email i telefon', en: 'Please fill in your name, email and phone' },
   badEmail: { sr: 'Unesi ispravnu email adresu', en: 'Please enter a valid email address' },
   badPhone: { sr: 'Unesi ispravan broj telefona', en: 'Please enter a valid phone number' },
@@ -44,23 +45,106 @@ const t = entry => entry[currentLang] || entry.sr;
 function renderTransformations() {
   const el = document.getElementById('transformationsGrid');
   if (!el) return;
-  el.innerHTML = TRANSFORMATIONS.map(item => `
-    <figure class="transformation${item.featured ? ' transformation--featured' : ''}">
-      <div class="transformation-pair">
-        <div class="transformation-shot">
-          <img src="${esc(item.before)}" alt="${esc(t(MSG.before))}" loading="lazy" decoding="async">
-          <span class="shot-label">${esc(t(MSG.before))}</span>
-        </div>
-        <div class="transformation-shot">
-          <img src="${esc(item.after)}" alt="${esc(t(MSG.after))}" loading="lazy" decoding="async">
-          <span class="shot-label shot-label--after">${esc(t(MSG.after))}</span>
-        </div>
-      </div>
-      ${item.name ? `<figcaption class="transformation-caption">
-        <strong>${esc(t(item.name))}</strong>
+  el.innerHTML = TRANSFORMATIONS.map(item => {
+    const caption = (item.quote || item.name) ? `
+      <figcaption class="transformation-caption">
+        ${item.quote ? `<p class="transformation-quote">${esc(t(item.quote))}</p>` : ''}
+        ${item.name ? `<strong>${esc(t(item.name))}</strong>` : ''}
         ${item.detail ? `<span>${esc(t(item.detail))}</span>` : ''}
-      </figcaption>` : ''}
-    </figure>`).join('');
+      </figcaption>` : '';
+    return `
+    <figure class="transformation">
+      <div class="compare">
+        <img src="${esc(item.after)}" alt="${esc(t(MSG.after))}" loading="lazy" decoding="async">
+        <div class="compare-before">
+          <img src="${esc(item.before)}" alt="${esc(t(MSG.before))}" loading="lazy" decoding="async">
+        </div>
+        <span class="shot-label shot-label--before">${esc(t(MSG.before))}</span>
+        <span class="shot-label shot-label--after">${esc(t(MSG.after))}</span>
+        <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="${esc(t(MSG.compare))}">
+        <span class="compare-handle" aria-hidden="true"><span class="compare-knob">${ICONS.drag}</span></span>
+      </div>${caption}
+    </figure>`;
+  }).join('');
+  el.querySelectorAll('.compare').forEach(wireCompare);
+  hintCompare(el);
+}
+
+// ===== Before / after slider =====
+const LESS_MOTION = window.matchMedia
+  && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let compareTracked = false;
+
+function wireCompare(box) {
+  const range = box.querySelector('.compare-range');
+  const set = value => {
+    const pos = Math.max(0, Math.min(100, value));
+    box.style.setProperty('--pos', pos + '%');
+    range.value = String(Math.round(pos));
+  };
+  const fromPointer = e => {
+    const r = box.getBoundingClientRect();
+    return ((e.clientX - r.left) / r.width) * 100;
+  };
+  const used = () => {
+    box.dataset.touched = '1';
+    if (!compareTracked) { compareTracked = true; clEvent('transformacija_pomjerena'); }
+  };
+
+  let dragging = false;
+  let moved = false;
+  range.addEventListener('input', () => { used(); set(Number(range.value)); });
+  box.addEventListener('pointerdown', e => {
+    if (e.button) return;
+    dragging = true;
+    moved = false;
+    box.dataset.touched = '1';
+    box.setPointerCapture(e.pointerId);
+  });
+  box.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    moved = true;
+    set(fromPointer(e));
+  });
+  // A tap or click without a drag jumps the line to that spot.
+  box.addEventListener('pointerup', e => {
+    if (!dragging) return;
+    if (!moved) set(fromPointer(e));
+    dragging = false;
+    used();
+  });
+  // The browser took the gesture over for scrolling.
+  box.addEventListener('pointercancel', () => { dragging = false; });
+}
+
+// The first time a frame is properly in view, the line swings once to
+// each side so it is obvious it can be moved.
+function hintCompare(root) {
+  if (LESS_MOTION || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      obs.unobserve(en.target);
+      sweepCompare(en.target);
+    });
+  }, { threshold: 0.6 });
+  root.querySelectorAll('.compare').forEach(box => io.observe(box));
+}
+
+function sweepCompare(box) {
+  const stops = [50, 26, 74, 50];
+  const duration = 2000;
+  const start = performance.now();
+  const ease = x => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
+  const step = now => {
+    if (box.dataset.touched) return;
+    const p = Math.min((now - start) / duration, 1);
+    const leg = Math.min(Math.floor(p * 3), 2);
+    const local = ease(p * 3 - leg);
+    box.style.setProperty('--pos', (stops[leg] + (stops[leg + 1] - stops[leg]) * local) + '%');
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
 function renderLevels() {
@@ -437,29 +521,68 @@ function observeFadeElements() {
   document.querySelectorAll('.fade-up:not(.visible)').forEach(el => _fadeObserver.observe(el));
 }
 
+// The big figures count up from zero when they come into view and land with
+// a short glow. They are set to zero only once it is certain the count will
+// run, so no figure is ever left showing the wrong number.
 function animateCounters() {
-  const counters = document.querySelectorAll('.stat-num');
-  if (!('IntersectionObserver' in window)) return;
+  if (LESS_MOTION || !('IntersectionObserver' in window)) return;
+  const counters = Array.from(document.querySelectorAll('.stat-num, .feature-big'))
+    .map(el => {
+      const text = el.textContent.trim();
+      const match = text.match(/^(\d+)/);
+      return match && { el, target: parseInt(match[1], 10), suffix: text.slice(match[1].length) };
+    })
+    .filter(Boolean);
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
-      const el = e.target;
-      io.unobserve(el);
-      const text = el.textContent.trim();
-      const match = text.match(/^(\d+)/);
-      if (!match) return;
-      const target = parseInt(match[1], 10);
-      const suffix = text.slice(match[1].length);
+      io.unobserve(e.target);
+      const c = counters.find(x => x.el === e.target);
       const start = performance.now();
       const step = now => {
-        const p = Math.min((now - start) / 1400, 1);
-        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+        const p = Math.min((now - start) / 1600, 1);
+        c.el.textContent = Math.round(c.target * (1 - Math.pow(1 - p, 3))) + c.suffix;
         if (p < 1) requestAnimationFrame(step);
+        else c.el.classList.add('is-counted');
       };
       requestAnimationFrame(step);
     });
-  }, { threshold: 0.4 });
-  counters.forEach(el => io.observe(el));
+  }, { threshold: 0.5 });
+  counters.forEach(c => {
+    c.el.textContent = '0' + c.suffix;
+    io.observe(c.el);
+  });
+}
+
+// On a phone, "Pridruži se" waits at the bottom of the screen once the hero
+// is passed. It steps aside where the page already offers the same button
+// (the join band) or a form of its own (contact).
+function mobileJoinBar() {
+  const bar = document.getElementById('mobileJoin');
+  const hero = document.querySelector('.hero-buttons');
+  if (!bar || !hero || !('IntersectionObserver' in window)) return;
+  const btn = bar.querySelector('button');
+  let pastHero = false;
+  const inTheWay = new Set();
+  const update = () => {
+    const show = pastHero && inTheWay.size === 0;
+    bar.classList.toggle('is-on', show);
+    bar.setAttribute('aria-hidden', String(!show));
+    btn.tabIndex = show ? 0 : -1;
+    document.body.classList.toggle('has-mobile-join', show);
+  };
+  new IntersectionObserver(([e]) => {
+    pastHero = !e.isIntersecting && e.boundingClientRect.top < 0;
+    update();
+  }).observe(hero);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => (e.isIntersecting ? inTheWay.add(e.target) : inTheWay.delete(e.target)));
+    update();
+  });
+  ['join', 'contact'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
 }
 
 // Everything that reacts to scrolling runs here, at most once per frame,
@@ -667,6 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
   landOnHash();
   openJoinFromUrl();
   animateCounters();
+  mobileJoinBar();
   trackSections();
   initHeroVideo();
 });

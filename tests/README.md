@@ -51,6 +51,8 @@ pravoj adresi.
   povratku sa stranice nivoa
 - da deljeni link `/#mentorship` stiže gde treba
 - da kartice otvaraju svoje stranice i da „Nazad" vraća na početnu
+- da je svaka transformacija jedna slika sa linijom koja se pomera (i
+  strelicama na tastaturi)
 - da su kontakt podaci iz `data.js` upisani na svakoj stranici
 
 ## Kad menjaš sadržaj

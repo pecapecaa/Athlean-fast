@@ -48,7 +48,9 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 - Video po nivou: upisati putanju u `video` kod nivoa u `data.js`
   (npr. `videos/pocetni.mp4`), a `poster` zameniti slikom iz snimka.
 - Transformacije: slike pre/posle (uspravne, 3:5) u `images/transformacije/`,
-  putanje i imena u `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata).
+  putanje u `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata). Utisak
+  klijenta (`quote`), ime i trajanje se dopisuju uz istu transformaciju i
+  pojavljuju se ispod slike.
 
 ## Domen
 
