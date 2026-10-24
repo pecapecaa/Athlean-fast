@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="favicon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@1,400&family=Lato:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -20,52 +20,43 @@
       text-align: center;
       padding: 24px;
       background:
-        radial-gradient(ellipse at 30% 40%, rgba(209, 168, 90, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse at 70% 60%, rgba(42, 75, 215, 0.4) 0%, transparent 55%),
-        linear-gradient(135deg, #04060e 0%, #0b1340 45%, #1b2f8a 100%);
-      color: #ffffff;
+        radial-gradient(ellipse 60% 50% at 50% 35%, rgba(47, 85, 255, 0.35) 0%, transparent 70%),
+        repeating-linear-gradient(-35deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 28px),
+        linear-gradient(180deg, #070a1c 0%, #050506 80%);
+      color: #f2f3f7;
       font-family: 'Lato', Arial, sans-serif;
     }
-    .mark { width: 92px; height: auto; margin: 0 auto 18px; display: block; }
+    .mark { width: 110px; height: auto; margin: 0 auto 18px; display: block; }
     .code {
-      font-family: 'Cinzel', Georgia, serif;
-      font-size: clamp(4.5rem, 20vw, 8rem);
-      font-weight: 700;
-      letter-spacing: 6px;
+      font-family: 'Montserrat', 'Arial Black', sans-serif;
+      font-size: clamp(5rem, 22vw, 9rem);
+      font-weight: 900;
       line-height: 1;
-      color: #d1a85a;
+      color: #6f8bff;
     }
-    /* Cinzel draws Đ/đ as a D with a macron; this title has an đ, so it
-       stays in the sans. */
     h1 {
-      font-family: 'Lato', Arial, sans-serif;
-      font-size: clamp(0.95rem, 3.5vw, 1.15rem);
-      font-weight: 700;
-      letter-spacing: 4px;
+      font-family: 'Montserrat', 'Arial Black', sans-serif;
+      font-size: clamp(1.3rem, 5vw, 2rem);
+      font-weight: 800;
       text-transform: uppercase;
-      margin: 16px 0 12px;
+      margin: 12px 0 10px;
     }
-    p {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.3rem;
-      font-style: italic;
-      color: rgba(255, 255, 255, 0.85);
-      margin-bottom: 32px;
-    }
+    p { font-size: 1.1rem; color: rgba(242, 243, 247, 0.7); margin-bottom: 32px; }
     a {
       display: inline-block;
-      padding: 14px 36px;
-      border: 2px solid #2a4bd7;
-      background: #2a4bd7;
+      padding: 16px 34px;
+      border-radius: 999px;
+      background: #2f55ff;
       color: #ffffff;
       text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 2px;
+      font-family: 'Montserrat', 'Arial Black', sans-serif;
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      transition: background 0.3s, border-color 0.3s;
+      transition: background 0.25s;
     }
-    a:hover { background: #3a5ce6; border-color: #3a5ce6; }
+    a:hover { background: #4a6bff; }
   </style>
 </head>
 <body>

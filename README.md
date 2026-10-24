@@ -26,16 +26,9 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 - **Mail na koji stižu prijave:** `RECIPIENT_EMAIL` u `script.js`. FormSubmit
   pri prvoj prijavi šalje jednokratni link za potvrdu na tu adresu.
 - **Tekst „Šta je AthLean Fast":** `index.html`.
-- **Raspored:** isti kao na prvobitnom šablonu. Naslov je na vrhu
-  centriran, a sekcije su svetle, sa tamnim trakama između (rezultati,
-  lokacije) i talasastim ivicama.
-- **Boje i fontovi:** promenljive na vrhu `styles.css` (`:root`).
-  - Tamna osnova je teget-crna (`--navy-deep`).
-  - Kraljevsko plava (`--royal`) je za dugmad i najvažnije.
-  - Zlatna (`--gold`) je za tanke akcente.
-  - Fontovi: naslovi Cinzel, ukrasni tekst Cormorant Garamond, ostalo Lato.
-  - Cinzel nema pravo Đ/đ, pa ga daju `fonts/dj-*.woff2` (SIL OFL,
-    `fonts/OFL.txt`).
+- **Boje i fontovi:** promenljive na vrhu `styles.css` (`:root`). Crna je
+  osnova, plava (`--blue`) naglašava najvažnije, a zlatna (`--gold`) i bela
+  služe za akcente.
 - **Logo:** vektorski, u `images/`:
   - `logo.svg` je horizontalni (meni i futer)
   - `logo-stacked.svg` je uspravni
@@ -47,6 +40,8 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   nema, prikazuje se statična pozadina, ništa drugo ne treba menjati.
 - Video po nivou: upisati putanju u `video` kod nivoa u `data.js`
   (npr. `videos/pocetni.mp4`), a `poster` zameniti slikom iz snimka.
+- Fotografija trenera: `images/trener.svg` zameniti pravom fotografijom i
+  promeniti putanju u `index.html`.
 - Transformacije: slike pre/posle u `images/transformacije/`, putanje i imena
   u `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata).
 
