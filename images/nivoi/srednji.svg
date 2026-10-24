@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="1600" viewBox="0 0 900 1600">
 <defs>
   <linearGradient id="bgl1" x1="0" y1="0" x2="0.4" y2="1">
-    <stop offset="0" stop-color="#0c1230"/><stop offset="1" stop-color="#050506"/>
+    <stop offset="0" stop-color="#0d1330"/><stop offset="1" stop-color="#050506"/>
   </linearGradient>
   <radialGradient id="glowl1" cx="0.5" cy="0.38" r="0.6">
-    <stop offset="0" stop-color="#2f55ff" stop-opacity="0.35"/><stop offset="1" stop-color="#2f55ff" stop-opacity="0"/>
+    <stop offset="0" stop-color="#2a4bd7" stop-opacity="0.35"/><stop offset="1" stop-color="#2a4bd7" stop-opacity="0"/>
   </radialGradient>
   <pattern id="linesl1" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
     <line x1="0" y1="0" x2="0" y2="28" stroke="#ffffff" stroke-opacity="0.035" stroke-width="10"/>
@@ -13,8 +13,8 @@
 <rect width="900" height="1600" fill="url(#bgl1)"/>
 <rect width="900" height="1600" fill="url(#linesl1)"/>
 <rect width="900" height="1600" fill="url(#glowl1)"/>
-<circle cx="450.0" cy="470" r="92" fill="none" stroke="#2f55ff" stroke-width="6"/>
-<path d="M422.0 426 L496.0 470 L422.0 514 Z" fill="#e3b25a"/>
+<circle cx="450.0" cy="470" r="92" fill="none" stroke="#2a4bd7" stroke-width="6"/>
+<path d="M422.0 426 L496.0 470 L422.0 514 Z" fill="#d6aa55"/>
 <text x="450.0" y="650" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Arial, Helvetica, sans-serif" font-size="30" font-weight="400" fill="#ffffff" fill-opacity="0.55" letter-spacing="8">VIDEO USKORO</text>
 <text x="450.0" y="1480" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Arial, Helvetica, sans-serif" font-size="300" font-weight="700" fill="#ffffff" fill-opacity="0.05" letter-spacing="0">02</text>
 </svg>
