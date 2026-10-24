@@ -44,6 +44,7 @@ const t = entry => entry[currentLang] || entry.sr;
 function renderTransformations() {
   const el = document.getElementById('transformationsGrid');
   if (!el) return;
+  el.classList.toggle('transformations--single', TRANSFORMATIONS.length === 1);
   el.innerHTML = TRANSFORMATIONS.map(item => `
     <figure class="transformation">
       <div class="transformation-pair">

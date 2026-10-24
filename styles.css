@@ -773,6 +773,13 @@ button {
   gap: 22px;
 }
 
+/* One transformation on its own: centred and wider, so the photos are
+   big enough to see the change. */
+.transformations.transformations--single {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+}
+
 .transformation {
   background: var(--dark);
   border-radius: var(--radius);
@@ -788,7 +795,7 @@ button {
 
 .transformation-shot {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 5;
   background: var(--dark-3);
   overflow: hidden;
 }
@@ -1435,6 +1442,14 @@ button {
   .transformations > * {
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+
+  /* Nothing to swipe to: the lone transformation takes the full width. */
+  .transformations.transformations--single {
+    grid-auto-columns: 100%;
+    overflow: visible;
+    padding-right: 0;
+    margin-right: 0;
   }
 
   /* A sideways row should not slide its cards up into place. */

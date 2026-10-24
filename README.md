@@ -44,8 +44,8 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   (npr. `videos/pocetni.mp4`), a `poster` zameniti slikom iz snimka.
 - Fotografija trenera: `images/trener.svg` zameniti pravom fotografijom i
   promeniti putanju u `index.html`.
-- Transformacije: slike pre/posle u `images/transformacije/`, putanje i imena
-  u `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata).
+- Transformacije: slike pre/posle (uspravne, 3:5) u `images/transformacije/`,
+  putanje i imena u `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata).
 
 ## Domen
 
