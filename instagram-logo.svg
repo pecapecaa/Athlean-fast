@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@900&amp;display=swap');
+    </style>
+
+    <!-- Background gradients -->
+    <linearGradient id="bgBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#1a0508"/>
+      <stop offset="30%"  stop-color="#2a0e14"/>
+      <stop offset="60%"  stop-color="#3d1015"/>
+      <stop offset="100%" stop-color="#1f0508"/>
+    </linearGradient>
+    <radialGradient id="bgGlow1" cx="30%" cy="30%" r="50%">
+      <stop offset="0%"   stop-color="#c9a961" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgGlow2" cx="70%" cy="70%" r="50%">
+      <stop offset="0%"   stop-color="#6b1f2a" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#6b1f2a" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Wine & glass gradients -->
+    <linearGradient id="wineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#8b2035"/>
+      <stop offset="50%"  stop-color="#6b1f2a"/>
+      <stop offset="100%" stop-color="#3d1015"/>
+    </linearGradient>
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.15)"/>
+      <stop offset="50%"  stop-color="rgba(255,255,255,0.05)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.10)"/>
+    </linearGradient>
+    <linearGradient id="stemGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.06)"/>
+    </linearGradient>
+
+    <!-- Subtle vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.45)"/>
+    </radialGradient>
+
+    <clipPath id="bowlClip">
+      <ellipse cx="150" cy="200" rx="85" ry="110"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1080" fill="url(#bgBase)"/>
+  <rect width="1080" height="1080" fill="url(#bgGlow1)"/>
+  <rect width="1080" height="1080" fill="url(#bgGlow2)"/>
+  <rect width="1080" height="1080" fill="url(#vignette)"/>
+
+  <!-- Wine glass: original viewBox 0 0 300 500, scaled 1.5x, centered -->
+  <g transform="translate(315, 90) scale(1.5)">
+
+    <!-- Bowl outer -->
+    <ellipse cx="150" cy="200" rx="85" ry="110"
+             fill="url(#glassGrad)"
+             stroke="rgba(255,255,255,0.20)" stroke-width="1.5"/>
+
+    <!-- Wine fill (clipped to bowl) -->
+    <g clip-path="url(#bowlClip)">
+      <rect x="65" y="160" width="170" height="150" fill="url(#wineGrad)"/>
+      <ellipse cx="150" cy="160" rx="83" ry="20" fill="#9b2840" opacity="0.8"/>
+      <ellipse cx="150" cy="160" rx="60"  ry="12" fill="rgba(201,169,97,0.08)"/>
+    </g>
+
+    <!-- Rim top -->
+    <ellipse cx="150" cy="95" rx="82" ry="16"
+             fill="none" stroke="rgba(255,255,255,0.20)" stroke-width="1.5"/>
+
+    <!-- Highlight streak -->
+    <line x1="110" y1="130" x2="100" y2="170"
+          stroke="rgba(255,255,255,0.08)" stroke-width="15"/>
+
+    <!-- Stem -->
+    <rect x="146" y="305" width="8" height="100" rx="4" fill="url(#stemGrad)"/>
+
+    <!-- Base -->
+    <ellipse cx="150" cy="420" rx="55" ry="12"
+             fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <ellipse cx="150" cy="420" rx="45" ry="8"
+             fill="rgba(255,255,255,0.03)"/>
+  </g>
+
+  <!-- H monogram (large, very subtle) -->
+  <text x="540" y="852"
+        text-anchor="middle"
+        font-family="Cinzel, 'Times New Roman', serif"
+        font-size="110" font-weight="900"
+        fill="#c9a961" opacity="0.15">H</text>
+
+  <!-- EST. 2021 -->
+  <text x="540" y="892"
+        text-anchor="middle"
+        font-family="Cinzel, 'Times New Roman', serif"
+        font-size="22" letter-spacing="14"
+        fill="#c9a961" opacity="0.20">EST. 2021</text>
+</svg>

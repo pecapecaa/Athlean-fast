@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://athlean-fast.pages.dev/sitemap.xml

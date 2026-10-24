@@ -1,0 +1,4 @@
+# Interni poslovni podaci — nabavne cene i marze ne smeju na javni repozitorijum
+*.xlsx
+*.xls
+~$*
