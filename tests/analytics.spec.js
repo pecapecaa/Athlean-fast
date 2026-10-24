@@ -2,20 +2,17 @@
 //
 // Every funnel and filter in Clarity is built on these event and tag names.
 // A renamed or missing one does not break the site, so nothing complains —
-// the funnel just quietly reports a number that is wrong. These tests are
-// what stands between a typo and a month of misleading data.
+// the funnel just quietly reports a wrong number. These tests are what stands
+// between a typo and a month of misleading data.
 //
-// Run:  ./tests/run.sh   (or: node tests/analytics.spec.js with a server up)
+// Run:  ./tests/run.sh
 
 const { chromium } = require('playwright');
 
 const BASE = process.env.BASE || 'http://localhost:8299';
-const WINE = 'tvrdos-vranac';
-const BUNDLE = 'bundle-start-duo';
 
 let pass = 0, fail = 0;
 const failures = [];
-
 function check(name, ok, detail) {
   if (ok) { pass++; console.log(`  ✓ ${name}`); }
   else { fail++; failures.push(name); console.log(`  ✗ ${name}${detail ? '\n      ' + detail : ''}`); }
@@ -29,13 +26,19 @@ async function stubClarity(page) {
       window.__cl.push(Array.prototype.slice.call(arguments).join(':'));
     };
   });
-  // Never let the real tag load over the stub.
   await page.route('**clarity.ms/**', route => route.abort());
 }
 
-const calls  = page => page.evaluate(() => window.__cl.slice());
+async function stubFormSubmit(page, ok = true) {
+  await page.route('**/formsubmit.co/**', route => route.fulfill(ok
+    ? { status: 200, contentType: 'application/json', body: '{"success":"true"}' }
+    : { status: 500, contentType: 'application/json', body: '{"success":"false"}' }));
+}
+
+const calls = page => page.evaluate(() => window.__cl.slice());
 const events = async page => (await calls(page)).filter(c => c.startsWith('event:')).map(c => c.slice(6));
-const tags   = async page => {
+const upgrades = async page => (await calls(page)).filter(c => c.startsWith('upgrade:')).map(c => c.slice(8));
+const tags = async page => {
   const out = {};
   for (const c of await calls(page)) {
     if (c.startsWith('set:')) {
@@ -47,253 +50,161 @@ const tags   = async page => {
   return out;
 };
 
-async function passAgeGate(page) {
-  const gate = await page.$('#ageYes');
-  if (gate && await gate.isVisible()) { await gate.click(); await page.waitForTimeout(120); }
-}
-async function openHome(page) { await page.goto(BASE + '/index.html'); await passAgeGate(page); }
-
-async function fillCheckout(page, over) {
-  const v = Object.assign({
-    oName: 'Test Kupac', oEmail: 'test@example.com', oPhone: '0601234567',
-    oCity: 'Novi Sad', oAddress: 'Ulica 1'
-  }, over || {});
-  for (const [id, val] of Object.entries(v)) await page.fill('#' + id, val);
+async function fillAndSend(page) {
+  await page.fill('#jName', 'Test Klijent');
+  await page.fill('#jEmail', 'test@example.com');
+  await page.fill('#jPhone', '065 123 4567');
+  await page.click('#joinNext');
+  for (const label of ['Start', 'Skidanje masnoće', 'Početnik', '2–3 dana', 'Kod kuće']) {
+    await page.click(`#joinQuestions label.choice:has-text("${label}")`);
+  }
+  await page.click('#joinSubmit');
+  await page.waitForTimeout(400);
 }
 
 async function run() {
   const browser = await chromium.launch({ args: ['--no-sandbox'] });
 
-  // ---- 1. Every add fires the shared funnel step, whatever was added.
-  {
-    console.log('\n1. u_korpu fires for a wine and for a bundle');
-    for (const [what, url, clickSel] of [
-      ['a wine on the homepage',  '/index.html', '.wine-add'],
-      ['a wine on its page',      `/vino.html?w=${WINE}`, '#wpAdd'],
-      ['a bundle on its page',    `/paket.html?p=${BUNDLE}`, '#wpAdd'],
-    ]) {
-      const ctx = await browser.newContext();
-      const page = await ctx.newPage();
-      await stubClarity(page);
-      await page.goto(BASE + url);
-      await passAgeGate(page);
-      await page.click(clickSel);
-      await page.waitForTimeout(250);
-      const ev = await events(page);
-      const tg = await tags(page);
-      check(`${what}: fires u_korpu`, ev.includes('u_korpu'), `got: ${ev.join(', ')}`);
-      check(`${what}: tags tip_artikla`, !!tg.tip_artikla, `got: ${JSON.stringify(tg)}`);
-      check(`${what}: tags mesto_dodavanja`, !!tg.mesto_dodavanja, `got: ${JSON.stringify(tg)}`);
-      await ctx.close();
-    }
-  }
-
-  // ---- 2. Checkout carries the numbers a funnel is read against.
-  {
-    console.log('\n2. Opening checkout tags the basket');
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
+  const fresh = async () => {
+    const page = await browser.newPage();
     await stubClarity(page);
-    await openHome(page);
-    await page.click('.wine-add');
-    await page.waitForTimeout(200);
-    await page.click('#cartBtn'); await page.waitForTimeout(200);
-    await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-    const tg = await tags(page);
-    check('vrednost_korpe is set', !!tg.vrednost_korpe, JSON.stringify(tg));
-    check('besplatna_dostava says ne for one bottle', tg.besplatna_dostava === 'ne', `got: ${tg.besplatna_dostava}`);
-    check('broj_artikala is 1', tg.broj_artikala === '1', `got: ${tg.broj_artikala}`);
-    await ctx.close();
+    return page;
+  };
+
+  // ---- 1. Opening the form says where it was opened from.
+  {
+    console.log('\n1. prijava_otvorena and its source');
+    const page = await fresh();
+    await page.goto(BASE + '/');
+    await page.click('.hero-buttons [data-join]');
+    check('prijava_otvorena fires', (await events(page)).includes('prijava_otvorena'));
+    check('tagged with the hero as the source', (await tags(page)).prijava_izvor === 'hero');
+
+    await page.keyboard.press('Escape');
+    await page.click('#programsGrid [data-program="elite"] button[data-join]');
+    const t = await tags(page);
+    check('a programme card tags its programme', t.program === 'elite' && t.prijava_izvor === 'program_kartica', JSON.stringify(t));
+    await page.close();
   }
 
-  // ---- 3. A basket over the threshold is tagged as such.
+  // ---- 2. Leaving the form says at which step.
   {
-    console.log('\n3. A basket over the free-delivery threshold');
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
-    await stubClarity(page);
-    await page.goto(`${BASE}/paket.html?p=bundle-premium-trio`);   // 7590 RSD
-    await passAgeGate(page);
-    await page.click('#wpAdd');
-    await page.waitForTimeout(200);
-    await openHome(page);
-    await page.click('#cartBtn'); await page.waitForTimeout(200);
-    await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-    const tg = await tags(page);
-    check('besplatna_dostava says da', tg.besplatna_dostava === 'da', `got: ${tg.besplatna_dostava}`);
-    await ctx.close();
+    console.log('\n2. Abandoning the form');
+    const page = await fresh();
+    await page.goto(BASE + '/');
+    await page.click('#navJoin');
+    await page.keyboard.press('Escape');
+    check('prijava_napustena fires', (await events(page)).includes('prijava_napustena'));
+    check('at the contact step', (await tags(page)).prijava_faza === 'podaci');
+    check('and the recording is kept', (await upgrades(page)).includes('prijava_napustena'));
+
+    await page.click('#navJoin');
+    await page.fill('#jName', 'Test Klijent');
+    await page.fill('#jEmail', 'test@example.com');
+    await page.fill('#jPhone', '065 123 4567');
+    await page.click('#joinNext');
+    check('prijava_korak_1 fires on the way to the questions', (await events(page)).includes('prijava_korak_1'));
+    await page.click('#joinClose');
+    check('leaving at the questionnaire is tagged as such', (await tags(page)).prijava_faza === 'upitnik');
+    await page.close();
   }
 
-  // ---- 4. Abandoning says which step it happened on.
+  // ---- 3. A rejected field says which field.
   {
-    console.log('\n4. Abandoning checkout, at each step');
-    // Leaving on the details step.
-    {
-      const ctx = await browser.newContext();
-      const page = await ctx.newPage();
-      await stubClarity(page);
-      await openHome(page);
-      await page.click('.wine-add'); await page.waitForTimeout(200);
-      await page.click('#cartBtn'); await page.waitForTimeout(200);
-      await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-      await page.click('#checkoutClose'); await page.waitForTimeout(250);
-      const ev = await events(page), tg = await tags(page);
-      check('fires checkout_napusten', ev.includes('checkout_napusten'), ev.join(', '));
-      check('tagged as the details step', tg.checkout_faza === 'podaci', `got: ${tg.checkout_faza}`);
-      await ctx.close();
-    }
-    // Leaving on the review step.
-    {
-      const ctx = await browser.newContext();
-      const page = await ctx.newPage();
-      await stubClarity(page);
-      await openHome(page);
-      await page.click('.wine-add'); await page.waitForTimeout(200);
-      await page.click('#cartBtn'); await page.waitForTimeout(200);
-      await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-      await fillCheckout(page);
-      await page.click('#checkoutNext'); await page.waitForTimeout(250);
-      await page.click('#checkoutClose'); await page.waitForTimeout(250);
-      const tg = await tags(page);
-      check('tagged as the review step', tg.checkout_faza === 'pregled', `got: ${tg.checkout_faza}`);
-      await ctx.close();
-    }
+    console.log('\n3. Form errors');
+    const page = await fresh();
+    await page.goto(BASE + '/');
+    await page.click('#navJoin');
+    await page.fill('#jName', 'Test');
+    await page.click('#joinNext');
+    check('forma_greska fires', (await events(page)).includes('forma_greska'));
+    check('naming the empty fields', (await tags(page)).greska_polje === 'prazno:email+telefon', (await tags(page)).greska_polje);
+    await page.fill('#jEmail', 'losa-adresa');
+    await page.fill('#jPhone', '065 123 4567');
+    await page.click('#joinNext');
+    check('a bad email is tagged as such', (await tags(page)).greska_polje === 'email');
+    await page.close();
   }
 
-  // ---- 5. A rejected form says which field rejected it.
+  // ---- 4. A sent sign-up is recorded once, and not as abandoned.
   {
-    console.log('\n5. Form validation failures');
-    const cases = [
-      ['an empty phone', { oPhone: '' }, v => v.startsWith('prazno:') && v.includes('telefon')],
-      ['a bad email',    { oEmail: 'nije-email' }, v => v === 'email'],
-      ['a short phone',  { oPhone: '123' }, v => v === 'telefon'],
-    ];
-    for (const [label, over, want] of cases) {
-      const ctx = await browser.newContext();
-      const page = await ctx.newPage();
-      await stubClarity(page);
-      await openHome(page);
-      await page.click('.wine-add'); await page.waitForTimeout(200);
-      await page.click('#cartBtn'); await page.waitForTimeout(200);
-      await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-      await fillCheckout(page, over);
-      await page.click('#checkoutNext'); await page.waitForTimeout(250);
-      const ev = await events(page), tg = await tags(page);
-      check(`${label}: fires forma_greska`, ev.includes('forma_greska'), ev.join(', '));
-      check(`${label}: names the field`, want(tg.greska_polje || ''), `got: ${tg.greska_polje}`);
-      // And it must not have advanced.
-      const onReview = await page.$eval('#checkoutStep2', el => el.style.display === 'block');
-      check(`${label}: does not advance`, !onReview);
-      await ctx.close();
-    }
-  }
-
-  // ---- 6. Taking an item back out is recorded.
-  {
-    console.log('\n6. Removing from the cart');
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
-    await stubClarity(page);
-    await openHome(page);
-    await page.click('.wine-add'); await page.waitForTimeout(200);
-    await page.click('#cartBtn'); await page.waitForTimeout(250);
-    await page.click('.remove-btn'); await page.waitForTimeout(250);
+    console.log('\n4. A completed sign-up');
+    const page = await fresh();
+    await stubFormSubmit(page);
+    await page.goto(BASE + '/');
+    await page.click('#navJoin');
+    await fillAndSend(page);
     const ev = await events(page);
-    check('fires iz_korpe_uklonjeno', ev.includes('iz_korpe_uklonjeno'), ev.join(', '));
-    check('fires korpa_ispraznjena on the last one', ev.includes('korpa_ispraznjena'), ev.join(', '));
-    await ctx.close();
+    check('prijava_poslata fires once', ev.filter(e => e === 'prijava_poslata').length === 1);
+    check('the recording is kept', (await upgrades(page)).includes('prijava_poslata'));
+    const t = await tags(page);
+    check('tagged with programme and goal', t.program === 'start' && t.cilj === 'masnoca', JSON.stringify(t));
+    await page.click('#joinDone');
+    check('closing the success screen is not an abandonment',
+      !(await events(page)).includes('prijava_napustena'));
+    await page.close();
   }
 
-  // ---- 7. A completed order fires its event and keeps the session.
+  // ---- 5. A failed send never reports success.
   {
-    console.log('\n7. A completed order');
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
-    await stubClarity(page);
-    await page.route('**formsubmit.co/**', route =>
-      route.fulfill({ status: 200, contentType: 'application/json', body: '{"success":"true"}' }));
-    await openHome(page);
-    await page.click('.wine-add'); await page.waitForTimeout(200);
-    await page.click('#cartBtn'); await page.waitForTimeout(200);
-    await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-    await fillCheckout(page);
-    await page.click('#checkoutNext'); await page.waitForTimeout(250);
-    await page.click('#checkoutForm button[type="submit"]');
-    await page.waitForTimeout(800);
-    const ev = await events(page), all = await calls(page), tg = await tags(page);
-    check('fires porudzbina_poslata', ev.includes('porudzbina_poslata'), ev.join(', '));
-    check('upgrades the recording', all.includes('upgrade:porudzbina_poslata'), all.join(', '));
-    check('tags vrednost_porudzbine', !!tg.vrednost_porudzbine, JSON.stringify(tg));
-    check('does not also report an abandon', !ev.includes('checkout_napusten'), ev.join(', '));
-    await ctx.close();
+    console.log('\n5. A failed sign-up');
+    const page = await fresh();
+    await stubFormSubmit(page, false);
+    await page.goto(BASE + '/');
+    await page.click('#navJoin');
+    await fillAndSend(page);
+    const ev = await events(page);
+    check('prijava_neuspjesna fires', ev.includes('prijava_neuspjesna'));
+    check('prijava_poslata does not', !ev.includes('prijava_poslata'));
+    check('the recording is kept', (await upgrades(page)).includes('prijava_neuspjesna'));
+    await page.close();
   }
 
-  // ---- 8. A failed order is reported as failed, and kept.
+  // ---- 6. The subpages report themselves.
   {
-    console.log('\n8. A failed order');
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
-    await stubClarity(page);
-    await page.route('**formsubmit.co/**', route => route.abort());
-    await openHome(page);
-    await page.click('.wine-add'); await page.waitForTimeout(200);
-    await page.click('#cartBtn'); await page.waitForTimeout(200);
-    await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-    await fillCheckout(page);
-    await page.click('#checkoutNext'); await page.waitForTimeout(250);
-    await page.click('#checkoutForm button[type="submit"]');
-    await page.waitForTimeout(900);
-    const ev = await events(page), all = await calls(page);
-    check('fires porudzbina_neuspesna', ev.includes('porudzbina_neuspesna'), ev.join(', '));
-    check('upgrades the recording', all.includes('upgrade:porudzbina_neuspesna'), all.join(', '));
-    check('does not claim success', !ev.includes('porudzbina_poslata'), ev.join(', '));
-    await ctx.close();
+    console.log('\n6. Level and programme pages');
+    const page = await fresh();
+    await page.goto(BASE + '/nivo?n=pocetnik');
+    await page.waitForTimeout(150);
+    check('nivo_otvoren fires', (await events(page)).includes('nivo_otvoren'));
+    check('tagged with the level', (await tags(page)).stranica_nivoa === 'pocetnik');
+    await page.goto(BASE + '/program?p=start');
+    await page.waitForTimeout(150);
+    check('program_otvoren fires', (await events(page)).includes('program_otvoren'));
+    check('tagged with the programme', (await tags(page)).stranica_programa === 'start');
+    await page.close();
   }
 
-  // ---- 9. A blocked Clarity tag must change nothing about the site.
+  // ---- 7. Sections reached on the homepage.
   {
-    console.log('\n9. With Clarity blocked entirely (adblocker)');
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
-    await page.route('**clarity.ms/**', route => route.abort());
+    console.log('\n7. Sections reached');
+    const page = await fresh();
+    await page.goto(BASE + '/');
+    for (const id of ['results', 'levels', 'programs', 'contact']) {
+      await page.evaluate(i => document.getElementById(i).scrollIntoView({ behavior: 'instant' }), id);
+      await page.waitForTimeout(250);
+    }
+    const ev = await events(page);
+    for (const name of ['rezultati_vidjeni', 'nivoi_vidjeni', 'mentorstvo_vidjeno', 'kontakt_vidjen']) {
+      check(name + ' fires once', ev.filter(e => e === name).length === 1);
+    }
+    await page.close();
+  }
+
+  // ---- 8. With Clarity blocked the site works exactly the same.
+  {
+    console.log('\n8. With Clarity blocked entirely (adblocker)');
+    const page = await browser.newPage();
     const errors = [];
     page.on('pageerror', e => errors.push(e.message));
-    await openHome(page);
-    await page.click('.wine-add'); await page.waitForTimeout(200);
-    await page.click('#cartBtn'); await page.waitForTimeout(200);
-    await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-    await fillCheckout(page);
-    await page.click('#checkoutNext'); await page.waitForTimeout(300);
-    const badge = await page.$eval('#cartCount', el => el.textContent.trim());
-    check('no page errors', errors.length === 0, errors.join(' | '));
-    check('the cart still works', badge === '1', `badge: ${badge}`);
-    const onReview = await page.$eval('#checkoutStep2', el => el.style.display === 'block');
-    check('checkout still advances', onReview);
-    await ctx.close();
-  }
-
-  // ---- 10. The names a funnel is built on, spelled exactly once each.
-  {
-    console.log('\n10. The funnel names exist and are spelled as documented');
-    const ctx = await browser.newContext();
-    const page = await ctx.newPage();
-    await stubClarity(page);
-    await openHome(page);
-    // One section at a time, with a pause: scrolling to both in the same tick
-    // leaves only the final position for the observer to see, and the first
-    // section never registers as reached.
-    await page.evaluate(() => document.getElementById('wines').scrollIntoView());
-    await page.waitForTimeout(400);
-    await page.evaluate(() => document.getElementById('bundles').scrollIntoView());
-    await page.waitForTimeout(400);
-    await page.click('.wine-add'); await page.waitForTimeout(200);
-    await page.click('#cartBtn'); await page.waitForTimeout(200);
-    await page.click('#checkoutBtn'); await page.waitForTimeout(250);
-    const ev = await events(page);
-    for (const name of ['vina_videna', 'u_korpu', 'korpa_otvorena', 'checkout_otvoren']) {
-      check(`${name} is emitted`, ev.includes(name), ev.join(', '));
-    }
-    await ctx.close();
+    await stubFormSubmit(page);
+    await page.goto(BASE + '/');
+    await page.click('#navJoin');
+    await fillAndSend(page);
+    check('no script errors', errors.length === 0, errors.join(' | '));
+    check('the sign-up still goes through',
+      await page.evaluate(() => !document.getElementById('joinSuccess').hidden));
+    await page.close();
   }
 
   await browser.close();

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+<defs>
+  <linearGradient id="bgt1" x1="0" y1="0" x2="0.4" y2="1">
+    <stop offset="0" stop-color="#1b1f26"/><stop offset="1" stop-color="#0b0d10"/>
+  </linearGradient>
+  <radialGradient id="glowt1" cx="0.5" cy="0.38" r="0.6">
+    <stop offset="0" stop-color="#ff5a1f" stop-opacity="0.22"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="linest1" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+    <line x1="0" y1="0" x2="0" y2="28" stroke="#ffffff" stroke-opacity="0.035" stroke-width="10"/>
+  </pattern>
+</defs>
+<rect width="600" height="800" fill="url(#bgt1)"/>
+<rect width="600" height="800" fill="url(#linest1)"/>
+<rect width="600" height="800" fill="url(#glowt1)"/>
+<g fill="#ffffff" fill-opacity="0.07"><circle cx="300" cy="250" r="74"/><path d="M180 820 L196 420 Q204 352 270 344 L330 344 Q396 352 404 420 L420 820 Z"/></g>
+<text x="300.0" y="600" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Arial, Helvetica, sans-serif" font-size="64" font-weight="700" fill="#ffffff" fill-opacity="0.9" letter-spacing="8">POSLIJE</text>
+<text x="300.0" y="650" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Arial, Helvetica, sans-serif" font-size="22" font-weight="400" fill="#ffffff" fill-opacity="0.5" letter-spacing="5">SLIKA USKORO</text>
+</svg>

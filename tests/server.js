@@ -2,7 +2,7 @@
 //
 // Pages does two things a plain file server does not: it serves foo.html at
 // /foo, and it permanently redirects /foo.html to /foo. Testing against a
-// plain file server means testing a different site than the one customers
+// plain file server means testing a different site than the one visitors
 // get — the URLs in the sitemap, in every canonical link and in every
 // internal link would look right locally and redirect in production.
 //
@@ -54,7 +54,7 @@ http.createServer((req, res) => {
   let file = resolveSafe(pathname);
   if (!file) { res.writeHead(403); return res.end('Forbidden'); }
 
-  // /vino is served from vino.html.
+  // /nivo is served from nivo.html.
   if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) {
     const asHtml = resolveSafe(pathname + '.html');
     if (asHtml && fs.existsSync(asHtml)) file = asHtml;

@@ -1,454 +1,380 @@
-// ===== Catalogue =====
-// Shared by the homepage and every product page, so a wine is described in
-// exactly one place. Loaded before script.js / vino.js, which both read it.
-
-// ===== Wines Data =====
-const WINES = [
-  {
-    id: 'tvrdos-vranac',
-    quickTag: 'preporuka',
-    tag: { sr: 'Duboko i staloženo', en: 'Deep and composed' },
-    tagIcon: 'barrel',
-    name: { sr: 'Tvrdoš Vranac', en: 'Tvrdoš Vranac' },
-    volume: '0.75L',
-    subtitle: { sr: 'Crveno vino • Manastir Tvrdoš, Trebinje', en: 'Red Wine • Manastir Tvrdoš, Trebinje' },
-    type: { sr: 'Crveno', en: 'Red' },
-    desc: {
-      sr: 'Vino iz manastirskih vinograda na stenovitim padinama iznad Trebinja. Monaška tradicija utkana u svaki gutljaj, kompleksno, dostojanstveno, duboko, za momente koji ostaju u sećanju.',
-      en: 'Wine from monastery vineyards on rocky slopes above Trebinje. Monastic tradition woven into every sip, complex, dignified, deep, for moments that stay in memory.'
-    },
-    price: 1890,
-    rank: 7,
-    img: 'images/tvrdos-vranac.webp'
-  },
-  {
-    id: 'tvrdos-zilavka',
-    quickTag: 'preporuka',
-    tag: { sr: 'Sveže i mineralno', en: 'Fresh and mineral' },
-    tagIcon: 'droplet',
-    name: { sr: 'Tvrdoš Žilavka', en: 'Tvrdoš Žilavka' },
-    volume: '0.75L',
-    subtitle: { sr: 'Belo vino • Manastir Tvrdoš, Trebinje', en: 'White Wine • Manastir Tvrdoš, Trebinje' },
-    type: { sr: 'Belo', en: 'White' },
-    desc: {
-      sr: 'Žilavka iz manastirskih vinograda, sa notama zrele kruške i badema. Sveža kiselina i dug, mineralan završetak, vino koje otkriva novi sloj ukusa sa svakim gutljajem.',
-      en: 'Žilavka from the monastery vineyards, with notes of ripe pear and almond. Fresh acidity and a long mineral finish, a wine that reveals a new layer with every sip.'
-    },
-    price: 2090,
-    rank: 6,
-    img: 'images/tvrdos-zilavka.webp'
-  },
-  {
-    id: 'tamjanika-galerija',
-    quickTag: 'drugacije',
-    tag: { sr: 'Aromatično', en: 'Aromatic' },
-    tagIcon: 'flower',
-    name: { sr: 'Tamjanika Galerija', en: 'Tamjanika Galerija' },
-    volume: '0.75L',
-    subtitle: { sr: 'Belo vino • Podrumi Vukoje, Trebinje', en: 'White Wine • Podrumi Vukoje, Trebinje' },
-    type: { sr: 'Belo', en: 'White' },
-    desc: {
-      sr: 'Izrazito mirisno belo vino sa aromama cvetne livade, grožđa i blagog meda. Pitko i osvežavajuće, savršeno za one koji vole da vino prvo osete nosom, pa tek onda ukusom.',
-      en: 'A strikingly fragrant white with aromas of flowering meadow, grapes and a hint of honey. Easy to drink and refreshing, perfect for anyone who likes to taste a wine with their nose first.'
-    },
-    price: 1790,
-    rank: 4,
-    img: 'images/tamjanika-galerija.webp'
-  },
-  {
-    id: 'tvrdos-metoh-vranac',
-    quickTag: 'preporuka',
-    tag: { sr: 'Opušteno i pitko', en: 'Relaxed and easy' },
-    tagIcon: 'glass',
-    name: { sr: 'Tvrdoš Metoh Vranac', en: 'Tvrdoš Metoh Vranac' },
-    volume: '0.75L',
-    subtitle: { sr: 'Crveno vino • Manastir Tvrdoš, Trebinje', en: 'Red Wine • Manastir Tvrdoš, Trebinje' },
-    type: { sr: 'Crveno', en: 'Red' },
-    desc: {
-      sr: 'Mlađi, opušteniji Vranac iz istog manastirskog podruma. Ukus zrele šljive i višnje, meki tanini bez težine, vino za svaki dan kad poželite nešto ozbiljno, ali ne zahtevno.',
-      en: 'A younger, more relaxed Vranac from the same monastery cellar. Ripe plum and cherry, soft tannins without the weight, a wine for when you want something serious but not demanding.'
-    },
-    price: 1590,
-    rank: 3,
-    img: 'images/tvrdos-metoh-vranac.webp'
-  },
-  {
-    id: 'primavera-roze',
-    quickTag: 'drugacije',
-    tag: { sr: 'Osvežavajuće leto', en: 'Refreshing summer' },
-    tagIcon: 'sun',
-    name: { sr: 'Primavera cuvée rosé', en: 'Primavera cuvée rosé' },
-    volume: '0.75L',
-    subtitle: { sr: 'Rosé vino • Podrumi Vukoje, Trebinje', en: 'Rosé Wine • Podrumi Vukoje, Trebinje' },
-    type: { sr: 'Rosé', en: 'Rosé' },
-    desc: {
-      sr: 'Svetlo rozé vino boje latica ruže, sa mirisom jagode i divlje kupine. Lagano, sveže i lako se pije, ide uz sve, od letnjeg druženja do prve večere na terasi.',
-      en: 'A pale rosé the colour of rose petals, with aromas of strawberry and wild blackberry. Light, fresh and effortless to drink, pairs with everything from a summer gathering to the first dinner on the terrace.'
-    },
-    price: 1690,
-    rank: 8,
-    img: 'images/primavera-roze.webp'
-  },
-  {
-    id: 'tvrdos-izba-merlot',
-    quickTag: 'preporuka',
-    tag: { sr: 'Mekše crveno', en: 'Softer red' },
-    tagIcon: 'heart',
-    name: { sr: 'Tvrdoš Izba Merlot', en: 'Tvrdoš Izba Merlot' },
-    volume: '0.75L',
-    subtitle: { sr: 'Crveno vino • Manastir Tvrdoš, Trebinje', en: 'Red Wine • Manastir Tvrdoš, Trebinje' },
-    type: { sr: 'Crveno', en: 'Red' },
-    desc: {
-      sr: 'Merlot u svom najpitomijem izdanju, baršunast, okrugao, bez oštrih ivica. Ukus zrele šljive i tamne čokolade, savršen izbor za nekoga ko tek otkriva crvena vina.',
-      en: 'Merlot at its most approachable, velvety, round, no rough edges. Ripe plum and dark chocolate, a perfect choice for someone just discovering red wine.'
-    },
-    price: 1490,
-    rank: 9,
-    img: 'images/tvrdos-izba-merlot.webp'
-  },
-  {
-    id: 'zlatna-selekcija-bijelo',
-    quickTag: 'premium',
-    tag: { sr: 'Bogato i slojevito', en: 'Rich and layered' },
-    tagIcon: 'layers',
-    name: { sr: 'Zlatna Selekcija Bijelo', en: 'Zlatna Selekcija Bijelo' },
-    volume: '0.75L',
-    subtitle: { sr: 'Belo vino • Podrumi Vukoje, Trebinje', en: 'White Wine • Podrumi Vukoje, Trebinje' },
-    type: { sr: 'Belo', en: 'White' },
-    desc: {
-      sr: 'Vrhunsko belo vino iz posebne selekcije, negovano sa više pažnje i vremena. Bogat, slojevit ukus zrelog voća i suptilne vanile, za trenutke kada želite da počastite sebe ili nekog drugog.',
-      en: 'A premium white from a special selection, given extra care and time. A rich, layered taste of ripe fruit and subtle vanilla, for moments when you want to treat yourself or someone else.'
-    },
-    price: 3990,
-    rank: 1,
-    img: 'images/zlatna-selekcija-bijelo-v2.webp'
-  },
-  {
-    id: 'vranac-reserve',
-    quickTag: 'premium',
-    tag: { sr: 'Baršunasto i začinjeno', en: 'Velvety and spiced' },
-    tagIcon: 'flame',
-    name: { sr: 'Vranac Reserve', en: 'Vranac Reserve' },
-    volume: '0.75L',
-    subtitle: { sr: 'Crveno vino • Podrumi Vukoje, Trebinje', en: 'Red Wine • Podrumi Vukoje, Trebinje' },
-    type: { sr: 'Crveno', en: 'Red' },
-    desc: {
-      sr: 'Vranac u svom najboljem izdanju, odležao duže od ostalih da uhvati punu dubinu ukusa. Tamni bobičasti plodovi, začini i baršunasta struktura, vino za slavlje i posebne trenutke.',
-      en: 'Vranac at its finest, aged longer than the rest to reach full depth. Dark berry fruit, spice and a velvety structure, a wine for celebration and special moments.'
-    },
-    price: 3990,
-    rank: 2,
-    img: 'images/vranac-reserve-v2.webp'
-  },
-  {
-    id: 'blatina-citluk-075',
-    quickTag: 'svakodnevno',
-    tag: { sr: 'Snažno i domaće', en: 'Bold and homegrown' },
-    tagIcon: 'house',
-    name: { sr: 'Blatina Čitluk', en: 'Blatina Čitluk' },
-    volume: '0.75L',
-    subtitle: { sr: 'Crveno vino • Vinarija Čitluk', en: 'Red Wine • Vinarija Čitluk' },
-    type: { sr: 'Crveno', en: 'Red' },
-    desc: {
-      sr: 'Jedinstven autohtoni crveni kultivar, uzgojen isključivo u Hercegovini. Tamno rubinska boja, arome višnje, šljive i začina. Srednji tanini, meki i savršeno balansirani.',
-      en: 'A unique indigenous red cultivar, grown exclusively in Herzegovina. Dark ruby, aromas of cherry, plum and spice. Medium tannins, soft and perfectly balanced.'
-    },
-    price: 1290,
-    rank: 10,
-    img: 'images/blatina-citluk.webp'
-  },
-  {
-    id: 'zilavka-citluk-075',
-    quickTag: 'svakodnevno',
-    tag: { sr: 'Laka klasika', en: 'Easy classic' },
-    tagIcon: 'feather',
-    name: { sr: 'Žilavka Čitluk', en: 'Žilavka Čitluk' },
-    volume: '0.75L',
-    subtitle: { sr: 'Belo vino • Vinarija Čitluk', en: 'White Wine • Vinarija Čitluk' },
-    type: { sr: 'Belo', en: 'White' },
-    desc: {
-      sr: 'Elegantna Žilavka iz čuvene Vinarije Čitluk uz reku Neretvu. Sveža kiselina, voćna kompleksnost i dug, svilenkast završetak. Najprepoznatljivije belo vino BiH.',
-      en: 'Elegant Žilavka from the renowned Vinarija Čitluk along the Neretva. Fresh acidity, fruity complexity and a long, silky finish. The most recognised white wine of BiH.'
-    },
-    price: 1090,
-    rank: 11,
-    img: 'images/zilavka-mostar.webp'
-  },
-  {
-    id: 'blatina-citluk-1l',
-    quickTag: 'svakodnevno',
-    tag: { sr: 'Snažno i domaće', en: 'Bold and homegrown' },
-    tagIcon: 'house',
-    tag2: { sr: 'Za veće društvo', en: 'For a bigger crowd' },
-    name: { sr: 'Blatina Čitluk', en: 'Blatina Čitluk' },
-    volume: '1L',
-    subtitle: { sr: 'Crveno vino • Vinarija Čitluk', en: 'Red Wine • Vinarija Čitluk' },
-    type: { sr: 'Crveno', en: 'Red' },
-    desc: {
-      sr: 'Ista omiljena Blatina iz Vinarije Čitluk, sada u većem, praktičnom pakovanju od 1 litra. Idealna kada je društvo veće ili kada jednostavno ne želite da vam ponestane.',
-      en: 'The same beloved Blatina from Vinarija Čitluk, now in a bigger, more practical 1-litre bottle. Ideal for a larger crowd, or simply so it does not run out mid-evening.'
-    },
-    // Its own photograph now — the 1L bottle carries a visibly different
-    // label ("Hercegovačka Blatina", 1850, Mostarsko vinogorje) from the
-    // 0.75L shot the two sizes used to share.
-    price: 690,
-    rank: 13,
-    img: 'images/blatina-citluk-1l.webp'
-  },
-  {
-    id: 'zilavka-citluk-1l',
-    quickTag: 'svakodnevno',
-    tag: { sr: 'Laka klasika', en: 'Easy classic' },
-    tagIcon: 'feather',
-    tag2: { sr: 'Za veće društvo', en: 'For a bigger crowd' },
-    name: { sr: 'Žilavka Čitluk', en: 'Žilavka Čitluk' },
-    volume: '1L',
-    subtitle: { sr: 'Belo vino • Vinarija Čitluk', en: 'White Wine • Vinarija Čitluk' },
-    type: { sr: 'Belo', en: 'White' },
-    desc: {
-      sr: 'Retka autohtona sorta uzgojena na karstu Hercegovine. Zlatno-žuta boja, bogata mineralna struktura, note zrele jabuke, breskve i mediteranskog bilja.',
-      en: 'A rare indigenous variety grown on the Herzegovina karst. Golden-yellow, rich mineral structure, notes of ripe apple, peach and Mediterranean herbs.'
-    },
-    price: 690,
-    rank: 12,
-    img: 'images/zilavka-hercegovina.webp'
-  },
-  {
-    id: 'tribunija-bijelo',
-    quickTag: 'preporuka',
-    tag: { sr: 'Elegantno i lako', en: 'Elegant and easy' },
-    tagIcon: 'ribbon',
-    name: { sr: 'Tribunia bijelo', en: 'Tribunia bijelo' },
-    volume: '0.75L',
-    subtitle: { sr: 'Belo vino • Podrumi Vukoje, Trebinje', en: 'White Wine • Podrumi Vukoje, Trebinje' },
-    type: { sr: 'Belo', en: 'White' },
-    desc: {
-      sr: 'Belo vino iz podruma Vukoje u Trebinju, sa mirisom svežeg voća i blagom notom cvetova. Elegantno i lako pitko, ostavlja utisak a da nikoga ne optereti.',
-      en: 'A white wine from the Vukoje cellars in Trebinje, with aromas of fresh fruit and a gentle floral note. Elegant and easy to drink, memorable without being demanding.'
-    },
-    price: 2090,
-    rank: 5,
-    img: 'images/tribunija-bijelo-v2.webp'
-  }
-];
-
-// The rail leads with the wines that earn the most on a single bottle sold, so
-// whichever filter someone lands on opens with its strongest earner rather than
-// with whatever happened to be typed first. The order comes from the margin
-// model in the pricing sheet; only the resulting position is kept here, because
-// this file is served to anyone who opens the page and the figures behind it
-// are not. A wine with no ranking sorts to the end instead of jumping ahead of
-// one that has been costed.
-WINES.sort((a, b) => (a.rank || 99) - (b.rank || 99));
-
-// ===== Bundles Data =====
-const BUNDLES = [
-  {
-    id: 'bundle-start-duo',
-    name: { sr: 'Hercz Start Duo', en: 'Hercz Start Duo' },
-    subtitle: { sr: 'Metoh Vranac + Tamjanika Galerija', en: 'Metoh Vranac + Tamjanika Galerija' },
-    badge: { sr: 'Za prvi put', en: 'Start here' },
-    desc: {
-      sr: 'Jedno crveno i jedno belo, oba pitka i bez pretenzija. Najlakši način da vidite šta Hercegovina radi, bez velike porudžbine.',
-      en: 'One red and one white, both easy and unpretentious. The simplest way to see what Herzegovina does, without committing to a big order.'
-    },
-    wines: ['tvrdos-metoh-vranac', 'tamjanika-galerija'],
-    price: 3290,
-    img: 'images/paket-start-duo-v3.webp'
-  },
-  {
-    id: 'bundle-signature-trio',
-    name: { sr: 'Hercz Signature Trio', en: 'Hercz Signature Trio' },
-    subtitle: {
-      sr: 'Metoh Vranac + Tamjanika Galerija + Tribunia bijelo',
-      en: 'Metoh Vranac + Tamjanika Galerija + Tribunia bijelo'
-    },
-    desc: {
-      sr: 'Naš glavni izbor: manastirsko crveno, aromatična Tamjanika i elegantna Tribunia. Tri različita karaktera u jednoj kutiji.',
-      en: 'Our main selection: a monastery red, the aromatic Tamjanika and the elegant Tribunia. Three different characters in one box.'
-    },
-    badge: { sr: 'Najpopularnije', en: 'Most popular' },
-    wines: ['tvrdos-metoh-vranac', 'tamjanika-galerija', 'tribunija-bijelo'],
-    price: 5390,
-    featured: true,
-    img: 'images/paket-signature-trio-v3.webp'
-  },
-  {
-    id: 'bundle-premium-trio',
-    name: { sr: 'Hercz Premium Trio', en: 'Hercz Premium Trio' },
-    subtitle: {
-      sr: 'Metoh Vranac + Tribunia bijelo + Zlatna Selekcija',
-      en: 'Metoh Vranac + Tribunia bijelo + Zlatna Selekcija'
-    },
-    desc: {
-      sr: 'Manastirsko crveno, elegantna Tribunia i Zlatna Selekcija kao kruna. Paket za poklon ili za veče koje treba da se pamti.',
-      en: 'A monastery red, the elegant Tribunia and the Zlatna Selekcija to crown it. A bundle for a gift, or for an evening meant to be remembered.'
-    },
-    wines: ['tvrdos-metoh-vranac', 'tribunija-bijelo', 'zlatna-selekcija-bijelo'],
-    price: 7590,
-    img: 'images/paket-premium-trio-v3.webp'
-  }
-];
-
-// A bundle stores only its own price and which wines it contains. The sum of
-// the parts, the difference against it and the bottle count are derived from
-// WINES on every load, so changing a wine's price can never leave a bundle
-// advertising a saving that no longer adds up. The bundles are currently
-// priced at exactly the sum of their bottles — what they offer is the choosing
-// and the single box, not a discount — so the difference is zero and the card
-// shows no struck-through price. Price one below its parts and the saving
-// reappears on its own.
-(function deriveBundleTotals() {
-  const priceOf = id => {
-    const wine = WINES.find(w => w.id === id);
-    if (!wine) throw new Error('Paket se poziva na nepoznato vino: ' + id);
-    return wine.price;
-  };
-  BUNDLES.forEach(bundle => {
-    bundle.count = bundle.wines.length;
-    bundle.originalPrice = bundle.wines.reduce((sum, id) => sum + priceOf(id), 0);
-    bundle.saving = bundle.originalPrice - bundle.price;
-    if (bundle.saving < 0) {
-      console.warn(
-        `Paket "${bundle.name.sr}" je skuplji od zbira pojedinačnih cena ` +
-        `(${bundle.price} > ${bundle.originalPrice}).`);
-    }
-  });
-})();
-
-// One place builds a product-page URL, so the homepage links and the page's
-// own related-wine links can never drift into different shapes.
-const WINE_URL_PARAM = 'w';
-const BUNDLE_URL_PARAM = 'p';
-
-// Cloudflare Pages serves vino.html at /vino and permanently redirects the
-// .html form to it. Linking to vino.html therefore costs every visitor a
-// redirect before the page even starts, and hands search engines an address
-// that is not the one they will end up indexing — so the extensionless form
-// is the only one this site ever writes down.
-function wineHref(id) {
-  return 'vino?' + WINE_URL_PARAM + '=' + encodeURIComponent(id);
-}
-
-function bundleHref(id) {
-  return 'paket?' + BUNDLE_URL_PARAM + '=' + encodeURIComponent(id);
-}
-
-// ===== Cart storage =====
-// The cart is read and written by three separate scripts: the homepage, the
-// wine page and the bundle page. Each used to carry its own copy of this
-// logic, and the copies drifted — one read a storage fallback the others
-// never wrote, and none of them noticed the cart changing after the page had
-// already rendered. That last gap is what a customer actually hit: a bottle
-// added on a product page, then the back button, and the basket in the header
-// said nothing was in it. A phone restores the previous page from the
-// back/forward cache without re-running a line of this file, so a count
-// computed once at load is a count that goes stale.
+// ===== Sadržaj sajta =====
+// Jedino mesto gde se menja ono što sajt prikazuje: nivoi, programi
+// mentorstva, transformacije i pitanja u upitniku. Početna stranica, stranica
+// nivoa, stranica programa i sitemap čitaju sve odavde.
 //
-// There is one implementation now, and every page subscribes to it.
-const CartStore = (function () {
-  const KEY = 'hercegCart';
-  // A cart still sitting there the next day reads as a glitch, not a
-  // courtesy. Six hours covers "let me think it over and come back tonight";
-  // the clock restarts on every write, so a long session never expires while
-  // someone is still shopping.
-  const TTL_MS = 6 * 60 * 60 * 1000;
+// Sve označeno sa PRIVREMENO je primer koji stoji dok ne stigne pravi
+// sadržaj (tekst, snimci, slike, cene).
 
-  const isKnown = id => WINES.some(w => w.id === id) || BUNDLES.some(b => b.id === id);
+// ===== Adresa sajta =====
+// Menja se na jednom mestu kad se poveže pravi domen. Ista vrednost mora
+// biti i u canonical/og linkovima u index.html (test to proverava).
+const SITE_ORIGIN = 'https://pecapecaa.github.io/Athlean-fast/';
+const BRAND = 'AthLean Fast';
 
-  // Every row leaves this function in the same shape, whichever page wrote it,
-  // so no page has to guess whether isBundle is missing or merely false.
-  const normalise = i => ({ id: i.id, qty: i.qty, isBundle: !!i.isBundle });
+// ===== Nivoi utreniranosti =====
+// video: putanja do kratkog snimka (npr. 'videos/pocetnik.mp4'). Dok je
+// prazno, prikazuje se poster.
+const LEVELS = [
+  {
+    id: 'pocetnik',
+    step: 1,
+    name: { sr: 'Početnik', en: 'Beginner' },
+    subtitle: { sr: 'Za one koji tek kreću', en: 'For those just starting out' },
+    desc: {
+      sr: 'Učiš osnovne pokrete pravilno, gradiš naviku i kondiciju bez preopterećenja. Kratki, jasni treninzi koje možeš da odradiš i kod kuće.',
+      en: 'Learn the basic movements properly, build the habit and your conditioning without overload. Short, clear sessions you can do at home too.'
+    },
+    // PRIVREMENO: parametri primera treninga
+    frequency: { sr: '3× sedmično', en: '3× a week' },
+    duration: '30–40 min',
+    equipment: { sr: 'Bez opreme ili osnovna', en: 'None or basic' },
+    poster: 'images/nivoi/pocetnik.svg',
+    video: ''
+  },
+  {
+    id: 'srednji',
+    step: 2,
+    name: { sr: 'Srednje napredni', en: 'Intermediate' },
+    subtitle: { sr: 'Za one koji već treniraju', en: 'For those already training' },
+    desc: {
+      sr: 'Podižeš opterećenje i intenzitet, radiš na snazi i obliku tijela. Za one koji treniraju redovno, a žele da se pomjere sa mrtve tačke.',
+      en: 'Raise the load and the intensity, work on strength and shape. For people who train regularly and want to get past a plateau.'
+    },
+    frequency: { sr: '4× sedmično', en: '4× a week' },
+    duration: '45–60 min',
+    equipment: { sr: 'Teretana ili bučice', en: 'Gym or dumbbells' },
+    poster: 'images/nivoi/srednji.svg',
+    video: ''
+  },
+  {
+    id: 'napredni',
+    step: 3,
+    name: { sr: 'Napredni', en: 'Advanced' },
+    subtitle: { sr: 'Za iskusne koji traže maksimum', en: 'For the experienced, chasing the maximum' },
+    desc: {
+      sr: 'Eksplozivnost, snaga i atletska izdržljivost na najvišem nivou. Zahtjevni treninzi za one koji imaju ozbiljnu osnovu iza sebe.',
+      en: 'Explosiveness, strength and athletic endurance at the highest level. Demanding sessions for people with a serious base behind them.'
+    },
+    frequency: { sr: '5× sedmično', en: '5× a week' },
+    duration: '60–75 min',
+    equipment: { sr: 'Teretana', en: 'Gym' },
+    poster: 'images/nivoi/napredni.svg',
+    video: ''
+  }
+];
 
-  function clear() {
-    try {
-      localStorage.removeItem(KEY);
-    } catch (err) {
-      // Storage unavailable — there is nothing to clear.
+// Sadržaj stranice nivoa. Stranica je samo na srpskom.
+// PRIVREMENO: primeri treninga i opisi dok ne stignu pravi.
+const LEVEL_DETAILS = {
+  pocetnik: {
+    lead: 'Prvi korak je najvažniji. Na ovom nivou učiš pravilnu tehniku osnovnih pokreta i gradiš kondiciju korak po korak, bez preopterećenja i bez povreda.',
+    workout: [
+      { name: 'Zagrijavanje', dose: '5 min', note: 'Lagani kardio i mobilnost zglobova' },
+      { name: 'Čučanj sa sopstvenom težinom', dose: '3 × 12', note: 'Leđa prava, koljena prate prste' },
+      { name: 'Sklekovi', dose: '3 × 8–10', note: 'Na koljenima, dok ne ojača' },
+      { name: 'Iskorak u mjestu', dose: '3 × 10 po nozi', note: 'Kontrolisano, bez žurbe' },
+      { name: 'Veslanje sa trakom ili bučicom', dose: '3 × 12', note: 'Lopatice skupljene na vrhu pokreta' },
+      { name: 'Plank', dose: '3 × 30 s', note: 'Stomak i zadnjica zategnuti' },
+      { name: 'Istezanje', dose: '5 min', note: 'Cijelo tijelo, polako' }
+    ],
+    forYou: [
+      'Tek počinješ da treniraš ili se vraćaš poslije duže pauze',
+      'Želiš da naučiš pravilnu tehniku prije nego što podigneš intenzitet',
+      'Imaš ograničeno vrijeme i treba ti jasan, kratak plan'
+    ],
+    notForYou: 'Ako redovno treniraš duže od godinu dana i osnovne pokrete radiš bez problema, srednji nivo će ti dati više.',
+    focus: { snaga: 2, kondicija: 3, tehnika: 5, mobilnost: 4, intenzitet: 2 }
+  },
+  srednji: {
+    lead: 'Osnova je tu, sada gradimo snagu i oblik. Opterećenje raste iz sedmice u sedmicu, a trening postaje raznovrsniji i zahtjevniji.',
+    workout: [
+      { name: 'Zagrijavanje i aktivacija', dose: '8 min', note: 'Kardio, mobilnost, aktivacija kukova i ramena' },
+      { name: 'Čučanj sa opterećenjem', dose: '4 × 8', note: 'Šipka ili bučice' },
+      { name: 'Potisak sa klupe', dose: '4 × 8', note: 'Ili sklekovi sa opterećenjem' },
+      { name: 'Rumunsko mrtvo dizanje', dose: '3 × 10', note: 'Fokus na zadnju ložu' },
+      { name: 'Zgibovi', dose: '3 × 6–8', note: 'Uz pomoć trake po potrebi' },
+      { name: 'Kružni finiš', dose: '3 kruga × 40 s', note: 'Burpees, penjači, skokovi' },
+      { name: 'Istezanje', dose: '5 min', note: 'Fokus na kukove i ramena' }
+    ],
+    forYou: [
+      'Treniraš redovno, ali si zapeo na istom mjestu',
+      'Osnovne pokrete radiš pravilno i spreman si za veće opterećenje',
+      'Želiš vidljivije rezultate u snazi i izgledu'
+    ],
+    notForYou: 'Ako tek počinješ, kreni od početnog nivoa: najbrži napredak dolazi iz dobre osnove.',
+    focus: { snaga: 4, kondicija: 4, tehnika: 3, mobilnost: 3, intenzitet: 4 }
+  },
+  napredni: {
+    lead: 'Trening kao kod sportista. Teška opterećenja, eksplozivni pokreti i metabolički intervali za atletsku građu koja se vidi i osjeti.',
+    workout: [
+      { name: 'Zagrijavanje i aktivacija', dose: '10 min', note: 'Dinamička mobilnost i aktivacija' },
+      { name: 'Čučanj', dose: '5 × 5', note: 'Teško, sa punom kontrolom' },
+      { name: 'Mrtvo dizanje', dose: '4 × 5', note: 'Neutralna leđa kroz cijeli pokret' },
+      { name: 'Potisak iznad glave', dose: '4 × 6', note: 'Stojeći, stabilan trup' },
+      { name: 'Zgibovi sa opterećenjem', dose: '4 × 6', note: 'Puna amplituda' },
+      { name: 'Skokovi na kutiju', dose: '4 × 5', note: 'Eksplozivno gore, mekano dolje' },
+      { name: 'Sprint intervali', dose: '6 × 20 s', note: 'Pauza 40 s između' }
+    ],
+    forYou: [
+      'Imaš bar godinu ili dvije ozbiljnog treninga iza sebe',
+      'Želiš atletske performanse, a ne samo izgled',
+      'Spreman si na zahtjevne treninge i disciplinu'
+    ],
+    notForYou: 'Ako nemaš ozbiljnu osnovu, ovaj intenzitet nosi rizik od povrede. Kreni od nivoa niže, stići ćeš brže nego što misliš.',
+    focus: { snaga: 5, kondicija: 5, tehnika: 4, mobilnost: 3, intenzitet: 5 }
+  }
+};
+
+// ===== Online mentorstvo =====
+// PRIVREMENO: nazivi, trajanje i sadržaj programa.
+// price: iznos u eurima (broj). null = cena se ne prikazuje dok se ne odredi.
+const PROGRAMS = [
+  {
+    id: 'start',
+    name: { sr: 'Start', en: 'Start' },
+    duration: { sr: '1 mjesec', en: '1 month' },
+    badge: { sr: 'Za početak', en: 'Start here' },
+    desc: {
+      sr: 'Mjesec dana da upoznaš način rada, dobiješ plan napravljen za tebe i vidiš prve rezultate.',
+      en: 'One month to get to know the method, get a plan built for you and see the first results.'
+    },
+    includes: {
+      sr: ['Plan treninga prilagođen tebi', 'Osnovne smjernice za ishranu', 'Sedmična provjera napretka'],
+      en: ['A training plan built for you', 'Basic nutrition guidelines', 'Weekly progress check']
+    },
+    price: null,
+    image: 'images/programi/start.svg'
+  },
+  {
+    id: 'transformacija',
+    name: { sr: 'Transformacija', en: 'Transformation' },
+    duration: { sr: '3 mjeseca', en: '3 months' },
+    badge: { sr: 'Najpopularnije', en: 'Most popular' },
+    featured: true,
+    desc: {
+      sr: 'Dovoljno vremena za pravu promjenu. Trening i ishrana se prilagođavaju kako napreduješ, uz redovne provjere.',
+      en: 'Enough time for real change. Training and nutrition adapt as you progress, with regular check-ins.'
+    },
+    includes: {
+      sr: ['Plan treninga koji raste sa tobom', 'Plan ishrane prilagođen cilju', 'Sedmične provjere i korekcije', 'Analiza tehnike kroz video'],
+      en: ['A training plan that grows with you', 'A nutrition plan built for your goal', 'Weekly check-ins and adjustments', 'Technique review on video']
+    },
+    price: null,
+    image: 'images/programi/transformacija.svg'
+  },
+  {
+    id: 'elite',
+    name: { sr: 'Elite', en: 'Elite' },
+    duration: { sr: '6 mjeseci', en: '6 months' },
+    badge: { sr: 'Maksimalni rezultati', en: 'Maximum results' },
+    desc: {
+      sr: 'Pola godine rada jedan na jedan. Za one koji žele potpunu promjenu i atletsku formu koja ostaje.',
+      en: 'Six months of one-to-one work. For people who want a complete change and athletic shape that lasts.'
+    },
+    includes: {
+      sr: ['Sve iz programa Transformacija', 'Video poziv jednom mjesečno', 'Prioritetna podrška', 'Plan za održavanje forme poslije programa'],
+      en: ['Everything in Transformation', 'A video call once a month', 'Priority support', 'A maintenance plan after the programme']
+    },
+    price: null,
+    image: 'images/programi/elite.svg'
+  }
+];
+
+// Sadržaj stranice programa (samo srpski).
+const PROGRAM_DETAILS = {
+  start: {
+    promise: 'Mjesec dana da vidiš kako izgleda trening sa planom napravljenim samo za tebe, i da osjetiš prve promjene.',
+    forYou: [
+      'Želiš da probaš online mentorstvo prije dužeg angažmana',
+      'Treba ti jasan plan i neko ko će ga prilagoditi tebi',
+      'Želiš da kreneš odmah, bez velikog ulaganja'
+    ],
+    notForYou: 'Ako ciljaš veliku promjenu u izgledu i formi, mjesec dana je kratko. Program Transformacija ti daje dovoljno vremena.'
+  },
+  transformacija: {
+    promise: 'Tri mjeseca, jedan cilj: vidljiva promjena u snazi, kondiciji i izgledu, uz plan koji se mijenja kako ti napreduješ.',
+    forYou: [
+      'Želiš vidljive rezultate, a ne samo bolji osjećaj',
+      'Treba ti neko ko te drži odgovornim iz sedmice u sedmicu',
+      'Spreman si da trening i ishranu shvatiš ozbiljno'
+    ],
+    notForYou: 'Ako tražiš brzo rješenje bez truda, ovo nije to. Rezultati dolaze iz rada, a mi ga činimo pametnijim.'
+  },
+  elite: {
+    promise: 'Šest mjeseci rada jedan na jedan, za atletsku formu koja ne nestaje kada program završi.',
+    forYou: [
+      'Želiš potpunu promjenu tijela i navika',
+      'Cijeniš direktan kontakt i redovne razgovore sa trenerom',
+      'Želiš da naučiš da sam održavaš formu i poslije programa'
+    ],
+    notForYou: 'Ako još nisi siguran da je online mentorstvo za tebe, kreni sa programom Start pa nastavi.'
+  }
+};
+
+// Koraci saradnje: sekcija "Kako funkcioniše" na početnoj i stranice programa.
+const HOW_STEPS = [
+  {
+    icon: 'form',
+    title: { sr: 'Prijava i upitnik', en: 'Sign-up and questionnaire' },
+    text: {
+      sr: 'Izabereš program i popuniš kratak upitnik o cilju, iskustvu i vremenu koje imaš.',
+      en: 'Choose a programme and fill in a short questionnaire about your goal, experience and time.'
+    }
+  },
+  {
+    icon: 'plan',
+    title: { sr: 'Tvoj plan', en: 'Your plan' },
+    text: {
+      sr: 'Na osnovu upitnika dobijaš plan treninga i ishrane napravljen samo za tebe.',
+      en: 'Based on the questionnaire you get a training and nutrition plan made just for you.'
+    }
+  },
+  {
+    icon: 'track',
+    title: { sr: 'Praćenje i korekcije', en: 'Tracking and adjustments' },
+    text: {
+      sr: 'Redovno pratimo napredak i prilagođavamo plan, dok ne dođeš do cilja.',
+      en: 'We track your progress and adjust the plan regularly until you reach your goal.'
     }
   }
+];
 
-  // Corrupt or unavailable storage must never take a page down.
-  function read() {
-    try {
-      const parsed = JSON.parse(localStorage.getItem(KEY) || 'null');
-      // Carts written before the expiry existed are bare arrays with no
-      // timestamp — those are exactly the stale ones this is meant to clear.
-      const fresh = parsed
-        && Array.isArray(parsed.items)
-        && typeof parsed.savedAt === 'number'
-        && Date.now() - parsed.savedAt <= TTL_MS;
-      if (!fresh) {
-        clear();
-        return [];
-      }
-      // A saved cart outlives the catalogue, so drop anything that no longer
-      // exists rather than rendering a broken row.
-      return parsed.items
-        .filter(i => i && typeof i.id === 'string' && i.qty > 0 && isKnown(i.id))
-        .map(normalise);
-    } catch (err) {
-      return [];
-    }
+// ===== Transformacije =====
+// PRIVREMENO: slike pre/posle, uz dozvolu klijenata.
+const TRANSFORMATIONS = [
+  {
+    before: 'images/transformacije/prije.svg',
+    after: 'images/transformacije/poslije.svg',
+    name: { sr: 'Ime klijenta', en: 'Client name' },
+    detail: { sr: 'Trajanje · rezultat', en: 'Duration · result' }
+  },
+  {
+    before: 'images/transformacije/prije.svg',
+    after: 'images/transformacije/poslije.svg',
+    name: { sr: 'Ime klijenta', en: 'Client name' },
+    detail: { sr: 'Trajanje · rezultat', en: 'Duration · result' }
+  },
+  {
+    before: 'images/transformacije/prije.svg',
+    after: 'images/transformacije/poslije.svg',
+    name: { sr: 'Ime klijenta', en: 'Client name' },
+    detail: { sr: 'Trajanje · rezultat', en: 'Duration · result' }
   }
+];
 
-  function write(items) {
-    try {
-      localStorage.setItem(KEY, JSON.stringify({
-        items: items.map(normalise),
-        savedAt: Date.now()
-      }));
-    } catch (err) {
-      // Private mode or quota exceeded — the cart still works for this view.
-    }
+// ===== Upitnik za prijavu =====
+// Drugi korak prijave se crta iz ove liste, pa se pitanja menjaju samo
+// ovde. type: 'choice' (jedan odgovor) ili 'text' (slobodan unos).
+// Pitanje 'program' i 'nivo' dobijaju odgovore iz PROGRAMS i LEVELS.
+const JOIN_QUESTIONS = [
+  {
+    id: 'program',
+    type: 'choice',
+    required: true,
+    label: { sr: 'Koji program te zanima?', en: 'Which programme interests you?' },
+    options: 'programs'
+  },
+  {
+    id: 'cilj',
+    type: 'choice',
+    required: true,
+    label: { sr: 'Koji ti je glavni cilj?', en: 'What is your main goal?' },
+    options: [
+      { value: 'masnoca', label: { sr: 'Skidanje masnoće', en: 'Fat loss' } },
+      { value: 'misici', label: { sr: 'Mišićna masa', en: 'Muscle gain' } },
+      { value: 'atletska', label: { sr: 'Atletska građa', en: 'Athletic build' } },
+      { value: 'kondicija', label: { sr: 'Kondicija i snaga', en: 'Conditioning and strength' } }
+    ]
+  },
+  {
+    id: 'nivo',
+    type: 'choice',
+    required: true,
+    label: { sr: 'Koliko si utreniran?', en: 'How trained are you?' },
+    options: 'levels'
+  },
+  {
+    id: 'dani',
+    type: 'choice',
+    required: true,
+    label: { sr: 'Koliko dana sedmično možeš da treniraš?', en: 'How many days a week can you train?' },
+    options: [
+      { value: '2-3', label: { sr: '2–3 dana', en: '2–3 days' } },
+      { value: '4', label: { sr: '4 dana', en: '4 days' } },
+      { value: '5+', label: { sr: '5 i više', en: '5 or more' } }
+    ]
+  },
+  {
+    id: 'mjesto',
+    type: 'choice',
+    required: true,
+    label: { sr: 'Gdje treniraš?', en: 'Where do you train?' },
+    options: [
+      { value: 'teretana', label: { sr: 'Teretana', en: 'Gym' } },
+      { value: 'kuca', label: { sr: 'Kod kuće', en: 'At home' } },
+      { value: 'napolju', label: { sr: 'Napolju', en: 'Outdoors' } },
+      { value: 'kombinovano', label: { sr: 'Kombinovano', en: 'A mix' } }
+    ]
+  },
+  {
+    id: 'napomena',
+    type: 'text',
+    required: false,
+    label: { sr: 'Povrede, zdravstvena ograničenja ili napomene', en: 'Injuries, health limitations or notes' },
+    placeholder: { sr: 'Npr. bol u koljenu, astma, radim u smjenama…', en: 'E.g. knee pain, asthma, shift work…' }
   }
+];
 
-  const count = items => items.reduce((sum, i) => sum + i.qty, 0);
+// Odgovor "još ne znam" za pitanja čiji odgovori dolaze iz podataka.
+const UNSURE_OPTION = { value: 'ne-znam', label: { sr: 'Još ne znam', en: 'Not sure yet' } };
 
-  // Two carts are the same cart only if they hold the same rows in the same
-  // order with the same quantities. Used to skip a re-render that would
-  // change nothing on screen.
-  const same = (a, b) => JSON.stringify(a.map(normalise)) === JSON.stringify(b.map(normalise));
-
-  // Every way the stored cart can change while a page is already on screen:
-  //   - another tab writes it (storage);
-  //   - this page is restored from the back/forward cache, which is what the
-  //     back button does on a phone, without re-running any script (pageshow
-  //     with persisted);
-  //   - the tab is brought back to the foreground after the customer was in
-  //     another app, which iOS does not always report as a pageshow.
-  function subscribe(onChange) {
-    window.addEventListener('storage', e => {
-      // A null key means the whole store was cleared.
-      if (e.key === null || e.key === KEY) onChange();
-    });
-    window.addEventListener('pageshow', e => {
-      if (e.persisted) onChange();
-    });
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') onChange();
-    });
+// Odgovori za pitanje, sa rešenim izvorima iz podataka.
+function questionOptions(q) {
+  if (q.options === 'programs') {
+    return PROGRAMS.map(p => ({
+      value: p.id,
+      label: { sr: p.name.sr + ' · ' + p.duration.sr, en: p.name.en + ' · ' + p.duration.en }
+    })).concat(UNSURE_OPTION);
   }
+  if (q.options === 'levels') {
+    return LEVELS.map(l => ({ value: l.id, label: l.name })).concat(UNSURE_OPTION);
+  }
+  return q.options || [];
+}
 
-  return { KEY, TTL_MS, read, write, clear, count, same, subscribe };
-})();
+// ===== Linkovi =====
+// Jedan oblik adrese za svaku stranicu, da se linkovi nikad ne razilaze.
+// Relativni su, pa sajt radi i na domenu i u podfolderu (GitHub Pages).
+const LEVEL_URL_PARAM = 'n';
+const PROGRAM_URL_PARAM = 'p';
 
-// ===== Search metadata =====
-// The product pages are one HTML file each, told apart by a query parameter,
-// so their canonical link and structured data cannot be written into the
-// markup — they have to be built per product at render time. Both product
-// pages do it through here rather than each keeping its own copy, which is
-// how the bundle page ended up with neither.
-const SITE_ORIGIN = 'https://athlean-fast.pages.dev/';
+function levelHref(id) {
+  return 'nivo?' + LEVEL_URL_PARAM + '=' + encodeURIComponent(id);
+}
 
-const absUrl = pathOrHref => SITE_ORIGIN + String(pathOrHref).replace(/^\//, '');
+function programHref(id) {
+  return 'program?' + PROGRAM_URL_PARAM + '=' + encodeURIComponent(id);
+}
 
-// Everything is sold before it is stocked: the shop is in its pre-sale phase
-// and the confirmation says so. PreOrder is what that is, and claiming
-// InStock instead would be a promise the shop has not made.
-const SCHEMA_AVAILABILITY = 'https://schema.org/PreOrder';
+// Prijava se uvek otvara na početnoj stranici; podstranice šalju ovamo sa
+// izabranim programom i/ili nivoom.
+function joinHref(opts) {
+  const params = new URLSearchParams();
+  params.set('prijava', (opts && opts.program) || '1');
+  if (opts && opts.level) params.set('nivo', opts.level);
+  if (opts && opts.source) params.set('izvor', opts.source);
+  return './?' + params.toString();
+}
 
-const SELLER = { '@type': 'Organization', name: 'Hercz Wines', url: SITE_ORIGIN };
+// ===== Cena =====
+function formatPrice(program) {
+  if (typeof program.price !== 'number') return '';
+  return program.price.toLocaleString('de-DE') + ' €';
+}
+
+// ===== Metapodaci za pretragu =====
+const absUrl = href => SITE_ORIGIN + String(href).replace(/^\.?\//, '');
 
 function setCanonical(href) {
   let el = document.querySelector('link[rel="canonical"]');
@@ -460,29 +386,20 @@ function setCanonical(href) {
   el.href = absUrl(href);
 }
 
-// Replaces any block this page wrote before, so re-rendering cannot leave two
-// contradictory Product records in one document.
-function setProductJsonLd(product) {
-  const previous = document.getElementById('productJsonLd');
+function setMeta(selector, value) {
+  const el = document.querySelector(selector);
+  if (el) el.setAttribute('content', value);
+}
+
+// Zamenjuje blok koji je stranica ranije upisala, da ih nikad ne bude dva.
+function setPageJsonLd(data) {
+  const previous = document.getElementById('pageJsonLd');
   if (previous) previous.remove();
   const el = document.createElement('script');
   el.type = 'application/ld+json';
-  el.id = 'productJsonLd';
-  el.textContent = JSON.stringify(product);
+  el.id = 'pageJsonLd';
+  el.textContent = JSON.stringify(data);
   document.head.appendChild(el);
 }
 
-// Only fields the catalogue actually holds are emitted. No invented rating,
-// review count or stock number — a fabricated one is worse than none, both
-// for the buyer and for the search listing.
-function productOffer(price, href) {
-  return {
-    '@type': 'Offer',
-    price: price,
-    priceCurrency: 'RSD',
-    availability: SCHEMA_AVAILABILITY,
-    itemCondition: 'https://schema.org/NewCondition',
-    url: absUrl(href),
-    seller: SELLER
-  };
-}
+const PROVIDER = { '@type': 'Organization', name: BRAND, url: SITE_ORIGIN };

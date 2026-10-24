@@ -5,65 +5,57 @@
 Podiže lokalni server, pokrene sve provere i ugasi server. Izlazni kod 0
 znači da je sve prošlo.
 
-Server je `tests/server.js`, a ne običan fajl-server: Cloudflare Pages
-poslužuje `vino.html` na adresi `/vino` i trajno preusmerava `.html` oblik na
-nju. Sa običnim serverom testirali bismo drugačiji sajt od onog koji kupci
-dobijaju — adrese bi lokalno izgledale ispravno, a u produkciji se
-preusmeravale.
+Server je `tests/server.js`, a ne običan fajl-server: Cloudflare Pages (i
+GitHub Pages) poslužuje `nivo.html` na adresi `/nivo`, a Cloudflare trajno
+preusmerava `.html` oblik na nju. Sa običnim serverom testirali bismo drugačiji
+sajt od onog koji posetioci dobijaju.
 
 ## Šta se proverava
 
-`cart.spec.js` — korpa mora da bude ista na sve tri stranice (početna,
-stranica vina, stranica paketa). Ona živi u `localStorage` pod jednim ključem,
-a čitaju je tri različita fajla; ovi testovi su jedino što ih drži usklađene.
+`join.spec.js` — prijava (upitnik), jedino što na sajtu dovodi klijente.
 
-1. Vino dodato na stranici proizvoda vidi se na početnoj (i na „nazad", i na
-   svežem učitavanju).
-2. I obrnuto: dodato na početnoj, vidi se na stranici proizvoda.
-3. Paketi rade isto i zadrže oznaku da su paket.
-4. Dodavanje sa sve tri stranice završi u jednoj korpi.
-5. Isto vino dva puta je količina 2, ne dva reda.
-6. Drugi otvoren tab ne sme da prikazuje stari broj.
-7. Korpa preživi osvežavanje; ispražnjena ostaje prazna svuda.
-8. **Povratak iz keša stranice (bfcache)** — ono što telefon radi na dugme
-   „nazad", bez ponovnog pokretanja skripti. Ovo je greška koja je bila na
-   produkciji.
-9. Korpa starija od šest sati se briše, na svim stranicama jednako.
-10. Pokvaren sadržaj u `localStorage` ne sme da obori stranicu ni da prikaže
-    pogrešan broj.
-11. Posle uspešne porudžbine korpa je prazna na svim stranicama.
-12. Posle neuspele porudžbine korpa **ostaje**, da kupac može da pokuša opet.
+1. Dugme u meniju otvara formu na prvom koraku, fokus je na imenu, Escape je
+   zatvara.
+2. Prvi korak ne pušta dalje prazna polja, pogrešan email, prekratak telefon
+   ni nemoguće godine; „Nazad" čuva upisano.
+3. Bez obaveznih odgovora ništa se ne šalje; poslata prijava nosi kontakt,
+   odgovore kao čitljiv tekst (ne kodove), napomenu, `_replyto` i naslov sa
+   imenom i programom. Ponovo otvorena forma posle slanja je prazna.
+4. Kartica programa otvara formu sa već izabranim programom.
+5. Link sa podstranice (`?prijava=…&nivo=…`) otvara formu sa izborom i čisti
+   adresu; nepoznati id-jevi ne izaberu ništa.
+6. Dugmad „Pridruži se" na stranici programa i nivoa nose svoj izbor.
+7. Kad slanje ne uspe, odgovori ostaju i dugme ponovo radi.
+8. Promena jezika usred forme ne briše odgovore.
 
-`analytics.spec.js` — imena događaja i tagova koje šaljemo Clarity-ju. Na njima
-su izgrađeni svi levci i filteri. Ako se ime promeni ili nestane, sajt i dalje
-radi i niko se ne žali — samo levak tiho prijavljuje pogrešan broj. Ovi testovi
-stoje između jedne slovne greške i mesec dana pogrešnih podataka.
+`analytics.spec.js` — imena događaja i tagova za Clarity. Ako se ime promeni,
+sajt i dalje radi, samo levak tiho prijavljuje pogrešan broj.
 
-Proverava se: da svako dodavanje (vino, paket, sa bilo koje stranice) okine
-zajednički `u_korpu`; da checkout označi vrednost korpe, broj artikala i da li
-je prešla prag za besplatnu dostavu; da odustajanje kaže **na kom koraku**; da
-odbijena forma kaže **koje polje**; da uspešna porudžbina ne prijavi i
-odustajanje; da neuspešna ne prijavi uspeh; i da sajt radi normalno kad je
-Clarity potpuno blokiran adblockerom.
+Proverava se: `prijava_otvorena` sa izvorom (`hero`, `meni`,
+`program_kartica`…); `prijava_napustena` sa korakom (`podaci` / `upitnik`);
+`forma_greska` sa poljem; `prijava_poslata` tačno jednom i bez lažnog
+napuštanja; `prijava_neuspjesna` bez lažnog uspeha; `nivo_otvoren` i
+`program_otvoren`; dosegnute sekcije; i da sajt radi normalno kad je Clarity
+blokiran.
 
-`seo.spec.js` — canonical link i strukturirani podaci (`Product`) na svakoj
-stranici vina i paketa, i potpunost `sitemap.xml`. Te stranice su jedan HTML
-fajl razlikovan parametrom u adresi, pa se canonical i JSON-LD prave tek pri
-iscrtavanju — nevidljivi su svakoj proveri koja čita HTML fajl. Baš tako su
-stranice paketa i otišle na produkciju bez ijednog od to dvoje.
+`seo.spec.js` — canonical i strukturirani podaci (`ExercisePlan` za nivoe,
+`Service` za programe), ponuda sa cenom samo kad je cena upisana, potpunost
+`sitemap.xml` i `robots.txt`, da nepostojeći id ne objavi lažnu stranicu i da
+stari `.html` link završi na pravoj adresi.
 
-Proverava se i da je cena u strukturiranim podacima ista kao cena na stranici,
-i da adresa nepostojećeg vina ne objavi lažan proizvod.
+`navigation.spec.js` — adresa ostaje čista (bez `#sekcija`) pri kretanju po
+početnoj i pri povratku sa podstranica, deljeni link `/#programs` stiže gde
+treba, kartice otvaraju svoje stranice, „Nazad" vraća na početnu.
 
-## Kad menjaš katalog
+## Kad menjaš sadržaj
 
-Posle svake izmene cena ili dodavanja vina pokreni:
+Posle dodavanja ili brisanja nivoa ili programa u `data.js` pokreni:
 
     node tools-sitemap.js
 
-Sitemap se generiše iz `data.js` da ne bi mogao da se razmimoiđe sa katalogom.
+Sitemap i robots.txt se generišu iz `data.js` da ne bi mogli da se razmimoiđu.
 
-## Kad menjaš nešto oko korpe
+## Pre svakog pusha
 
-Pokreni ovo pre nego što pušiš na produkciju. I proveri da test stvarno hvata
-grešku: privremeno pokvari kod, vidi da test pukne, pa vrati.
+Pokreni `./tests/run.sh`. I proveri da test stvarno hvata grešku: privremeno
+pokvari kod, vidi da test pukne, pa vrati.

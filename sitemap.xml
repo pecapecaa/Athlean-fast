@@ -1,104 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://athlean-fast.pages.dev/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://pecapecaa.github.io/Athlean-fast/</loc>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=zlatna-selekcija-bijelo</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://pecapecaa.github.io/Athlean-fast/nivo?n=pocetnik</loc>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=vranac-reserve</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://pecapecaa.github.io/Athlean-fast/nivo?n=srednji</loc>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=tvrdos-metoh-vranac</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://pecapecaa.github.io/Athlean-fast/nivo?n=napredni</loc>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=tamjanika-galerija</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://pecapecaa.github.io/Athlean-fast/program?p=start</loc>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=tribunija-bijelo</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://pecapecaa.github.io/Athlean-fast/program?p=transformacija</loc>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=tvrdos-zilavka</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=tvrdos-vranac</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=primavera-roze</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=tvrdos-izba-merlot</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=blatina-citluk-075</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=zilavka-citluk-075</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=zilavka-citluk-1l</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/vino?w=blatina-citluk-1l</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/paket?p=bundle-start-duo</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/paket?p=bundle-signature-trio</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://athlean-fast.pages.dev/paket?p=bundle-premium-trio</loc>
-    <lastmod>2026-09-05</lastmod>
+    <loc>https://pecapecaa.github.io/Athlean-fast/program?p=elite</loc>
+    <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+<defs>
+  <linearGradient id="bgp0" x1="0" y1="0" x2="0.4" y2="1">
+    <stop offset="0" stop-color="#1b1f26"/><stop offset="1" stop-color="#0b0d10"/>
+  </linearGradient>
+  <radialGradient id="glowp0" cx="0.5" cy="0.38" r="0.6">
+    <stop offset="0" stop-color="#ff5a1f" stop-opacity="0.22"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="linesp0" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+    <line x1="0" y1="0" x2="0" y2="28" stroke="#ffffff" stroke-opacity="0.035" stroke-width="10"/>
+  </pattern>
+</defs>
+<rect width="1200" height="675" fill="url(#bgp0)"/>
+<rect width="1200" height="675" fill="url(#linesp0)"/>
+<rect width="1200" height="675" fill="url(#glowp0)"/>
+<text x="430" y="520" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Arial, Helvetica, sans-serif" font-size="440" font-weight="700" fill="#ff5a1f" fill-opacity="0.92" letter-spacing="0">1</text>
+<text x="560" y="330" text-anchor="start" font-family="Oswald, 'Arial Narrow', Arial, Helvetica, sans-serif" font-size="70" font-weight="700" fill="#ffffff" fill-opacity="0.9" letter-spacing="10">MJESEC</text>
+<text x="560" y="390" text-anchor="start" font-family="Oswald, 'Arial Narrow', Arial, Helvetica, sans-serif" font-size="40" font-weight="400" fill="#ffffff" fill-opacity="0.55" letter-spacing="8">START</text>
+<text x="560" y="438" text-anchor="start" font-family="Oswald, 'Arial Narrow', Arial, Helvetica, sans-serif" font-size="24" font-weight="400" fill="#ffffff" fill-opacity="0.35" letter-spacing="6">ONLINE MENTORSTVO</text>
+</svg>

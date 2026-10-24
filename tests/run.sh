@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs the cart tests against a local copy of the site.
+# Runs every test against a local copy of the site.
 #
 #   ./tests/run.sh
 #
@@ -21,7 +21,7 @@ for _ in $(seq 1 40); do
   sleep 0.25
 done
 
-BASE="http://localhost:$PORT" node tests/cart.spec.js
+BASE="http://localhost:$PORT" node tests/join.spec.js
 BASE="http://localhost:$PORT" node tests/analytics.spec.js
 BASE="http://localhost:$PORT" node tests/seo.spec.js
 BASE="http://localhost:$PORT" node tests/navigation.spec.js
