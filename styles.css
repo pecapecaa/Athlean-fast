@@ -14,11 +14,14 @@
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(255, 255, 255, 0.16);
 
-  --blue: #3a62f0;             /* royal blue: fills behind white text */
-  --blue-hover: #4b72ff;
-  --blue-bright: #5d84ff;      /* royal blue as text and figures on black */
-  --blue-deep: #10235f;
-  --blue-glow: rgba(58, 98, 240, 0.35);
+  /* Royal blue, taken from the satin behind the logo: deep and saturated,
+     not the light screen blue. */
+  --blue: #1739c4;             /* fills behind white text */
+  --blue-hover: #2448d6;
+  --blue-bright: #3b5fe0;      /* large figures, titles and icons on black */
+  --velvet: #011244;           /* the logo's backdrop */
+  --velvet-light: #0b2273;
+  --blue-glow: rgba(23, 57, 196, 0.45);
 
   --gold: #d6aa55;
   --gold-light: #f0cf86;
@@ -249,9 +252,9 @@ button {
   opacity: 0;
   transition: opacity 1.2s ease;
   background:
-    radial-gradient(ellipse 55% 45% at 50% 38%, rgba(58, 98, 240, 0.32) 0%, transparent 70%),
-    radial-gradient(ellipse 90% 60% at 50% 100%, rgba(16, 35, 95, 0.55) 0%, transparent 70%),
-    linear-gradient(180deg, #05070f 0%, var(--bg) 100%);
+    radial-gradient(ellipse 55% 45% at 50% 38%, rgba(23, 57, 196, 0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 90% 60% at 50% 100%, rgba(11, 34, 115, 0.6) 0%, transparent 70%),
+    linear-gradient(180deg, var(--velvet) 0%, var(--bg) 100%);
 }
 
 .hero-bg.visible { opacity: 1; }
@@ -524,13 +527,13 @@ button {
 .feature-grid--cards .feature-icon { color: var(--blue-bright); }
 .feature-grid--cards .feature-icon svg { width: 64px; height: 64px; }
 
-.feature-grid--cards .feature--highlight .feature-head { border-color: rgba(58, 98, 240, 0.55); }
+.feature-grid--cards .feature--highlight .feature-head { border-color: rgba(23, 57, 196, 0.55); }
 
 @media (hover: hover) {
   .feature-grid--cards .feature:hover .feature-head {
     transform: translateY(-4px);
     border-color: var(--blue);
-    box-shadow: 0 16px 40px rgba(58, 98, 240, 0.16);
+    box-shadow: 0 16px 40px rgba(23, 57, 196, 0.16);
   }
 }
 
@@ -556,7 +559,7 @@ button {
   .card:hover {
     transform: translateY(-8px);
     border-color: var(--blue);
-    box-shadow: 0 20px 44px rgba(58, 98, 240, 0.18);
+    box-shadow: 0 20px 44px rgba(23, 57, 196, 0.18);
   }
 }
 
@@ -759,9 +762,11 @@ button {
   padding: 90px 40px;
   text-align: center;
   border-radius: 28px;
+  border: 1px solid rgba(214, 170, 85, 0.35);
   background:
-    radial-gradient(ellipse 80% 90% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, transparent 70%),
-    linear-gradient(160deg, var(--blue) 0%, #2443c4 100%);
+    radial-gradient(ellipse 70% 80% at 25% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.018) 0 22px, rgba(0, 0, 0, 0.04) 22px 48px),
+    linear-gradient(160deg, var(--blue) 0%, var(--velvet-light) 50%, var(--velvet) 100%);
 }
 
 .join-band::before {
@@ -773,8 +778,7 @@ button {
   height: 400px;
   transform: translate(-50%, -50%);
   background: url('images/logo-mark.svg') center / contain no-repeat;
-  filter: brightness(0) invert(1);
-  opacity: 0.08;
+  opacity: 0.12;
   pointer-events: none;
 }
 
@@ -837,7 +841,7 @@ button {
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--blue-bright);
+  color: var(--gold);
 }
 
 /* ===== CONTACT ===== */
@@ -866,7 +870,7 @@ button {
   height: 44px;
   padding: 11px;
   border-radius: 50%;
-  background: rgba(58, 98, 240, 0.14);
+  background: rgba(23, 57, 196, 0.14);
   color: var(--blue-bright);
 }
 
@@ -923,7 +927,7 @@ button {
 .join-modal textarea:focus {
   outline: none;
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(58, 98, 240, 0.25);
+  box-shadow: 0 0 0 3px rgba(23, 57, 196, 0.25);
 }
 
 .contact-form textarea,

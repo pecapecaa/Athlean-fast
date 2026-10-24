@@ -75,7 +75,7 @@
   position: relative;
   padding: calc(var(--nav-h) + 28px) 0 100px;
   background:
-    radial-gradient(ellipse 60% 40% at 50% 22%, rgba(58, 98, 240, 0.28) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 22%, rgba(23, 57, 196, 0.45) 0%, transparent 70%),
     var(--bg);
 }
 
@@ -112,7 +112,7 @@
   overflow: hidden;
   border-radius: var(--radius);
   background: var(--card);
-  box-shadow: 0 30px 80px rgba(58, 98, 240, 0.22);
+  box-shadow: 0 30px 80px rgba(23, 57, 196, 0.4);
 }
 
 .wp-stage img,
@@ -153,7 +153,7 @@
 }
 
 .wp-subtitle {
-  font-size: 1.12rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--blue-bright);
   margin-bottom: 18px;
@@ -383,7 +383,7 @@
 .wp-bar-word {
   font-size: 0.86rem;
   font-weight: 700;
-  color: var(--blue-bright);
+  color: var(--gold);
 }
 
 .wp-dots {
