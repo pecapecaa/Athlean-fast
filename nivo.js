@@ -58,7 +58,6 @@ function render(level, detail) {
     provider: PROVIDER
   });
 
-  document.getElementById('wpCrumbName').textContent = name;
   document.getElementById('wpStage').innerHTML = stageMedia(level);
   document.getElementById('wpStep').textContent = 'Nivo ' + level.step;
   document.getElementById('wpName').textContent = name;
@@ -132,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
   render(level, detail);
   wireRail();
   heroReveal();
-  scrollChrome(['vrh', 'fokus']);
+  scrollChrome();
   stickyJoinBar();
   measureOnScroll();
   arrivals(['.wp-honest', '.wp-note', '.wp-related-more'], ['#wpWorkout', '#wpForYou', '#wpRelated']);

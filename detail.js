@@ -6,15 +6,6 @@ const REDUCED_MOTION = window.matchMedia
 
 function wireNav() {
   applyContact();
-  const toggle = document.getElementById('navToggle');
-  const links = document.getElementById('navLinks');
-  if (!toggle || !links) return;
-  const setMenu = open => {
-    links.classList.toggle('active', open);
-    toggle.setAttribute('aria-expanded', String(open));
-  };
-  toggle.addEventListener('click', () => setMenu(!links.classList.contains('active')));
-  links.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('click', e => {
     const contact = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
     if (contact) clEvent(contact.getAttribute('href').startsWith('tel:') ? 'telefon_kliknut' : 'email_kliknut');
@@ -37,7 +28,7 @@ function setJoinLinks(opts) {
 
 // Progress bar, and the rail marking whichever section owns the middle of
 // the screen. One listener, at most once per frame.
-function scrollChrome(darkIds) {
+function scrollChrome() {
   const bar = document.getElementById('wpProgressBar');
   const rail = document.getElementById('wpRail');
   const links = rail ? Array.from(rail.querySelectorAll('a')).filter(a => !a.hidden) : [];
@@ -53,10 +44,7 @@ function scrollChrome(darkIds) {
     const mid = window.scrollY + window.innerHeight * 0.42;
     let current = sections[0];
     sections.forEach(s => { if (s.el.offsetTop <= mid) current = s; });
-    if (current) {
-      links.forEach(a => a.classList.toggle('is-active', a === current.a));
-      if (rail) rail.classList.toggle('wp-rail--dark', (darkIds || []).includes(current.a.dataset.rail));
-    }
+    if (current) links.forEach(a => a.classList.toggle('is-active', a === current.a));
   };
 
   window.addEventListener('scroll', () => {

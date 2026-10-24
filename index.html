@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AthLean Fast: atletski izvajano tijelo, brzo do rezultata</title>
   <meta name="description" content="AthLean Fast je sistem treninga sa vlastitim tijelom i kettlebellom. Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada. Online mentorstvo za sve nivoe.">
-  <meta name="theme-color" content="#08090c">
+  <meta name="theme-color" content="#0a0a0b">
 
   <link rel="canonical" href="https://pecapecaa.github.io/Athlean-fast/">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -32,12 +32,12 @@
   <!-- Ne blokira prvi prikaz: ako Google Fonts kasni, stranica se crta
        rezervnim fontom. -->
   <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Lato:wght@300;400;700&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Lato:wght@400;700&display=swap">
   <noscript>
     <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Lato:wght@300;400;700&display=swap">
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Lato:wght@400;700&display=swap">
   </noscript>
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 
   <script>
     // Sopstveni događaji i tagovi za analitiku (Microsoft Clarity). Sve kroz
@@ -61,27 +61,19 @@
   <nav class="navbar" id="navbar">
     <div class="container nav-container">
       <a href="#hero" class="logo">
-        <img src="images/logo.svg" alt="AthLean Fast" width="300" height="70">
+        <img src="images/logo.svg" alt="AthLean Fast" width="337" height="50">
       </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#about" data-sr="O programu" data-en="About">O programu</a></li>
-        <li><a href="#results" data-sr="Rezultati" data-en="Results">Rezultati</a></li>
-        <li><a href="#levels" data-sr="Nivoi" data-en="Levels">Nivoi</a></li>
-        <li><a href="#mentorship" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</a></li>
-        <li><a href="#contact" data-sr="Kontakt" data-en="Contact">Kontakt</a></li>
-      </ul>
       <div class="nav-actions">
         <button type="button" class="lang-toggle" id="langToggle" aria-label="Jezik / Language">
           <span class="lang-active">SR</span> / <span>EN</span>
         </button>
         <button type="button" class="nav-join" id="navJoin" data-join="meni" data-sr="Pridruži se" data-en="Join">Pridruži se</button>
-        <button type="button" class="nav-toggle" id="navToggle" aria-label="Meni" aria-controls="navLinks" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
       </div>
     </div>
   </nav>
 
+  <!-- Jedna stranica koja se samo skroluje: nema menija ni posebnih stranica
+       za "O nama" i kontakt, sve je redom ispod. -->
   <main id="main" tabindex="-1">
     <section class="hero" id="hero">
       <!-- Pozadinski snimak: dovoljno je ubaciti videos/hero.mp4 (i po želji
@@ -92,36 +84,34 @@
       <div class="hero-overlay"></div>
       <div class="container hero-content">
         <img class="hero-emblem" src="images/logo-mark.svg" alt="" width="750" height="530">
-        <p class="hero-kicker">AthLean Fast</p>
         <h1 class="hero-title">
           <span data-sr="Atletski izvajano tijelo." data-en="An athletic, sculpted body.">Atletski izvajano tijelo.</span>
           <span class="hero-title-accent" data-sr="Brzo do rezultata." data-en="Results, fast.">Brzo do rezultata.</span>
         </h1>
-        <p class="hero-subtitle" data-sr="Sistem treninga sa vlastitim tijelom i kettlebellom, za ljude koji cijene svoje vrijeme." data-en="A training system with your own body and kettlebells, for people who value their time.">Sistem treninga sa vlastitim tijelom i kettlebellom, za ljude koji cijene svoje vrijeme.</p>
+        <p class="hero-subtitle" data-sr="Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada." data-en="All you need is 2 kettlebells and 30 minutes of honest work.">Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada.</p>
         <div class="hero-buttons">
-          <button type="button" class="btn btn-primary" data-join="hero" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
-          <a href="#about" class="btn btn-outline" data-sr="Saznaj više" data-en="Learn more">Saznaj više</a>
+          <button type="button" class="btn btn-primary btn-lg" data-join="hero" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
+          <a href="#about" class="btn-link" data-sr="Saznaj više" data-en="Learn more">Saznaj više</a>
         </div>
+        <ul class="hero-points">
+          <li data-sr="Može svako" data-en="Anyone can">Može svako</li>
+          <li data-sr="Bilo kada" data-en="Any time">Bilo kada</li>
+          <li data-sr="Bilo gdje" data-en="Anywhere">Bilo gdje</li>
+        </ul>
       </div>
       <a href="#about" class="scroll-indicator" aria-label="Nastavi niže"><span class="scroll-arrow"></span></a>
-      <div class="edge edge--bottom"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,56 1440,0 1440,56" fill="#f6f6f3"/></svg></div>
     </section>
 
     <!-- 1. Šta je AthLean Fast -->
-    <section class="section section-light" id="about">
-      <div class="container about-grid">
-        <div class="about-content">
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header">
           <div class="section-kicker" data-sr="O programu" data-en="About">O programu</div>
           <h2 class="section-title" data-sr="Šta je AthLean Fast?" data-en="What is AthLean Fast?">Šta je AthLean Fast?</h2>
-          <div class="divider"></div>
+        </div>
+        <div class="about">
           <p data-sr="AthLean Fast je sistem treninga gdje koristimo vlastito tijelo i kettlebelle. Postižemo estetski lijepo, atletski izvajano tijelo." data-en="AthLean Fast is a training system built on your own body and kettlebells. The result is an aesthetic, athletic, sculpted body.">AthLean Fast je sistem treninga gdje koristimo vlastito tijelo i kettlebelle. Postižemo estetski lijepo, atletski izvajano tijelo.</p>
-          <p class="about-quote" data-sr="Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada." data-en="All you need is 2 kettlebells and 30 minutes of honest work.">Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada.</p>
           <p data-sr="Izgrađen za busy (prezauzete) ljude koji cijene svoje vrijeme, žele da budu zdravi i izgledaju lijepo." data-en="Built for busy people who value their time and want to be healthy and look good.">Izgrađen za busy (prezauzete) ljude koji cijene svoje vrijeme, žele da budu zdravi i izgledaju lijepo.</p>
-          <ul class="chips">
-            <li data-sr="Može svako" data-en="Anyone can">Može svako</li>
-            <li data-sr="Bilo kada" data-en="Any time">Bilo kada</li>
-            <li data-sr="Bilo gdje" data-en="Anywhere">Bilo gdje</li>
-          </ul>
           <div class="about-stats">
             <div class="about-stat">
               <div class="stat-num">2</div>
@@ -137,34 +127,26 @@
             </div>
           </div>
         </div>
-        <figure class="about-media">
-          <!-- PRIVREMENO: fotografija trenera. -->
-          <img src="images/trener.svg" alt="Trener AthLean Fast" width="900" height="1100" loading="lazy" decoding="async">
-        </figure>
       </div>
     </section>
 
     <!-- 2. Kakve rezultate donosi -->
-    <section class="section section-dark" id="results">
-      <div class="edge edge--top"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 1440,0 0,56" fill="#f6f6f3"/></svg></div>
+    <section class="section section--alt" id="results">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker" data-sr="Rezultati" data-en="Results">Rezultati</div>
           <h2 class="section-title" data-sr="Kakve rezultate donosi" data-en="What it delivers">Kakve rezultate donosi</h2>
-          <div class="divider"></div>
         </div>
         <div class="feature-grid" id="resultsGrid"></div>
       </div>
-      <div class="edge edge--bottom"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,56 1440,0 1440,56" fill="#f6f6f3"/></svg></div>
     </section>
 
     <!-- 3. Prilagođeno svima -->
-    <section class="section section-levels" id="levels">
+    <section class="section" id="levels">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker" data-sr="Nivoi" data-en="Levels">Nivoi</div>
           <h2 class="section-title" data-sr="Prilagođeno svima" data-en="Built for everyone">Prilagođeno svima</h2>
-          <div class="divider"></div>
           <p class="section-lead" data-sr="Tri nivoa, tri primjera treninga. Izaberi svoj i pogledaj kako izgleda." data-en="Three levels, three sample workouts. Pick yours and see what it looks like.">Tri nivoa, tri primjera treninga. Izaberi svoj i pogledaj kako izgleda.</p>
         </div>
         <div class="cards-grid" id="levelsGrid"></div>
@@ -172,66 +154,60 @@
     </section>
 
     <!-- 4. Online mentorstvo -->
-    <section class="section section-dark" id="mentorship">
-      <div class="edge edge--top"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 1440,0 0,56" fill="#ebebe6"/></svg></div>
+    <section class="section section--alt" id="mentorship">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</div>
           <h2 class="section-title" data-sr="Online mentorstvo" data-en="Online coaching">Online mentorstvo</h2>
-          <div class="divider"></div>
         </div>
-        <div class="feature-grid" id="mentorshipGrid"></div>
+        <div class="feature-grid feature-grid--cards" id="mentorshipGrid"></div>
         <div class="section-cta">
-          <button type="button" class="btn btn-primary" data-join="mentorstvo" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
+          <button type="button" class="btn btn-primary btn-lg" data-join="mentorstvo" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
         </div>
       </div>
-      <div class="edge edge--bottom"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,56 1440,0 1440,56" fill="#f6f6f3"/></svg></div>
     </section>
 
     <!-- Transformacije -->
-    <section class="section section-light" id="transformations">
+    <section class="section" id="transformations">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker" data-sr="Transformacije" data-en="Transformations">Transformacije</div>
           <h2 class="section-title" data-sr="Pravi ljudi, pravi rezultati" data-en="Real people, real results">Pravi ljudi, pravi rezultati</h2>
-          <div class="divider"></div>
         </div>
         <div class="transformations" id="transformationsGrid"></div>
       </div>
     </section>
 
     <!-- 5. Pridruži se -->
-    <section class="section section-light" id="join">
+    <section class="section section--follow" id="join">
       <div class="container">
         <div class="join-band">
           <h2 data-sr="Pridruži se" data-en="Join us">Pridruži se</h2>
           <p data-sr="Popuni kratak upitnik o cilju, nivou i vremenu koje imaš. Na osnovu njega pravim tvoj plan." data-en="Fill in a short questionnaire about your goal, your level and the time you have. Your plan is built from it.">Popuni kratak upitnik o cilju, nivou i vremenu koje imaš. Na osnovu njega pravim tvoj plan.</p>
-          <button type="button" class="btn btn-primary" data-join="poziv" data-sr="Popuni upitnik" data-en="Fill in the questionnaire">Popuni upitnik</button>
+          <button type="button" class="btn btn-primary btn-lg" data-join="poziv" data-sr="Popuni upitnik" data-en="Fill in the questionnaire">Popuni upitnik</button>
         </div>
       </div>
     </section>
 
     <!-- Lokacije -->
-    <section class="section section-dark" id="locations">
-      <div class="edge edge--top"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 1440,0 0,56" fill="#f6f6f3"/></svg></div>
+    <section class="section section--alt" id="locations">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker" data-sr="Lokacije" data-en="Locations">Lokacije</div>
           <h2 class="section-title" data-sr="Gdje treniramo" data-en="Where we train">Gdje treniramo</h2>
-          <div class="divider"></div>
         </div>
         <div class="locations" id="locationsGrid"></div>
       </div>
-      <div class="edge edge--bottom"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,56 1440,0 1440,56" fill="#ebebe6"/></svg></div>
     </section>
 
-    <!-- Kontakt -->
-    <section class="section section-light-2" id="contact">
+    <!-- Kontakt i Instagram -->
+    <section class="section" id="contact">
       <div class="container contact-grid">
         <div class="contact-info">
-          <div class="section-kicker" data-sr="Kontakt" data-en="Contact">Kontakt</div>
-          <h2 class="section-title" data-sr="Imaš pitanje?" data-en="Got a question?">Imaš pitanje?</h2>
-          <div class="divider"></div>
+          <div class="section-header">
+            <div class="section-kicker" data-sr="Kontakt" data-en="Contact">Kontakt</div>
+            <h2 class="section-title" data-sr="Imaš pitanje?" data-en="Got a question?">Imaš pitanje?</h2>
+          </div>
           <div class="contact-item">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
             <div>
@@ -262,7 +238,7 @@
           </div>
           <input type="text" id="cSubject" data-clarity-mask="true" placeholder="Naslov" data-sr-ph="Naslov" data-en-ph="Subject" aria-label="Naslov">
           <textarea id="cMessage" data-clarity-mask="true" rows="5" placeholder="Tvoja poruka" data-sr-ph="Tvoja poruka" data-en-ph="Your message" aria-label="Poruka" required></textarea>
-          <button type="submit" class="btn btn-primary" data-sr="Pošalji poruku" data-en="Send message">Pošalji poruku</button>
+          <button type="submit" class="btn btn-primary btn-full" data-sr="Pošalji poruku" data-en="Send message">Pošalji poruku</button>
           <p class="form-privacy-note" data-sr="Podaci se koriste isključivo da bismo ti odgovorili i ne čuvaju se trajno." data-en="Your details are used only to reply to you and are not stored permanently.">Podaci se koriste isključivo da bismo ti odgovorili i ne čuvaju se trajno.</p>
         </form>
       </div>
@@ -271,32 +247,15 @@
 
   <footer class="footer" id="footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#hero" class="logo">
-            <img src="images/logo.svg" alt="AthLean Fast" width="300" height="70" loading="lazy">
-          </a>
-          <p data-sr="Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje." data-en="An athletic, sculpted body. Results, fast. Anyone, any time, anywhere.">Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje.</p>
-        </div>
-        <div class="footer-links">
-          <h4 data-sr="Navigacija" data-en="Navigation">Navigacija</h4>
-          <ul>
-            <li><a href="#about" data-sr="O programu" data-en="About">O programu</a></li>
-            <li><a href="#results" data-sr="Rezultati" data-en="Results">Rezultati</a></li>
-            <li><a href="#levels" data-sr="Nivoi" data-en="Levels">Nivoi</a></li>
-            <li><a href="#mentorship" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</a></li>
-            <li><a href="#locations" data-sr="Lokacije" data-en="Locations">Lokacije</a></li>
-          </ul>
-        </div>
-        <div class="footer-links">
-          <h4 data-sr="Kontakt" data-en="Contact">Kontakt</h4>
-          <ul>
-            <li><a href="#" data-contact="phone"></a></li>
-            <li><a href="#" data-contact="email"></a></li>
-            <li><a href="#" data-contact="instagram" target="_blank" rel="noopener"></a></li>
-          </ul>
-        </div>
-      </div>
+      <a href="#hero" class="logo">
+        <img src="images/logo.svg" alt="AthLean Fast" width="337" height="50" loading="lazy">
+      </a>
+      <p class="footer-tagline" data-sr="Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje." data-en="An athletic, sculpted body. Results, fast. Anyone, any time, anywhere.">Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje.</p>
+      <ul class="footer-contact">
+        <li><a href="#" data-contact="phone"></a></li>
+        <li><a href="#" data-contact="email"></a></li>
+        <li><a href="#" data-contact="instagram" target="_blank" rel="noopener"></a></li>
+      </ul>
       <div class="footer-bottom">
         <p>&copy; 2026 AthLean Fast. <span data-sr="Sva prava zadržana." data-en="All rights reserved.">Sva prava zadržana.</span></p>
         <p class="footer-note" data-sr="Prije početka programa posavjetuj se sa ljekarom ako imaš zdravstvenih problema. Slanjem prijave ne preuzimaš nikakvu finansijsku obavezu." data-en="If you have any health conditions, check with a doctor before starting a programme. Sending a sign-up commits you to no payment.">Prije početka programa posavjetuj se sa ljekarom ako imaš zdravstvenih problema. Slanjem prijave ne preuzimaš nikakvu finansijsku obavezu.</p>
@@ -389,8 +348,8 @@
   }
   </script>
 
-  <script src="data.js?v=5"></script>
-  <script src="components.js?v=5"></script>
-  <script src="script.js?v=5"></script>
+  <script src="data.js?v=6"></script>
+  <script src="components.js?v=6"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

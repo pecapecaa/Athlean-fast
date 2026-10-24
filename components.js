@@ -30,6 +30,8 @@ const ICONS = {
   nutrition: svgIcon('<path d="M12 7c-3-2.5-8-1-8 4.5C4 16 7.5 21 10 21c.8 0 1.3-.4 2-.4s1.2.4 2 .4c2.5 0 6-5 6-9.5C20 6 15 4.5 12 7z"/><path d="M12 7c0-2 1-3.5 3-4"/>', 34),
   plan: svgIcon('<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>', 34),
   library: svgIcon('<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M10 8.5v5l4.5-2.5z"/><path d="M7 21h10"/>', 34),
+  timer: svgIcon('<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 2.5h4M12 2.5V6M18.5 6.5l1.5-1.5"/>', 34),
+  calendar: svgIcon('<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8.5 15l2.2 2.2 4.8-4.7"/>', 34),
   pin: svgIcon('<path d="M12 21s-7-6.1-7-11.5a7 7 0 0114 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>', 22)
 };
 

@@ -28,16 +28,17 @@ const inView = (page, id) => page.evaluate(i => {
 async function run() {
   const browser = await chromium.launch({ args: ['--no-sandbox'] });
 
-  // ---- 1. Moving around the homepage never leaves #anchor behind.
+  // ---- 1. One page that is only scrolled, and its in-page links never
+  //         leave #anchor behind.
   {
-    console.log('\n1. The address bar on the homepage');
+    console.log('\n1. The homepage');
     const page = await browser.newPage();
     await page.goto(BASE + '/');
-    for (const label of ['O programu', 'Rezultati', 'Nivoi', 'Mentorstvo', 'Kontakt']) {
-      await page.click(`#navLinks a:has-text("${label}")`);
-      await page.waitForTimeout(250);
-      check(`"${label}" leaves the address clean`, hashOf(page) === '', page.url());
-    }
+    const barLinks = await page.$$eval('.navbar a', els => els.map(e => e.getAttribute('href')));
+    check('the bar has no menu, only the logo', barLinks.length === 1 && barLinks[0] === '#hero', barLinks.join(','));
+    await page.click('.scroll-indicator');
+    await page.waitForTimeout(250);
+    check('the scroll arrow leaves the address clean', hashOf(page) === '', page.url());
     await page.click('.navbar .logo');
     await page.waitForTimeout(250);
     check('the logo leaves the address clean', hashOf(page) === '', page.url());
@@ -53,7 +54,7 @@ async function run() {
     const page = await browser.newPage();
     await page.goto(`${BASE}/nivo?n=${LEVEL}`);
     await page.waitForTimeout(200);
-    await page.click('.wp-crumbs a:has-text("Nivoi")');
+    await page.click('.wp-back');
     await page.waitForTimeout(700);
     check('lands on the homepage', new URL(page.url()).pathname === '/', page.url());
     check('the address is clean', hashOf(page) === '', page.url());

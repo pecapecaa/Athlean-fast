@@ -7,7 +7,7 @@
        Ovo vidi skrejper bez JavaScript-a. -->
   <title>Nivo treninga | AthLean Fast</title>
   <meta name="description" content="Primjer treninga i opis nivoa utreniranosti u AthLean Fast programu.">
-  <meta name="theme-color" content="#08090c">
+  <meta name="theme-color" content="#0a0a0b">
 
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/svg+xml" href="images/logo-mark.svg">
@@ -24,13 +24,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Lato:wght@300;400;700&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Lato:wght@400;700&display=swap">
   <noscript>
     <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Lato:wght@300;400;700&display=swap">
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Lato:wght@400;700&display=swap">
   </noscript>
-  <link rel="stylesheet" href="styles.css?v=5">
-  <link rel="stylesheet" href="detail.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="detail.css?v=6">
 
   <script>
     window.clEvent = function (name) {
@@ -50,20 +50,10 @@
   <nav class="navbar navbar--solid" id="navbar">
     <div class="container nav-container">
       <a href="./" class="logo" aria-label="AthLean Fast, početna">
-        <img src="images/logo.svg" alt="AthLean Fast" width="300" height="70">
+        <img src="images/logo.svg" alt="AthLean Fast" width="337" height="50">
       </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="./#about">O programu</a></li>
-        <li><a href="./#results">Rezultati</a></li>
-        <li><a href="./#levels">Nivoi</a></li>
-        <li><a href="./#mentorship">Mentorstvo</a></li>
-        <li><a href="./#contact">Kontakt</a></li>
-      </ul>
       <div class="nav-actions">
         <a class="nav-join" href="./?prijava=1" data-join-link="meni_nivo">Pridruži se</a>
-        <button type="button" class="nav-toggle" id="navToggle" aria-label="Meni" aria-controls="navLinks" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
       </div>
     </div>
   </nav>
@@ -85,7 +75,6 @@
       <div class="container wp-404-inner">
         <div class="section-kicker">404</div>
         <h1 class="section-title">Ovaj nivo ne postoji</h1>
-        <div class="divider divider-center"></div>
         <p>Link je možda zastario. Pogledaj sve nivoe na početnoj stranici.</p>
         <a href="./#levels" class="btn btn-primary">Svi nivoi</a>
       </div>
@@ -94,14 +83,9 @@
     <article id="levelArticle" hidden>
       <section class="wp-hero" id="vrh">
         <div class="container">
-          <nav class="wp-crumbs" aria-label="Putanja">
-            <a href="./">Početna</a>
-            <span aria-hidden="true">/</span>
-            <a href="./#levels">Nivoi</a>
-            <span aria-hidden="true">/</span>
-            <span class="wp-crumbs-current" id="wpCrumbName"></span>
-          </nav>
+          <a class="wp-back" href="./#levels">Svi nivoi</a>
 
+          <!-- Prvo video, ispod sve ostalo: jedan stub na svakom ekranu. -->
           <div class="wp-hero-grid">
             <div class="wp-stage" id="wpStage"></div>
 
@@ -114,7 +98,7 @@
               <dl class="wp-facts" id="wpFacts"></dl>
               <div class="wp-buy">
                 <a class="btn btn-primary" href="./?prijava=1" data-join-link="stranica_nivoa">Pridruži se</a>
-                <a class="btn btn-outline" href="#trening" data-scroll="trening">Pogledaj trening</a>
+                <a class="btn-link" href="#trening" data-scroll="trening">Pogledaj trening</a>
               </div>
               <ul class="wp-assurances">
                 <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Bilo kada</span></li>
@@ -131,46 +115,42 @@
           <div class="section-header">
             <div class="section-kicker">Primjer treninga</div>
             <h2 class="section-title">Kako izgleda jedan trening</h2>
-            <div class="divider"></div>
           </div>
           <ol class="wp-steps" id="wpWorkout"></ol>
           <p class="wp-note">Ovo je primjer jednog treninga. U mentorstvu dobijaš plan treninga i ishrane, bazu vježbi i podršku trenera 24/7.</p>
         </div>
       </section>
 
-      <section class="section wp-section wp-section--alt" id="za-koga">
+      <section class="section section--alt wp-section" id="za-koga">
         <div class="container">
           <div class="section-header">
             <div class="section-kicker">Za koga je</div>
             <h2 class="section-title">Ovo je tvoj nivo ako</h2>
-            <div class="divider"></div>
           </div>
           <ul class="wp-checklist" id="wpForYou"></ul>
           <div class="wp-honest" id="wpNotForYou"></div>
         </div>
       </section>
 
-      <section class="section wp-section wp-section--dark" id="fokus">
+      <section class="section wp-section" id="fokus">
         <div class="container">
           <div class="section-header">
             <div class="section-kicker">Fokus</div>
             <h2 class="section-title">Na šta se radi na ovom nivou</h2>
-            <div class="divider"></div>
           </div>
           <div class="wp-bars" id="wpFocus"></div>
         </div>
       </section>
 
-      <section class="section wp-section wp-related" id="ostali">
+      <section class="section section--alt wp-section wp-related" id="ostali">
         <div class="container">
           <div class="section-header">
             <div class="section-kicker">Za sve nivoe</div>
             <h2 class="section-title">Ostali nivoi</h2>
-            <div class="divider"></div>
           </div>
           <div class="cards-grid" id="wpRelated"></div>
           <div class="wp-related-more">
-            <a href="./#mentorship" class="btn btn-outline-dark">Pogledaj online mentorstvo</a>
+            <a href="./#mentorship" class="btn btn-outline">Pogledaj online mentorstvo</a>
           </div>
         </div>
       </section>
@@ -189,32 +169,15 @@
 
   <footer class="footer" id="footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="./" class="logo">
-            <img src="images/logo.svg" alt="AthLean Fast" width="300" height="70" loading="lazy">
-          </a>
-          <p>Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje.</p>
-        </div>
-        <div class="footer-links">
-          <h4>Navigacija</h4>
-          <ul>
-            <li><a href="./#about">O programu</a></li>
-            <li><a href="./#results">Rezultati</a></li>
-            <li><a href="./#levels">Nivoi</a></li>
-            <li><a href="./#mentorship">Mentorstvo</a></li>
-            <li><a href="./#locations">Lokacije</a></li>
-          </ul>
-        </div>
-        <div class="footer-links">
-          <h4>Kontakt</h4>
-          <ul>
-            <li><a href="#" data-contact="phone"></a></li>
-            <li><a href="#" data-contact="email"></a></li>
-            <li><a href="#" data-contact="instagram" target="_blank" rel="noopener"></a></li>
-          </ul>
-        </div>
-      </div>
+      <a href="./" class="logo">
+        <img src="images/logo.svg" alt="AthLean Fast" width="337" height="50" loading="lazy">
+      </a>
+      <p class="footer-tagline">Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje.</p>
+      <ul class="footer-contact">
+        <li><a href="#" data-contact="phone"></a></li>
+        <li><a href="#" data-contact="email"></a></li>
+        <li><a href="#" data-contact="instagram" target="_blank" rel="noopener"></a></li>
+      </ul>
       <div class="footer-bottom">
         <p>&copy; 2026 AthLean Fast. Sva prava zadržana.</p>
         <p class="footer-note">Prije početka programa posavjetuj se sa ljekarom ako imaš zdravstvenih problema. Slanjem prijave ne preuzimaš nikakvu finansijsku obavezu.</p>
@@ -231,9 +194,9 @@
     </a>
   </aside>
 
-  <script src="data.js?v=5"></script>
-  <script src="components.js?v=5"></script>
-  <script src="detail.js?v=5"></script>
-  <script src="nivo.js?v=5"></script>
+  <script src="data.js?v=6"></script>
+  <script src="components.js?v=6"></script>
+  <script src="detail.js?v=6"></script>
+  <script src="nivo.js?v=6"></script>
 </body>
 </html>

@@ -419,7 +419,7 @@ function observeFadeElements() {
       el.classList.add('fade-up', 'stagger-' + Math.min(i + 1, 4));
     });
   });
-  document.querySelectorAll('.section-header, .about-content, .about-media, .contact-form, .join-band, .section-cta')
+  document.querySelectorAll('.section-header, .about, .contact-item, .contact-form, .join-band, .section-cta')
     .forEach(el => el.classList.add('fade-up'));
   if (!('IntersectionObserver' in window)) {
     document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
@@ -609,15 +609,6 @@ document.addEventListener('DOMContentLoaded', () => {
     progress.style.width = (max > 0 ? Math.min(window.scrollY / max, 1) * 100 : 0) + '%';
   });
 
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  const setMenu = open => {
-    navLinks.classList.toggle('active', open);
-    navToggle.setAttribute('aria-expanded', String(open));
-  };
-  navToggle.addEventListener('click', () => setMenu(!navLinks.classList.contains('active')));
-  navLinks.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
-
   document.getElementById('langToggle').addEventListener('click', () => {
     switchLanguage(currentLang === 'sr' ? 'en' : 'sr');
   });
@@ -627,7 +618,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const joinBtn = e.target.closest('[data-join]');
     if (joinBtn) {
       e.preventDefault();
-      setMenu(false);
       openJoin({ source: joinBtn.dataset.join });
       return;
     }

@@ -23,11 +23,10 @@ const CONTACT = {
 };
 
 // ===== Kakve rezultate donosi =====
-// big: veliki natpis na kartici; icon: ikonica umesto natpisa.
+// icon: ikonica iznad naslova; big: veliki broj umesto ikonice.
 const RESULTS = [
   {
-    big: '30–60',
-    unit: { sr: 'minuta', en: 'minutes' },
+    icon: 'timer',
     title: { sr: 'Treniraj pametno', en: 'Train smart' },
     text: {
       sr: 'Ne rasipaj slobodno vrijeme. 30, 45 ili 60 minuta treninga.',
@@ -51,8 +50,7 @@ const RESULTS = [
     }
   },
   {
-    big: '365',
-    unit: { sr: 'fit', en: 'fit' },
+    icon: 'calendar',
     title: { sr: '365 fit', en: '365 fit' },
     text: {
       sr: 'Izgradi mišić, istopi salo, izdefiniši tijelo i budi fit tokom cijele godine.',
