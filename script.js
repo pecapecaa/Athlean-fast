@@ -42,7 +42,7 @@ const t = entry => entry[currentLang] || entry.sr;
 
 // ===== Rendering =====
 function renderTransformations() {
-  const el = document.getElementById('transformations');
+  const el = document.getElementById('transformationsGrid');
   if (!el) return;
   el.innerHTML = TRANSFORMATIONS.map(item => `
     <figure class="transformation">
@@ -65,28 +65,25 @@ function renderTransformations() {
 
 function renderLevels() {
   const el = document.getElementById('levelsGrid');
-  if (!el) return;
-  el.innerHTML = LEVELS.map(level => levelCardHtml(level, currentLang)).join('')
-    + levelTeaserHtml(currentLang, '#programs');
+  if (el) el.innerHTML = LEVELS.map(level => levelCardHtml(level, currentLang)).join('');
 }
 
-function renderPrograms() {
-  const el = document.getElementById('programsGrid');
-  if (!el) return;
-  el.innerHTML = PROGRAMS.map(p => programCardHtml(p, currentLang)).join('');
+function renderFeatures(id, items) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = items.map(item => featureHtml(item, currentLang)).join('');
 }
 
-function renderHow() {
-  const el = document.getElementById('howGrid');
-  if (!el) return;
-  el.innerHTML = HOW_STEPS.map((step, i) => howCardHtml(step, i, currentLang)).join('');
+function renderLocations() {
+  const el = document.getElementById('locationsGrid');
+  if (el) el.innerHTML = LOCATIONS.map(loc => locationHtml(loc, currentLang)).join('');
 }
 
 function renderAll() {
-  renderTransformations();
+  renderFeatures('resultsGrid', RESULTS);
   renderLevels();
-  renderPrograms();
-  renderHow();
+  renderFeatures('mentorshipGrid', MENTORSHIP);
+  renderTransformations();
+  renderLocations();
   renderQuestions();
   observeFadeElements();
 }
@@ -176,11 +173,10 @@ function openJoin(opts) {
   document.getElementById('joinSuccess').hidden = true;
   document.getElementById('joinProgress').hidden = false;
   setJoinStep(1);
-  if (o.program && PROGRAMS.some(p => p.id === o.program)) setAnswer('program', o.program);
   if (o.level && LEVELS.some(l => l.id === o.level)) setAnswer('nivo', o.level);
 
   clTag('prijava_izvor', join.source);
-  if (o.program) clTag('program', o.program);
+  if (o.level) clTag('nivo', o.level);
   clEvent('prijava_otvorena');
 
   const overlay = document.getElementById('joinOverlay');
@@ -275,7 +271,7 @@ async function submitJoin(e) {
   }
 
   const d = contactDetails();
-  const programLabel = answerLabel(JOIN_QUESTIONS.find(q => q.id === 'program') || { type: 'text' }, answers.program);
+  const levelLabel = answerLabel(JOIN_QUESTIONS.find(q => q.id === 'nivo') || { type: 'text' }, answers.nivo);
   const timestamp = new Date().toLocaleString('sr-RS', {
     timeZone: 'Europe/Belgrade',
     day: '2-digit', month: '2-digit', year: 'numeric',
@@ -285,7 +281,7 @@ async function submitJoin(e) {
   // Readable Serbian keys, because FormSubmit prints them as the rows of the
   // email the coach reads.
   const payload = {
-    _subject: BRAND + ' | Nova prijava | ' + d.name + (programLabel ? ' | ' + programLabel : ''),
+    _subject: BRAND + ' | Nova prijava | ' + d.name + (levelLabel ? ' | ' + levelLabel : ''),
     _template: 'table',
     _captcha: 'false',
     _replyto: d.email,
@@ -328,7 +324,7 @@ async function submitJoin(e) {
 
   join.sent = true;
   clKeep('prijava_poslata');
-  clTag('program', answers.program || 'nije_izabran');
+  clTag('nivo', answers.nivo || '');
   clTag('cilj', answers.cilj || '');
   clEvent('prijava_poslata');
   submitBtn.disabled = false;
@@ -417,12 +413,12 @@ let _fadeObserver = null;
 // One observer for the life of the page; re-observing on every render is a
 // no-op for elements it already holds.
 function observeFadeElements() {
-  ['.card', '.program-card', '.how-card', '.transformation'].forEach(sel => {
+  ['.feature', '.card', '.transformation', '.location'].forEach(sel => {
     document.querySelectorAll(sel).forEach((el, i) => {
       el.classList.add('fade-up', 'stagger-' + Math.min(i + 1, 4));
     });
   });
-  document.querySelectorAll('.section-header, .about-content, .about-media, .contact-form, .results-features')
+  document.querySelectorAll('.section-header, .about-content, .about-media, .contact-form, .join-band, .section-cta')
     .forEach(el => el.classList.add('fade-up'));
   if (!('IntersectionObserver' in window)) {
     document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
@@ -521,11 +517,11 @@ function landOnHash() {
   else window.addEventListener('load', () => setTimeout(settle, 60), { once: true });
 }
 
-// A subpage's "Pridruži se" sends people here as ?prijava=<program>&nivo=<level>.
+// The level page's "Pridruži se" sends people here as ?prijava=1&nivo=<level>.
 function openJoinFromUrl() {
   const params = new URLSearchParams(location.search);
   if (!params.has('prijava')) return;
-  openJoin({ program: params.get('prijava'), level: params.get('nivo'), source: params.get('izvor') || 'podstranica' });
+  openJoin({ level: params.get('nivo'), source: params.get('izvor') || 'podstranica' });
   try {
     history.replaceState(null, '', location.pathname + location.hash);
   } catch (err) { /* cosmetic */ }
@@ -546,7 +542,7 @@ function trackSections() {
   };
   once('results', 'rezultati_vidjeni');
   once('levels', 'nivoi_vidjeni');
-  once('programs', 'mentorstvo_vidjeno');
+  once('mentorship', 'mentorstvo_vidjeno');
   once('contact', 'kontakt_vidjen');
 }
 
@@ -631,7 +627,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (joinBtn) {
       e.preventDefault();
       setMenu(false);
-      openJoin({ source: joinBtn.dataset.join, program: joinBtn.dataset.program });
+      openJoin({ source: joinBtn.dataset.join });
       return;
     }
     const anchor = e.target.closest('a[href^="#"]');
@@ -671,6 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('contactForm').addEventListener('submit', submitContact);
+  applyContact();
 
   let saved = null;
   try { saved = localStorage.getItem(LANG_KEY); } catch (err) { /* storage off */ }

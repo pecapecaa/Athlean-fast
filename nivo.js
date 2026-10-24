@@ -54,7 +54,6 @@ function render(level, detail) {
     description: description,
     url: absUrl(levelHref(level.id)),
     image: absUrl(level.poster),
-    activityFrequency: level.frequency.sr,
     activityDuration: level.duration,
     provider: PROVIDER
   });
@@ -67,9 +66,9 @@ function render(level, detail) {
   document.getElementById('wpLead').textContent = detail.lead;
 
   document.getElementById('wpFacts').innerHTML = [
-    ['Učestalost', level.frequency.sr],
     ['Trajanje', level.duration],
-    ['Oprema', level.equipment.sr]
+    ['Oprema', level.equipment.sr],
+    ['Gdje', 'Bilo gdje']
   ].map(([k, v]) => '<div class="wp-fact"><dt>' + k + '</dt><dd>' + esc(v) + '</dd></div>').join('');
 
   document.getElementById('wpWorkout').innerHTML = detail.workout.map((move, i) =>
@@ -92,7 +91,7 @@ function render(level, detail) {
     .filter(l => l.id !== level.id)
     .map(l => levelCardHtml(l, 'sr')).join('');
 
-  document.getElementById('wpStickyName').textContent = 'Nivo ' + level.step + ': ' + name;
+  document.getElementById('wpStickyName').textContent = name;
   setJoinLinks({ level: level.id });
 
   const video = document.getElementById('wpVideo');

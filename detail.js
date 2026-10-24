@@ -1,10 +1,11 @@
-// ===== Shared by the level and programme pages =====
+// ===== Shared by the subpages (the level page) =====
 // Loaded after data.js and components.js, before the page's own script.
 
 const REDUCED_MOTION = window.matchMedia
   && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function wireNav() {
+  applyContact();
   const toggle = document.getElementById('navToggle');
   const links = document.getElementById('navLinks');
   if (!toggle || !links) return;

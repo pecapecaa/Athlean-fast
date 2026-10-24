@@ -55,7 +55,7 @@ async function fillAndSend(page) {
   await page.fill('#jEmail', 'test@example.com');
   await page.fill('#jPhone', '065 123 4567');
   await page.click('#joinNext');
-  for (const label of ['Start', 'Skidanje masnoće', 'Početnik', '2–3 dana', 'Kod kuće']) {
+  for (const label of ['Istopiti salo', 'Početni nivo', '30 minuta', 'Nemam još', 'Kod kuće']) {
     await page.click(`#joinQuestions label.choice:has-text("${label}")`);
   }
   await page.click('#joinSubmit');
@@ -81,9 +81,15 @@ async function run() {
     check('tagged with the hero as the source', (await tags(page)).prijava_izvor === 'hero');
 
     await page.keyboard.press('Escape');
-    await page.click('#programsGrid [data-program="elite"] button[data-join]');
+    await page.click('#mentorship [data-join]');
+    check('the coaching button tags itself', (await tags(page)).prijava_izvor === 'mentorstvo');
+
+    await page.keyboard.press('Escape');
+    await page.goto(BASE + '/?prijava=1&nivo=napredni&izvor=stranica_nivoa');
+    await page.waitForTimeout(200);
     const t = await tags(page);
-    check('a programme card tags its programme', t.program === 'elite' && t.prijava_izvor === 'program_kartica', JSON.stringify(t));
+    check('arriving from a level page tags the level and the source',
+      t.nivo === 'napredni' && t.prijava_izvor === 'stranica_nivoa', JSON.stringify(t));
     await page.close();
   }
 
@@ -138,7 +144,7 @@ async function run() {
     check('prijava_poslata fires once', ev.filter(e => e === 'prijava_poslata').length === 1);
     check('the recording is kept', (await upgrades(page)).includes('prijava_poslata'));
     const t = await tags(page);
-    check('tagged with programme and goal', t.program === 'start' && t.cilj === 'masnoca', JSON.stringify(t));
+    check('tagged with level and goal', t.nivo === 'pocetni' && t.cilj === 'salo', JSON.stringify(t));
     await page.click('#joinDone');
     check('closing the success screen is not an abandonment',
       !(await events(page)).includes('prijava_napustena'));
@@ -162,16 +168,12 @@ async function run() {
 
   // ---- 6. The subpages report themselves.
   {
-    console.log('\n6. Level and programme pages');
+    console.log('\n6. The level page');
     const page = await fresh();
-    await page.goto(BASE + '/nivo?n=pocetnik');
+    await page.goto(BASE + '/nivo?n=pocetni');
     await page.waitForTimeout(150);
     check('nivo_otvoren fires', (await events(page)).includes('nivo_otvoren'));
-    check('tagged with the level', (await tags(page)).stranica_nivoa === 'pocetnik');
-    await page.goto(BASE + '/program?p=start');
-    await page.waitForTimeout(150);
-    check('program_otvoren fires', (await events(page)).includes('program_otvoren'));
-    check('tagged with the programme', (await tags(page)).stranica_programa === 'start');
+    check('tagged with the level', (await tags(page)).stranica_nivoa === 'pocetni');
     await page.close();
   }
 
@@ -180,7 +182,7 @@ async function run() {
     console.log('\n7. Sections reached');
     const page = await fresh();
     await page.goto(BASE + '/');
-    for (const id of ['results', 'levels', 'programs', 'contact']) {
+    for (const id of ['results', 'levels', 'mentorship', 'contact']) {
       await page.evaluate(i => document.getElementById(i).scrollIntoView({ behavior: 'instant' }), id);
       await page.waitForTimeout(250);
     }

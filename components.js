@@ -1,20 +1,10 @@
 // ===== Shared markup =====
-// Cards drawn the same way on every page that shows them: the homepage, the
-// level page ("Ostali nivoi") and the programme page ("Ostali programi").
-// Loaded after data.js.
+// Drawn the same way on every page that shows it: the homepage and the level
+// page ("Ostali nivoi"). Loaded after data.js.
 
 const UI_TEXT = {
   level: { sr: 'Nivo', en: 'Level' },
-  sampleWorkout: { sr: 'Primjer treninga', en: 'Sample workout' },
-  join: { sr: 'Pridruži se', en: 'Join' },
-  details: { sr: 'Detalji', en: 'Details' },
-  teaserKicker: { sr: 'Ne znaš koji je tvoj nivo?', en: 'Not sure about your level?' },
-  teaserTitle: { sr: 'Odredićemo ga zajedno', en: 'We will work it out together' },
-  teaserText: {
-    sr: 'U online mentorstvu nivo određujemo na osnovu tvog upitnika, a plan raste kako ti napreduješ.',
-    en: 'In online coaching your level comes from your questionnaire, and the plan grows as you progress.'
-  },
-  teaserCta: { sr: 'Pogledaj mentorstvo', en: 'See the coaching' }
+  sampleWorkout: { sr: 'Primjer treninga', en: 'Sample workout' }
 };
 
 // Text from data.js goes through this before landing in markup, so a stray
@@ -32,13 +22,15 @@ const svgIcon = (paths, size) =>
 
 const ICONS = {
   play: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>',
-  arrow: svgIcon('<path d="M5 12h14M13 6l6 6-6 6"/>'),
   check: svgIcon('<path d="M4 12.5l5 5L20 6.5"/>', 16),
-  calendar: svgIcon('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', 14),
   clock: svgIcon('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 14),
-  form: svgIcon('<path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M16 5h2a1 1 0 011 1v14a1 1 0 01-1 1H6a1 1 0 01-1-1V6a1 1 0 011-1h2"/><path d="M9 12l2 2 4-4"/>', 28),
-  plan: svgIcon('<path d="M6 7v10M18 7v10M3 9.5v5M21 9.5v5M6 12h12"/>', 28),
-  track: svgIcon('<path d="M4 19h16"/><path d="M4 15l5-5 4 4 7-7"/><path d="M15 7h5v5"/>', 28)
+  kettlebell: svgIcon('<path d="M8.5 9.5a3.5 3.5 0 117 0"/><path d="M9 4.5h6"/><path d="M6.5 13a5.5 5.5 0 1111 0c0 2.8-1 5-2.2 6.5H8.7C7.5 18 6.5 15.8 6.5 13z"/>', 14),
+  trophy: svgIcon('<path d="M8 4h8v5a4 4 0 01-8 0V4z"/><path d="M16 5h3v2a3 3 0 01-3 3M8 5H5v2a3 3 0 003 3"/><path d="M12 13v4M8.5 20h7M10 17h4"/>', 34),
+  bolt: svgIcon('<path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12L13 2z"/>', 34),
+  nutrition: svgIcon('<path d="M12 7c-3-2.5-8-1-8 4.5C4 16 7.5 21 10 21c.8 0 1.3-.4 2-.4s1.2.4 2 .4c2.5 0 6-5 6-9.5C20 6 15 4.5 12 7z"/><path d="M12 7c0-2 1-3.5 3-4"/>', 34),
+  plan: svgIcon('<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>', 34),
+  library: svgIcon('<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M10 8.5v5l4.5-2.5z"/><path d="M7 21h10"/>', 34),
+  pin: svgIcon('<path d="M12 21s-7-6.1-7-11.5a7 7 0 0114 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>', 22)
 };
 
 function levelCardHtml(level, lang) {
@@ -53,8 +45,8 @@ function levelCardHtml(level, lang) {
         <div class="card-sub">${esc(tr(level.subtitle, lang))}</div>
         <p class="card-desc">${esc(tr(level.desc, lang))}</p>
         <div class="card-tags">
-          <span class="card-tag">${ICONS.calendar}${esc(tr(level.frequency, lang))}</span>
           <span class="card-tag">${ICONS.clock}${esc(level.duration)}</span>
+          <span class="card-tag">${ICONS.kettlebell}${esc(tr(level.equipment, lang))}</span>
         </div>
         <div class="card-footer">
           <span class="card-cta">${esc(tr(UI_TEXT.sampleWorkout, lang))}</span>
@@ -64,65 +56,47 @@ function levelCardHtml(level, lang) {
     </a>`;
 }
 
-// The last level card catches whoever went through every level without
-// seeing themselves in one, and hands them to the coaching, where the level
-// is worked out for them.
-function levelTeaserHtml(lang, href) {
+// A result or a coaching feature: a big figure or an icon, a title, a line.
+function featureHtml(item, lang) {
+  const head = item.big
+    ? `<div class="feature-big">${esc(item.big)}</div>${item.unit ? `<div class="feature-unit">${esc(tr(item.unit, lang))}</div>` : ''}`
+    : `<div class="feature-icon">${ICONS[item.icon] || ''}</div>`;
   return `
-    <a class="card card--teaser" href="${href}">
-      <span class="teaser-mark" aria-hidden="true">?</span>
-      <div class="card-body">
-        <div class="teaser-kicker">${esc(tr(UI_TEXT.teaserKicker, lang))}</div>
-        <h3>${esc(tr(UI_TEXT.teaserTitle, lang))}</h3>
-        <p class="card-desc">${esc(tr(UI_TEXT.teaserText, lang))}</p>
-        <div class="card-footer">
-          <span class="card-cta">${esc(tr(UI_TEXT.teaserCta, lang))}</span>
-          <span class="card-play" aria-hidden="true">${ICONS.arrow}</span>
-        </div>
-      </div>
-    </a>`;
-}
-
-// joinSource: on the homepage the button opens the questionnaire in place
-// (data-join); on a subpage it is a link to the homepage with the programme
-// already chosen.
-function programCardHtml(p, lang, opts) {
-  const o = opts || {};
-  const price = formatPrice(p);
-  const joinLabel = esc(tr(UI_TEXT.join, lang));
-  const joinControl = o.asLink
-    ? `<a class="btn btn-primary" href="${joinHref({ program: p.id, source: o.joinSource })}">${joinLabel}</a>`
-    : `<button type="button" class="btn btn-primary" data-join="${esc(o.joinSource || 'program_kartica')}" data-program="${p.id}">${joinLabel}</button>`;
-  return `
-    <article class="program-card${p.featured ? ' program-card--featured' : ''}" data-program="${p.id}">
-      ${p.badge ? `<span class="program-badge">${esc(tr(p.badge, lang))}</span>` : ''}
-      <a class="program-media" href="${programHref(p.id)}" tabindex="-1" aria-hidden="true">
-        <img src="${esc(p.image)}" alt="" loading="lazy" decoding="async">
-      </a>
-      <div class="program-body">
-        <div class="program-duration">${esc(tr(p.duration, lang))}</div>
-        <h3><a href="${programHref(p.id)}">${esc(tr(p.name, lang))}</a></h3>
-        <p class="program-desc">${esc(tr(p.desc, lang))}</p>
-        <ul class="program-includes">
-          ${tr(p.includes, lang).map(item => `<li>${ICONS.check}<span>${esc(item)}</span></li>`).join('')}
-        </ul>
-        <div class="program-footer">
-          ${price ? `<div class="program-price">${esc(price)}</div>` : ''}
-          <div class="program-actions">
-            ${joinControl}
-            <a class="program-more" href="${programHref(p.id)}">${esc(tr(UI_TEXT.details, lang))}</a>
-          </div>
-        </div>
-      </div>
-    </article>`;
-}
-
-function howCardHtml(step, index, lang) {
-  return `
-    <div class="how-card${index === 1 ? ' featured' : ''}">
-      <span class="how-step" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span>
-      <div class="how-icon">${ICONS[step.icon] || ''}</div>
-      <h3>${esc(tr(step.title, lang))}</h3>
-      <p>${esc(tr(step.text, lang))}</p>
+    <div class="feature${item.big === '24/7' ? ' feature--highlight' : ''}">
+      <div class="feature-head">${head}</div>
+      <h3>${esc(tr(item.title, lang))}</h3>
+      <p>${esc(tr(item.text, lang))}</p>
     </div>`;
+}
+
+function locationHtml(loc, lang) {
+  return `
+    <div class="location">
+      <span class="location-icon">${ICONS.pin}</span>
+      <div>
+        <h3>${esc(tr(loc.name, lang))}</h3>
+        <p>${esc(tr(loc.place, lang))}</p>
+        <small>${esc(tr(loc.note, lang))}</small>
+      </div>
+    </div>`;
+}
+
+// Phone, mail, WhatsApp and Instagram live in CONTACT (data.js); every page
+// marks where they go and this fills them in.
+function applyContact(root) {
+  const scope = root || document;
+  const wa = 'https://wa.me/' + CONTACT.whatsapp + '?text='
+    + encodeURIComponent('Zdravo! Pišem sa sajta, zanima me ' + BRAND + '.');
+  const set = {
+    phone: el => { el.textContent = CONTACT.phone; if (el.tagName === 'A') el.href = 'tel:' + CONTACT.phoneHref; },
+    'phone-link': el => { el.href = 'tel:' + CONTACT.phoneHref; },
+    email: el => { el.textContent = CONTACT.email; if (el.tagName === 'A') el.href = 'mailto:' + CONTACT.email; },
+    instagram: el => { el.textContent = CONTACT.instagram.handle; el.href = CONTACT.instagram.url; },
+    'instagram-link': el => { el.href = CONTACT.instagram.url; },
+    whatsapp: el => { el.href = wa; }
+  };
+  scope.querySelectorAll('[data-contact]').forEach(el => {
+    const fill = set[el.dataset.contact];
+    if (fill) fill(el);
+  });
 }

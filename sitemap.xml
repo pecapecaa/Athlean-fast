@@ -7,7 +7,7 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://pecapecaa.github.io/Athlean-fast/nivo?n=pocetnik</loc>
+    <loc>https://pecapecaa.github.io/Athlean-fast/nivo?n=pocetni</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -20,24 +20,6 @@
   </url>
   <url>
     <loc>https://pecapecaa.github.io/Athlean-fast/nivo?n=napredni</loc>
-    <lastmod>2026-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pecapecaa.github.io/Athlean-fast/program?p=start</loc>
-    <lastmod>2026-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pecapecaa.github.io/Athlean-fast/program?p=transformacija</loc>
-    <lastmod>2026-10-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pecapecaa.github.io/Athlean-fast/program?p=elite</loc>
     <lastmod>2026-10-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

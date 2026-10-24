@@ -3,27 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AthLean Fast: online mentorstvo za atletsku građu</title>
-  <meta name="description" content="AthLean Fast: online treninzi i mentorstvo za atletsku građu koja se brzo postiže. Programi za početnike, srednje napredne i napredne.">
-  <meta name="theme-color" content="#0d0f12">
+  <title>AthLean Fast: atletski izvajano tijelo, brzo do rezultata</title>
+  <meta name="description" content="AthLean Fast je sistem treninga sa vlastitim tijelom i kettlebellom. Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada. Online mentorstvo za sve nivoe.">
+  <meta name="theme-color" content="#050506">
 
   <link rel="canonical" href="https://pecapecaa.github.io/Athlean-fast/">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/svg+xml" href="images/logo-mark.svg">
   <link rel="apple-touch-icon" href="favicon-180.png">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="AthLean Fast">
   <meta property="og:locale" content="sr_RS">
-  <meta property="og:title" content="AthLean Fast: atletska građa koja se brzo postiže">
-  <meta property="og:description" content="Online treninzi i mentorstvo za sve nivoe utreniranosti: plan po mjeri, redovno praćenje i podrška do cilja.">
+  <meta property="og:title" content="AthLean Fast: atletski izvajano tijelo, brzo do rezultata">
+  <meta property="og:description" content="Sistem treninga sa vlastitim tijelom i kettlebellom. 2 kettlebella i 30 minuta iskrenog rada.">
   <meta property="og:url" content="https://pecapecaa.github.io/Athlean-fast/">
   <meta property="og:image" content="https://pecapecaa.github.io/Athlean-fast/images/og-share.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="AthLean Fast">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AthLean Fast: atletska građa koja se brzo postiže">
-  <meta name="twitter:description" content="Online treninzi i mentorstvo za sve nivoe utreniranosti.">
+  <meta name="twitter:title" content="AthLean Fast: atletski izvajano tijelo, brzo do rezultata">
+  <meta name="twitter:description" content="Sistem treninga sa vlastitim tijelom i kettlebellom.">
   <meta name="twitter:image" content="https://pecapecaa.github.io/Athlean-fast/images/og-share.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,12 +32,12 @@
   <!-- Ne blokira prvi prikaz: ako Google Fonts kasni, stranica se crta
        rezervnim fontom. -->
   <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Lato:wght@400;700;900&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Lato:wght@400;700&display=swap">
   <noscript>
     <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Lato:wght@400;700;900&display=swap">
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Lato:wght@400;700&display=swap">
   </noscript>
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles.css?v=2">
 
   <script>
     // Sopstveni događaji i tagovi za analitiku (Microsoft Clarity). Sve kroz
@@ -59,15 +60,14 @@
 
   <nav class="navbar" id="navbar">
     <div class="container nav-container">
-      <a href="#hero" class="logo" aria-label="AthLean Fast">
-        <span class="logo-mark" aria-hidden="true">AF</span>
-        <span class="logo-text">AthLean <span class="logo-accent">Fast</span></span>
+      <a href="#hero" class="logo">
+        <img src="images/logo.svg" alt="AthLean Fast" width="300" height="70">
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#about" data-sr="O programu" data-en="About">O programu</a></li>
         <li><a href="#results" data-sr="Rezultati" data-en="Results">Rezultati</a></li>
         <li><a href="#levels" data-sr="Nivoi" data-en="Levels">Nivoi</a></li>
-        <li><a href="#programs" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</a></li>
+        <li><a href="#mentorship" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</a></li>
         <li><a href="#contact" data-sr="Kontakt" data-en="Contact">Kontakt</a></li>
       </ul>
       <div class="nav-actions">
@@ -91,43 +91,47 @@
       <div class="hero-bg" id="heroBg"></div>
       <div class="hero-overlay"></div>
       <div class="container hero-content">
-        <p class="hero-kicker" data-sr="Online mentorstvo" data-en="Online coaching">Online mentorstvo</p>
+        <img class="hero-mark" src="images/logo-mark.svg" alt="" width="750" height="530">
         <h1 class="hero-title">
-          <span>AthLean</span>
-          <span class="hero-title-accent">Fast</span>
+          <span data-sr="Atletski izvajano tijelo." data-en="An athletic, sculpted body.">Atletski izvajano tijelo.</span>
+          <span class="accent" data-sr="Brzo do rezultata." data-en="Results, fast.">Brzo do rezultata.</span>
         </h1>
-        <p class="hero-subtitle" data-sr="Atletska građa koja se brzo postiže." data-en="An athletic build, reached fast.">Atletska građa koja se brzo postiže.</p>
+        <p class="hero-subtitle" data-sr="Sistem treninga sa vlastitim tijelom i kettlebellom, za ljude koji cijene svoje vrijeme." data-en="A training system with your own body and kettlebells, for people who value their time.">Sistem treninga sa vlastitim tijelom i kettlebellom, za ljude koji cijene svoje vrijeme.</p>
         <div class="hero-buttons">
-          <button type="button" class="btn btn-primary" data-join="hero" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
-          <a href="#about" class="btn btn-outline" data-sr="Saznaj više" data-en="Learn more">Saznaj više</a>
+          <button type="button" class="btn btn-primary btn-lg" data-join="hero" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
+          <a href="#about" class="btn btn-outline btn-lg" data-sr="Saznaj više" data-en="Learn more">Saznaj više</a>
         </div>
       </div>
       <a href="#about" class="scroll-indicator" aria-label="Nastavi niže"><span class="scroll-arrow"></span></a>
-      <div class="edge edge--bottom"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,56 1440,0 1440,56" fill="#f4f4f1"/></svg></div>
     </section>
 
-    <section class="section section-about" id="about">
+    <!-- 1. Šta je AthLean Fast -->
+    <section class="section" id="about">
       <div class="container about-grid">
         <div class="about-content">
-          <div class="section-kicker" data-sr="Šta je AthLean Fast" data-en="What is AthLean Fast">Šta je AthLean Fast</div>
-          <h2 class="section-title" data-sr="Atletska građa. Brzo i pametno." data-en="An athletic build. Fast and smart.">Atletska građa. Brzo i pametno.</h2>
+          <div class="section-kicker" data-sr="O programu" data-en="About">O programu</div>
+          <h2 class="section-title" data-sr="Šta je AthLean Fast?" data-en="What is AthLean Fast?">Šta je AthLean Fast?</h2>
           <div class="divider"></div>
-          <!-- PRIVREMENO: tekst o treneru i viziji. -->
-          <p data-sr="AthLean Fast, od Athletic Lean Fast, je način treninga koji spaja snagu, kondiciju i ishranu u jedan jasan plan. Cilj je atletska građa: čvrsto, funkcionalno tijelo koje izgleda dobro i radi još bolje." data-en="AthLean Fast, short for Athletic Lean Fast, is a way of training that brings strength, conditioning and nutrition together in one clear plan. The goal is an athletic build: a lean, functional body that looks good and performs even better.">AthLean Fast, od Athletic Lean Fast, je način treninga koji spaja snagu, kondiciju i ishranu u jedan jasan plan. Cilj je atletska građa: čvrsto, funkcionalno tijelo koje izgleda dobro i radi još bolje.</p>
-          <p class="about-quote" data-sr="Ne treniraš više. Treniraš pametnije." data-en="You don't train more. You train smarter.">Ne treniraš više. Treniraš pametnije.</p>
-          <p data-sr="Svaki plan polazi od tebe: tvog nivoa, cilja i vremena koje imaš. Zato rezultati dolaze brže i ostaju." data-en="Every plan starts with you: your level, your goal and the time you have. That is why results come faster and stay.">Svaki plan polazi od tebe: tvog nivoa, cilja i vremena koje imaš. Zato rezultati dolaze brže i ostaju.</p>
+          <p data-sr="AthLean Fast je sistem treninga gdje koristimo vlastito tijelo i kettlebelle. Postižemo estetski lijepo, atletski izvajano tijelo." data-en="AthLean Fast is a training system built on your own body and kettlebells. The result is an aesthetic, athletic, sculpted body.">AthLean Fast je sistem treninga gdje koristimo vlastito tijelo i kettlebelle. Postižemo estetski lijepo, atletski izvajano tijelo.</p>
+          <p class="about-quote" data-sr="Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada." data-en="All you need is 2 kettlebells and 30 minutes of honest work.">Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada.</p>
+          <p data-sr="Izgrađen za busy (prezauzete) ljude koji cijene svoje vrijeme, žele da budu zdravi i izgledaju lijepo." data-en="Built for busy people who value their time and want to be healthy and look good.">Izgrađen za busy (prezauzete) ljude koji cijene svoje vrijeme, žele da budu zdravi i izgledaju lijepo.</p>
+          <ul class="chips">
+            <li data-sr="Može svako" data-en="Anyone can">Može svako</li>
+            <li data-sr="Bilo kada" data-en="Any time">Bilo kada</li>
+            <li data-sr="Bilo gdje" data-en="Anywhere">Bilo gdje</li>
+          </ul>
           <div class="about-stats">
             <div class="about-stat">
-              <div class="stat-num">3</div>
-              <div class="stat-lbl" data-sr="Nivoa utreniranosti" data-en="Fitness levels">Nivoa utreniranosti</div>
+              <div class="stat-num">2</div>
+              <div class="stat-lbl" data-sr="Kettlebella" data-en="Kettlebells">Kettlebella</div>
             </div>
             <div class="about-stat">
-              <div class="stat-num">1:1</div>
-              <div class="stat-lbl" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</div>
+              <div class="stat-num">30</div>
+              <div class="stat-lbl" data-sr="Minuta" data-en="Minutes">Minuta</div>
             </div>
             <div class="about-stat">
-              <div class="stat-num">100%</div>
-              <div class="stat-lbl" data-sr="Online" data-en="Online">Online</div>
+              <div class="stat-num">24/7</div>
+              <div class="stat-lbl" data-sr="Podrška" data-en="Support">Podrška</div>
             </div>
           </div>
         </div>
@@ -138,117 +142,107 @@
       </div>
     </section>
 
-    <section class="section section-results" id="results">
-      <div class="edge edge--top"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 1440,0 0,56" fill="#f4f4f1"/></svg></div>
+    <!-- 2. Kakve rezultate donosi -->
+    <section class="section section--ink" id="results">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker light" data-sr="Rezultati" data-en="Results">Rezultati</div>
-          <h2 class="section-title light" data-sr="Rezultati koji se vide" data-en="Results you can see">Rezultati koji se vide</h2>
+          <div class="section-kicker" data-sr="Rezultati" data-en="Results">Rezultati</div>
+          <h2 class="section-title" data-sr="Kakve rezultate donosi" data-en="What it delivers">Kakve rezultate donosi</h2>
           <div class="divider"></div>
-          <p class="section-lead light" data-sr="Pametan trening, prilagođena ishrana i redovno praćenje. Bez gladovanja i bez sati na traci, samo plan koji radi." data-en="Smart training, tailored nutrition and regular tracking. No starving and no hours on the treadmill, just a plan that works.">Pametan trening, prilagođena ishrana i redovno praćenje. Bez gladovanja i bez sati na traci, samo plan koji radi.</p>
         </div>
-        <div class="transformations" id="transformations"></div>
-        <div class="results-features">
-          <div class="rf-item">
-            <div class="rf-num">01</div>
-            <div class="rf-lbl" data-sr="Trening po mjeri" data-en="Training built for you">Trening po mjeri</div>
-          </div>
-          <div class="rf-item">
-            <div class="rf-num">02</div>
-            <div class="rf-lbl" data-sr="Ishrana bez gladovanja" data-en="Nutrition without starving">Ishrana bez gladovanja</div>
-          </div>
-          <div class="rf-item">
-            <div class="rf-num">03</div>
-            <div class="rf-lbl" data-sr="Praćenje napretka" data-en="Progress tracking">Praćenje napretka</div>
-          </div>
-        </div>
+        <div class="feature-grid" id="resultsGrid"></div>
       </div>
-      <div class="edge edge--bottom"><svg viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,56 1440,0 1440,56" fill="#f4f4f1"/></svg></div>
     </section>
 
-    <section class="section section-levels" id="levels">
+    <!-- 3. Prilagođeno svima -->
+    <section class="section" id="levels">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker" data-sr="Za sve nivoe" data-en="For every level">Za sve nivoe</div>
-          <h2 class="section-title" data-sr="Prilagođeno svim nivoima utreniranosti" data-en="Built for every fitness level">Prilagođeno svim nivoima utreniranosti</h2>
+          <div class="section-kicker" data-sr="Nivoi" data-en="Levels">Nivoi</div>
+          <h2 class="section-title" data-sr="Prilagođeno svima" data-en="Built for everyone">Prilagođeno svima</h2>
           <div class="divider"></div>
-          <p class="section-lead" data-sr="Izaberi svoj nivo i pogledaj primjer treninga. Ako nisi siguran gdje si, odredićemo to zajedno." data-en="Pick your level and watch a sample workout. Not sure where you stand? We will work it out together.">Izaberi svoj nivo i pogledaj primjer treninga. Ako nisi siguran gdje si, odredićemo to zajedno.</p>
+          <p class="section-lead" data-sr="Tri nivoa, tri primjera treninga. Izaberi svoj i pogledaj kako izgleda." data-en="Three levels, three sample workouts. Pick yours and see what it looks like.">Tri nivoa, tri primjera treninga. Izaberi svoj i pogledaj kako izgleda.</p>
         </div>
         <div class="cards-grid" id="levelsGrid"></div>
       </div>
     </section>
 
-    <section class="section section-programs" id="programs">
+    <!-- 4. Online mentorstvo -->
+    <section class="section section--ink" id="mentorship">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker" data-sr="Online mentorstvo" data-en="Online coaching">Online mentorstvo</div>
-          <h2 class="section-title" data-sr="Plan, podrška i rezultati" data-en="A plan, support and results">Plan, podrška i rezultati</h2>
-          <div class="divider"></div>
-          <p class="section-lead" data-sr="Ti treniraš, ja vodim. Dobijaš plan napravljen za tebe, redovne provjere i podršku dok ne dođeš do cilja." data-en="You train, I guide. You get a plan made for you, regular check-ins and support until you reach your goal.">Ti treniraš, ja vodim. Dobijaš plan napravljen za tebe, redovne provjere i podršku dok ne dođeš do cilja.</p>
-          <ul class="program-benefits">
-            <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
-              <span data-sr="Plan po mjeri" data-en="A plan built for you">Plan po mjeri</span>
-            </li>
-            <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
-              <span data-sr="Redovne provjere" data-en="Regular check-ins">Redovne provjere</span>
-            </li>
-            <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z"/></svg>
-              <span data-sr="Podrška putem poruka" data-en="Support by message">Podrška putem poruka</span>
-            </li>
-          </ul>
-        </div>
-        <div class="programs-grid" id="programsGrid"></div>
-      </div>
-    </section>
-
-    <section class="section section-how" id="how">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-kicker" data-sr="Kako funkcioniše" data-en="How it works">Kako funkcioniše</div>
-          <h2 class="section-title" data-sr="Od prijave do rezultata" data-en="From sign-up to results">Od prijave do rezultata</h2>
+          <div class="section-kicker" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</div>
+          <h2 class="section-title" data-sr="Online mentorstvo" data-en="Online coaching">Online mentorstvo</h2>
           <div class="divider"></div>
         </div>
-        <div class="how-grid" id="howGrid"></div>
-        <div class="cta-banner fade-up">
-          <div>
-            <h3 data-sr="Spreman da kreneš?" data-en="Ready to start?">Spreman da kreneš?</h3>
-            <p data-sr="Popuni kratak upitnik i javljamo ti se sa sljedećim koracima. Prijava te ni na šta ne obavezuje." data-en="Fill in a short questionnaire and we will get back to you with the next steps. Signing up commits you to nothing.">Popuni kratak upitnik i javljamo ti se sa sljedećim koracima. Prijava te ni na šta ne obavezuje.</p>
-          </div>
-          <button type="button" class="btn btn-primary" data-join="poziv" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
+        <div class="feature-grid" id="mentorshipGrid"></div>
+        <div class="section-cta">
+          <button type="button" class="btn btn-primary btn-lg" data-join="mentorstvo" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
         </div>
       </div>
     </section>
 
-    <section class="section section-contact" id="contact">
+    <!-- Transformacije -->
+    <section class="section" id="transformations">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker" data-sr="Transformacije" data-en="Transformations">Transformacije</div>
+          <h2 class="section-title" data-sr="Pravi ljudi, pravi rezultati" data-en="Real people, real results">Pravi ljudi, pravi rezultati</h2>
+          <div class="divider"></div>
+        </div>
+        <div class="transformations" id="transformationsGrid"></div>
+      </div>
+    </section>
+
+    <!-- 5. Pridruži se -->
+    <section class="section" id="join">
+      <div class="container">
+        <div class="join-band">
+          <h2 data-sr="Pridruži se" data-en="Join us">Pridruži se</h2>
+          <p data-sr="Popuni kratak upitnik o cilju, nivou i vremenu koje imaš. Na osnovu njega pravim tvoj plan." data-en="Fill in a short questionnaire about your goal, your level and the time you have. Your plan is built from it.">Popuni kratak upitnik o cilju, nivou i vremenu koje imaš. Na osnovu njega pravim tvoj plan.</p>
+          <button type="button" class="btn btn-primary btn-lg" data-join="poziv" data-sr="Popuni upitnik" data-en="Fill in the questionnaire">Popuni upitnik</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lokacije -->
+    <section class="section section--ink" id="locations">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker" data-sr="Lokacije" data-en="Locations">Lokacije</div>
+          <h2 class="section-title" data-sr="Gdje treniramo" data-en="Where we train">Gdje treniramo</h2>
+          <div class="divider"></div>
+        </div>
+        <div class="locations" id="locationsGrid"></div>
+      </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section class="section" id="contact">
       <div class="container contact-grid">
         <div class="contact-info">
           <div class="section-kicker" data-sr="Kontakt" data-en="Contact">Kontakt</div>
           <h2 class="section-title" data-sr="Imaš pitanje?" data-en="Got a question?">Imaš pitanje?</h2>
           <div class="divider"></div>
           <div class="contact-item">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
-            <div>
-              <strong data-sr="Gdje" data-en="Where">Gdje</strong>
-              <p data-sr="Online, gdje god da si" data-en="Online, wherever you are">Online, gdje god da si</p>
-            </div>
-          </div>
-          <div class="contact-item">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
             <div>
               <strong data-sr="Telefon" data-en="Phone">Telefon</strong>
-              <!-- PRIVREMENO: broj telefona. -->
-              <a href="tel:+38700000000">+387 XX XXX XXX</a>
+              <a href="#" data-contact="phone"></a>
             </div>
           </div>
           <div class="contact-item">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M22 6l-10 7L2 6"/></svg>
             <div>
               <strong>Email</strong>
-              <!-- PRIVREMENO: email adresa. -->
-              <a href="mailto:upiti@example.com">upiti@example.com</a>
+              <a href="#" data-contact="email"></a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            <div>
+              <strong>Instagram</strong>
+              <a href="#" data-contact="instagram" target="_blank" rel="noopener"></a>
             </div>
           </div>
         </div>
@@ -271,11 +265,10 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="#hero" class="logo" aria-label="AthLean Fast">
-            <span class="logo-mark" aria-hidden="true">AF</span>
-            <span class="logo-text">AthLean <span class="logo-accent">Fast</span></span>
+          <a href="#hero" class="logo">
+            <img src="images/logo.svg" alt="AthLean Fast" width="300" height="70" loading="lazy">
           </a>
-          <p data-sr="Atletska građa koja se brzo postiže. Online treninzi i mentorstvo za sve nivoe." data-en="An athletic build, reached fast. Online training and coaching for every level.">Atletska građa koja se brzo postiže. Online treninzi i mentorstvo za sve nivoe.</p>
+          <p data-sr="Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje." data-en="An athletic, sculpted body. Results, fast. Anyone, any time, anywhere.">Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje.</p>
         </div>
         <div class="footer-links">
           <h4 data-sr="Navigacija" data-en="Navigation">Navigacija</h4>
@@ -283,15 +276,16 @@
             <li><a href="#about" data-sr="O programu" data-en="About">O programu</a></li>
             <li><a href="#results" data-sr="Rezultati" data-en="Results">Rezultati</a></li>
             <li><a href="#levels" data-sr="Nivoi" data-en="Levels">Nivoi</a></li>
-            <li><a href="#programs" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</a></li>
+            <li><a href="#mentorship" data-sr="Mentorstvo" data-en="Coaching">Mentorstvo</a></li>
+            <li><a href="#locations" data-sr="Lokacije" data-en="Locations">Lokacije</a></li>
           </ul>
         </div>
         <div class="footer-links">
           <h4 data-sr="Kontakt" data-en="Contact">Kontakt</h4>
           <ul>
-            <li data-sr="Online, gdje god da si" data-en="Online, wherever you are">Online, gdje god da si</li>
-            <li><a href="tel:+38700000000">+387 XX XXX XXX</a></li>
-            <li><a href="mailto:upiti@example.com">upiti@example.com</a></li>
+            <li><a href="#" data-contact="phone"></a></li>
+            <li><a href="#" data-contact="email"></a></li>
+            <li><a href="#" data-contact="instagram" target="_blank" rel="noopener"></a></li>
           </ul>
         </div>
       </div>
@@ -367,11 +361,10 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <aside class="fab-buttons" aria-label="Brzi kontakt">
-    <!-- PRIVREMENO: WhatsApp i telefon. -->
-    <a href="https://wa.me/38700000000?text=Zdravo%21%20Pi%C5%A1em%20sa%20sajta%2C%20zanima%20me%20online%20mentorstvo." class="fab-btn fab-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <a href="#" data-contact="whatsapp" class="fab-btn fab-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
-    <a href="tel:+38700000000" class="fab-btn fab-phone" aria-label="Pozovi">
+    <a href="#" data-contact="phone-link" class="fab-btn fab-phone" aria-label="Pozovi">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     </a>
   </aside>
@@ -381,16 +374,15 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "AthLean Fast",
-    "description": "Online treninzi i mentorstvo za atletsku građu koja se brzo postiže.",
+    "description": "Sistem treninga sa vlastitim tijelom i kettlebellom. Online mentorstvo: plan ishrane, plan treninga, baza vježbi i podrška trenera 24/7.",
     "url": "https://pecapecaa.github.io/Athlean-fast/",
-    "image": "https://pecapecaa.github.io/Athlean-fast/images/og-share.png",
-    "telephone": "+38700000000",
-    "email": "upiti@example.com"
+    "logo": "https://pecapecaa.github.io/Athlean-fast/images/logo-stacked.svg",
+    "image": "https://pecapecaa.github.io/Athlean-fast/images/og-share.png"
   }
   </script>
 
-  <script src="data.js?v=1"></script>
-  <script src="components.js?v=1"></script>
-  <script src="script.js?v=1"></script>
+  <script src="data.js?v=2"></script>
+  <script src="components.js?v=2"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

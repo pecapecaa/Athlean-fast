@@ -1,10 +1,10 @@
 // ===== Sadržaj sajta =====
-// Jedino mesto gde se menja ono što sajt prikazuje: nivoi, programi
-// mentorstva, transformacije i pitanja u upitniku. Početna stranica, stranica
-// nivoa, stranica programa i sitemap čitaju sve odavde.
+// Jedino mesto gde se menja ono što sajt prikazuje: kontakt, rezultati,
+// nivoi, mentorstvo, transformacije, lokacije i pitanja u upitniku. Početna
+// stranica, stranica nivoa i sitemap čitaju sve odavde.
 //
 // Sve označeno sa PRIVREMENO je primer koji stoji dok ne stigne pravi
-// sadržaj (tekst, snimci, slike, cene).
+// sadržaj (snimci, slike, kontakt, lokacije).
 
 // ===== Adresa sajta =====
 // Menja se na jednom mestu kad se poveže pravi domen. Ista vrednost mora
@@ -12,109 +12,154 @@
 const SITE_ORIGIN = 'https://pecapecaa.github.io/Athlean-fast/';
 const BRAND = 'AthLean Fast';
 
-// ===== Nivoi utreniranosti =====
-// video: putanja do kratkog snimka (npr. 'videos/pocetnik.mp4'). Dok je
+// ===== Kontakt =====
+// PRIVREMENO: broj, mail i Instagram. Upisuje se na sve stranice odavde.
+const CONTACT = {
+  phone: '+387 XX XXX XXX',
+  phoneHref: '+38700000000',
+  whatsapp: '38700000000',
+  email: 'upiti@example.com',
+  instagram: { handle: 'Instagram', url: 'https://www.instagram.com/' }
+};
+
+// ===== Kakve rezultate donosi =====
+// big: veliki natpis na kartici; icon: ikonica umesto natpisa.
+const RESULTS = [
+  {
+    big: '30–60',
+    unit: { sr: 'minuta', en: 'minutes' },
+    title: { sr: 'Treniraj pametno', en: 'Train smart' },
+    text: {
+      sr: 'Ne rasipaj slobodno vrijeme. 30, 45 ili 60 minuta treninga.',
+      en: 'Don\'t waste your free time. 30, 45 or 60 minutes of training.'
+    }
+  },
+  {
+    icon: 'trophy',
+    title: { sr: 'Mentalna snaga', en: 'Mental strength' },
+    text: {
+      sr: 'Budi pobjednik i okruži se pobjednicima.',
+      en: 'Be a winner and surround yourself with winners.'
+    }
+  },
+  {
+    icon: 'bolt',
+    title: { sr: 'Energija', en: 'Energy' },
+    text: {
+      sr: 'Više energije, bolji fokus.',
+      en: 'More energy, sharper focus.'
+    }
+  },
+  {
+    big: '365',
+    unit: { sr: 'fit', en: 'fit' },
+    title: { sr: '365 fit', en: '365 fit' },
+    text: {
+      sr: 'Izgradi mišić, istopi salo, izdefiniši tijelo i budi fit tokom cijele godine.',
+      en: 'Build muscle, melt fat, define your body and stay fit all year round.'
+    }
+  }
+];
+
+// ===== Nivoi =====
+// video: putanja do kratkog snimka (npr. 'videos/pocetni.mp4'). Dok je
 // prazno, prikazuje se poster.
 const LEVELS = [
   {
-    id: 'pocetnik',
+    id: 'pocetni',
     step: 1,
-    name: { sr: 'Početnik', en: 'Beginner' },
+    name: { sr: 'Početni nivo', en: 'Beginner level' },
     subtitle: { sr: 'Za one koji tek kreću', en: 'For those just starting out' },
     desc: {
-      sr: 'Učiš osnovne pokrete pravilno, gradiš naviku i kondiciju bez preopterećenja. Kratki, jasni treninzi koje možeš da odradiš i kod kuće.',
-      en: 'Learn the basic movements properly, build the habit and your conditioning without overload. Short, clear sessions you can do at home too.'
+      sr: 'Učiš osnovne pokrete sa kettlebellom i vlastitim tijelom. Gradiš tehniku, naviku i kondiciju bez preopterećenja.',
+      en: 'Learn the basic movements with a kettlebell and your own body. Build technique, the habit and conditioning without overload.'
     },
-    // PRIVREMENO: parametri primera treninga
-    frequency: { sr: '3× sedmično', en: '3× a week' },
-    duration: '30–40 min',
-    equipment: { sr: 'Bez opreme ili osnovna', en: 'None or basic' },
-    poster: 'images/nivoi/pocetnik.svg',
+    duration: '30 min',
+    equipment: { sr: '1–2 kettlebella', en: '1–2 kettlebells' },
+    poster: 'images/nivoi/pocetni.svg',
     video: ''
   },
   {
     id: 'srednji',
     step: 2,
-    name: { sr: 'Srednje napredni', en: 'Intermediate' },
+    name: { sr: 'Srednji nivo', en: 'Intermediate level' },
     subtitle: { sr: 'Za one koji već treniraju', en: 'For those already training' },
     desc: {
-      sr: 'Podižeš opterećenje i intenzitet, radiš na snazi i obliku tijela. Za one koji treniraju redovno, a žele da se pomjere sa mrtve tačke.',
-      en: 'Raise the load and the intensity, work on strength and shape. For people who train regularly and want to get past a plateau.'
+      sr: 'Veći tempo i složeniji pokreti. Gradiš mišić, topiš salo i podižeš kondiciju.',
+      en: 'A faster pace and more complex movements. Build muscle, melt fat and raise your conditioning.'
     },
-    frequency: { sr: '4× sedmično', en: '4× a week' },
-    duration: '45–60 min',
-    equipment: { sr: 'Teretana ili bučice', en: 'Gym or dumbbells' },
+    duration: '45 min',
+    equipment: { sr: '2 kettlebella', en: '2 kettlebells' },
     poster: 'images/nivoi/srednji.svg',
     video: ''
   },
   {
     id: 'napredni',
     step: 3,
-    name: { sr: 'Napredni', en: 'Advanced' },
+    name: { sr: 'Napredni nivo', en: 'Advanced level' },
     subtitle: { sr: 'Za iskusne koji traže maksimum', en: 'For the experienced, chasing the maximum' },
     desc: {
-      sr: 'Eksplozivnost, snaga i atletska izdržljivost na najvišem nivou. Zahtjevni treninzi za one koji imaju ozbiljnu osnovu iza sebe.',
-      en: 'Explosiveness, strength and athletic endurance at the highest level. Demanding sessions for people with a serious base behind them.'
+      sr: 'Teški kompleksi sa 2 kettlebella i eksplozivni pokreti. Atletski izvajano tijelo na najvišem nivou.',
+      en: 'Heavy double-kettlebell complexes and explosive movements. An athletic, sculpted body at the highest level.'
     },
-    frequency: { sr: '5× sedmično', en: '5× a week' },
-    duration: '60–75 min',
-    equipment: { sr: 'Teretana', en: 'Gym' },
+    duration: '60 min',
+    equipment: { sr: '2 kettlebella', en: '2 kettlebells' },
     poster: 'images/nivoi/napredni.svg',
     video: ''
   }
 ];
 
-// Sadržaj stranice nivoa. Stranica je samo na srpskom.
-// PRIVREMENO: primeri treninga i opisi dok ne stignu pravi.
+// Sadržaj stranice nivoa (samo srpski).
+// PRIVREMENO: primeri treninga dok ne stignu pravi.
 const LEVEL_DETAILS = {
-  pocetnik: {
-    lead: 'Prvi korak je najvažniji. Na ovom nivou učiš pravilnu tehniku osnovnih pokreta i gradiš kondiciju korak po korak, bez preopterećenja i bez povreda.',
+  pocetni: {
+    lead: 'Prvi korak je najvažniji. Učiš pravilnu tehniku osnovnih pokreta sa kettlebellom i vlastitim tijelom, korak po korak, bez preopterećenja i bez povreda.',
     workout: [
-      { name: 'Zagrijavanje', dose: '5 min', note: 'Lagani kardio i mobilnost zglobova' },
-      { name: 'Čučanj sa sopstvenom težinom', dose: '3 × 12', note: 'Leđa prava, koljena prate prste' },
+      { name: 'Zagrijavanje', dose: '5 min', note: 'Mobilnost zglobova i lagani kardio' },
+      { name: 'Goblet čučanj', dose: '3 × 12', note: 'Kettlebell uz grudi, leđa prava' },
+      { name: 'Kettlebell swing', dose: '3 × 15', note: 'Snaga dolazi iz kukova, ne iz ruku' },
       { name: 'Sklekovi', dose: '3 × 8–10', note: 'Na koljenima, dok ne ojača' },
+      { name: 'Veslanje kettlebellom', dose: '3 × 10 po ruci', note: 'Lopatica ide ka kičmi' },
       { name: 'Iskorak u mjestu', dose: '3 × 10 po nozi', note: 'Kontrolisano, bez žurbe' },
-      { name: 'Veslanje sa trakom ili bučicom', dose: '3 × 12', note: 'Lopatice skupljene na vrhu pokreta' },
-      { name: 'Plank', dose: '3 × 30 s', note: 'Stomak i zadnjica zategnuti' },
-      { name: 'Istezanje', dose: '5 min', note: 'Cijelo tijelo, polako' }
+      { name: 'Plank', dose: '3 × 30 s', note: 'Stomak i zadnjica zategnuti' }
     ],
     forYou: [
       'Tek počinješ da treniraš ili se vraćaš poslije duže pauze',
-      'Želiš da naučiš pravilnu tehniku prije nego što podigneš intenzitet',
-      'Imaš ograničeno vrijeme i treba ti jasan, kratak plan'
+      'Želiš da naučiš pravilnu tehniku prije nego što podigneš tempo',
+      'Imaš malo vremena i treba ti jasan, kratak trening'
     ],
-    notForYou: 'Ako redovno treniraš duže od godinu dana i osnovne pokrete radiš bez problema, srednji nivo će ti dati više.',
+    notForYou: 'Ako redovno treniraš i osnovne pokrete sa kettlebellom radiš bez problema, srednji nivo će ti dati više.',
     focus: { snaga: 2, kondicija: 3, tehnika: 5, mobilnost: 4, intenzitet: 2 }
   },
   srednji: {
-    lead: 'Osnova je tu, sada gradimo snagu i oblik. Opterećenje raste iz sedmice u sedmicu, a trening postaje raznovrsniji i zahtjevniji.',
+    lead: 'Osnova je tu, sada gradimo mišić i podižemo tempo. Pokreti postaju složeniji, a trening zahtjevniji iz sedmice u sedmicu.',
     workout: [
-      { name: 'Zagrijavanje i aktivacija', dose: '8 min', note: 'Kardio, mobilnost, aktivacija kukova i ramena' },
-      { name: 'Čučanj sa opterećenjem', dose: '4 × 8', note: 'Šipka ili bučice' },
-      { name: 'Potisak sa klupe', dose: '4 × 8', note: 'Ili sklekovi sa opterećenjem' },
-      { name: 'Rumunsko mrtvo dizanje', dose: '3 × 10', note: 'Fokus na zadnju ložu' },
-      { name: 'Zgibovi', dose: '3 × 6–8', note: 'Uz pomoć trake po potrebi' },
-      { name: 'Kružni finiš', dose: '3 kruga × 40 s', note: 'Burpees, penjači, skokovi' },
-      { name: 'Istezanje', dose: '5 min', note: 'Fokus na kukove i ramena' }
+      { name: 'Zagrijavanje i aktivacija', dose: '8 min', note: 'Mobilnost kukova i ramena' },
+      { name: 'Dvoručni swing', dose: '4 × 20', note: 'Eksplozivno, pa kontrolisano nazad' },
+      { name: 'Clean & press', dose: '4 × 8 po ruci', note: 'Jedan kettlebell, stabilan trup' },
+      { name: 'Prednji čučanj sa 2 kettlebella', dose: '4 × 10', note: 'Laktovi ispod kettlebella' },
+      { name: 'Renegade veslanje', dose: '3 × 8 po ruci', note: 'Iz pozicije skleka, kukovi mirni' },
+      { name: 'Farmer\'s walk', dose: '3 × 40 m', note: '2 kettlebella, uspravno držanje' },
+      { name: 'Kružni finiš', dose: '3 kruga × 40 s', note: 'Burpees, penjači, skokovi' }
     ],
     forYou: [
       'Treniraš redovno, ali si zapeo na istom mjestu',
-      'Osnovne pokrete radiš pravilno i spreman si za veće opterećenje',
+      'Osnovne pokrete radiš pravilno i spreman si za veći tempo',
       'Želiš vidljivije rezultate u snazi i izgledu'
     ],
     notForYou: 'Ako tek počinješ, kreni od početnog nivoa: najbrži napredak dolazi iz dobre osnove.',
     focus: { snaga: 4, kondicija: 4, tehnika: 3, mobilnost: 3, intenzitet: 4 }
   },
   napredni: {
-    lead: 'Trening kao kod sportista. Teška opterećenja, eksplozivni pokreti i metabolički intervali za atletsku građu koja se vidi i osjeti.',
+    lead: 'Trening kao kod sportista. Teški kompleksi sa 2 kettlebella, eksplozivni pokreti i metabolički finiš za atletski izvajano tijelo.',
     workout: [
       { name: 'Zagrijavanje i aktivacija', dose: '10 min', note: 'Dinamička mobilnost i aktivacija' },
-      { name: 'Čučanj', dose: '5 × 5', note: 'Teško, sa punom kontrolom' },
-      { name: 'Mrtvo dizanje', dose: '4 × 5', note: 'Neutralna leđa kroz cijeli pokret' },
-      { name: 'Potisak iznad glave', dose: '4 × 6', note: 'Stojeći, stabilan trup' },
-      { name: 'Zgibovi sa opterećenjem', dose: '4 × 6', note: 'Puna amplituda' },
-      { name: 'Skokovi na kutiju', dose: '4 × 5', note: 'Eksplozivno gore, mekano dolje' },
-      { name: 'Sprint intervali', dose: '6 × 20 s', note: 'Pauza 40 s između' }
+      { name: 'Dupli clean & jerk', dose: '5 × 5', note: '2 kettlebella, eksplozivno' },
+      { name: 'Dupli prednji čučanj', dose: '5 × 6', note: 'Puna dubina, puna kontrola' },
+      { name: 'Snatch', dose: '4 × 8 po ruci', note: 'Kettlebell mekano preko šake' },
+      { name: 'Pistol čučanj', dose: '4 × 5 po nozi', note: 'Kettlebell kao kontrateg' },
+      { name: 'Veslanje sa 2 kettlebella', dose: '4 × 8', note: 'Pretklon, neutralna leđa' },
+      { name: 'Metabolički finiš', dose: '10 min', note: 'Svakog minuta 10 swingova i 5 burpeesa' }
     ],
     forYou: [
       'Imaš bar godinu ili dvije ozbiljnog treninga iza sebe',
@@ -127,116 +172,26 @@ const LEVEL_DETAILS = {
 };
 
 // ===== Online mentorstvo =====
-// PRIVREMENO: nazivi, trajanje i sadržaj programa.
-// price: iznos u eurima (broj). null = cena se ne prikazuje dok se ne odredi.
-const PROGRAMS = [
+const MENTORSHIP = [
   {
-    id: 'start',
-    name: { sr: 'Start', en: 'Start' },
-    duration: { sr: '1 mjesec', en: '1 month' },
-    badge: { sr: 'Za početak', en: 'Start here' },
-    desc: {
-      sr: 'Mjesec dana da upoznaš način rada, dobiješ plan napravljen za tebe i vidiš prve rezultate.',
-      en: 'One month to get to know the method, get a plan built for you and see the first results.'
-    },
-    includes: {
-      sr: ['Plan treninga prilagođen tebi', 'Osnovne smjernice za ishranu', 'Sedmična provjera napretka'],
-      en: ['A training plan built for you', 'Basic nutrition guidelines', 'Weekly progress check']
-    },
-    price: null,
-    image: 'images/programi/start.svg'
-  },
-  {
-    id: 'transformacija',
-    name: { sr: 'Transformacija', en: 'Transformation' },
-    duration: { sr: '3 mjeseca', en: '3 months' },
-    badge: { sr: 'Najpopularnije', en: 'Most popular' },
-    featured: true,
-    desc: {
-      sr: 'Dovoljno vremena za pravu promjenu. Trening i ishrana se prilagođavaju kako napreduješ, uz redovne provjere.',
-      en: 'Enough time for real change. Training and nutrition adapt as you progress, with regular check-ins.'
-    },
-    includes: {
-      sr: ['Plan treninga koji raste sa tobom', 'Plan ishrane prilagođen cilju', 'Sedmične provjere i korekcije', 'Analiza tehnike kroz video'],
-      en: ['A training plan that grows with you', 'A nutrition plan built for your goal', 'Weekly check-ins and adjustments', 'Technique review on video']
-    },
-    price: null,
-    image: 'images/programi/transformacija.svg'
-  },
-  {
-    id: 'elite',
-    name: { sr: 'Elite', en: 'Elite' },
-    duration: { sr: '6 mjeseci', en: '6 months' },
-    badge: { sr: 'Maksimalni rezultati', en: 'Maximum results' },
-    desc: {
-      sr: 'Pola godine rada jedan na jedan. Za one koji žele potpunu promjenu i atletsku formu koja ostaje.',
-      en: 'Six months of one-to-one work. For people who want a complete change and athletic shape that lasts.'
-    },
-    includes: {
-      sr: ['Sve iz programa Transformacija', 'Video poziv jednom mjesečno', 'Prioritetna podrška', 'Plan za održavanje forme poslije programa'],
-      en: ['Everything in Transformation', 'A video call once a month', 'Priority support', 'A maintenance plan after the programme']
-    },
-    price: null,
-    image: 'images/programi/elite.svg'
-  }
-];
-
-// Sadržaj stranice programa (samo srpski).
-const PROGRAM_DETAILS = {
-  start: {
-    promise: 'Mjesec dana da vidiš kako izgleda trening sa planom napravljenim samo za tebe, i da osjetiš prve promjene.',
-    forYou: [
-      'Želiš da probaš online mentorstvo prije dužeg angažmana',
-      'Treba ti jasan plan i neko ko će ga prilagoditi tebi',
-      'Želiš da kreneš odmah, bez velikog ulaganja'
-    ],
-    notForYou: 'Ako ciljaš veliku promjenu u izgledu i formi, mjesec dana je kratko. Program Transformacija ti daje dovoljno vremena.'
-  },
-  transformacija: {
-    promise: 'Tri mjeseca, jedan cilj: vidljiva promjena u snazi, kondiciji i izgledu, uz plan koji se mijenja kako ti napreduješ.',
-    forYou: [
-      'Želiš vidljive rezultate, a ne samo bolji osjećaj',
-      'Treba ti neko ko te drži odgovornim iz sedmice u sedmicu',
-      'Spreman si da trening i ishranu shvatiš ozbiljno'
-    ],
-    notForYou: 'Ako tražiš brzo rješenje bez truda, ovo nije to. Rezultati dolaze iz rada, a mi ga činimo pametnijim.'
-  },
-  elite: {
-    promise: 'Šest mjeseci rada jedan na jedan, za atletsku formu koja ne nestaje kada program završi.',
-    forYou: [
-      'Želiš potpunu promjenu tijela i navika',
-      'Cijeniš direktan kontakt i redovne razgovore sa trenerom',
-      'Želiš da naučiš da sam održavaš formu i poslije programa'
-    ],
-    notForYou: 'Ako još nisi siguran da je online mentorstvo za tebe, kreni sa programom Start pa nastavi.'
-  }
-};
-
-// Koraci saradnje: sekcija "Kako funkcioniše" na početnoj i stranice programa.
-const HOW_STEPS = [
-  {
-    icon: 'form',
-    title: { sr: 'Prijava i upitnik', en: 'Sign-up and questionnaire' },
-    text: {
-      sr: 'Izabereš program i popuniš kratak upitnik o cilju, iskustvu i vremenu koje imaš.',
-      en: 'Choose a programme and fill in a short questionnaire about your goal, experience and time.'
-    }
+    icon: 'nutrition',
+    title: { sr: 'Plan ishrane', en: 'Nutrition plan' },
+    text: { sr: 'Ishrana prilagođena tvom cilju, bez gladovanja.', en: 'Nutrition built around your goal, without starving.' }
   },
   {
     icon: 'plan',
-    title: { sr: 'Tvoj plan', en: 'Your plan' },
-    text: {
-      sr: 'Na osnovu upitnika dobijaš plan treninga i ishrane napravljen samo za tebe.',
-      en: 'Based on the questionnaire you get a training and nutrition plan made just for you.'
-    }
+    title: { sr: 'Plan treninga', en: 'Training plan' },
+    text: { sr: 'Treninzi sa kettlebellom i vlastitim tijelom, složeni za tebe.', en: 'Kettlebell and bodyweight sessions, put together for you.' }
   },
   {
-    icon: 'track',
-    title: { sr: 'Praćenje i korekcije', en: 'Tracking and adjustments' },
-    text: {
-      sr: 'Redovno pratimo napredak i prilagođavamo plan, dok ne dođeš do cilja.',
-      en: 'We track your progress and adjust the plan regularly until you reach your goal.'
-    }
+    icon: 'library',
+    title: { sr: 'Baza vježbi', en: 'Exercise library' },
+    text: { sr: 'Svaka vježba objašnjena kroz video, da tehnika bude ispravna.', en: 'Every exercise explained on video, so your technique is right.' }
+  },
+  {
+    big: '24/7',
+    title: { sr: 'Podrška trenera', en: 'Coach support' },
+    text: { sr: 'Trener je tu za svako pitanje, kad god ti zatreba.', en: 'Your coach is there for every question, whenever you need it.' }
   }
 ];
 
@@ -263,28 +218,41 @@ const TRANSFORMATIONS = [
   }
 ];
 
+// ===== Lokacije =====
+// PRIVREMENO: prave lokacije treninga.
+const LOCATIONS = [
+  {
+    name: { sr: 'Lokacija 1', en: 'Location 1' },
+    place: { sr: 'Grad, adresa', en: 'City, address' },
+    note: { sr: 'Treninzi uživo', en: 'In-person training' }
+  },
+  {
+    name: { sr: 'Lokacija 2', en: 'Location 2' },
+    place: { sr: 'Grad, adresa', en: 'City, address' },
+    note: { sr: 'Treninzi uživo', en: 'In-person training' }
+  },
+  {
+    name: { sr: 'Online', en: 'Online' },
+    place: { sr: 'Bilo gdje', en: 'Anywhere' },
+    note: { sr: 'Treniraš gdje ti odgovara', en: 'Train wherever suits you' }
+  }
+];
+
 // ===== Upitnik za prijavu =====
 // Drugi korak prijave se crta iz ove liste, pa se pitanja menjaju samo
 // ovde. type: 'choice' (jedan odgovor) ili 'text' (slobodan unos).
-// Pitanje 'program' i 'nivo' dobijaju odgovore iz PROGRAMS i LEVELS.
+// Pitanje 'nivo' dobija odgovore iz LEVELS.
 const JOIN_QUESTIONS = [
-  {
-    id: 'program',
-    type: 'choice',
-    required: true,
-    label: { sr: 'Koji program te zanima?', en: 'Which programme interests you?' },
-    options: 'programs'
-  },
   {
     id: 'cilj',
     type: 'choice',
     required: true,
     label: { sr: 'Koji ti je glavni cilj?', en: 'What is your main goal?' },
     options: [
-      { value: 'masnoca', label: { sr: 'Skidanje masnoće', en: 'Fat loss' } },
-      { value: 'misici', label: { sr: 'Mišićna masa', en: 'Muscle gain' } },
-      { value: 'atletska', label: { sr: 'Atletska građa', en: 'Athletic build' } },
-      { value: 'kondicija', label: { sr: 'Kondicija i snaga', en: 'Conditioning and strength' } }
+      { value: 'misic', label: { sr: 'Izgraditi mišić', en: 'Build muscle' } },
+      { value: 'salo', label: { sr: 'Istopiti salo', en: 'Melt fat' } },
+      { value: 'definicija', label: { sr: 'Izdefinisati tijelo', en: 'Define my body' } },
+      { value: 'energija', label: { sr: 'Više energije i kondicije', en: 'More energy and conditioning' } }
     ]
   },
   {
@@ -295,25 +263,36 @@ const JOIN_QUESTIONS = [
     options: 'levels'
   },
   {
-    id: 'dani',
+    id: 'vrijeme',
     type: 'choice',
     required: true,
-    label: { sr: 'Koliko dana sedmično možeš da treniraš?', en: 'How many days a week can you train?' },
+    label: { sr: 'Koliko vremena imaš za trening?', en: 'How much time do you have per session?' },
     options: [
-      { value: '2-3', label: { sr: '2–3 dana', en: '2–3 days' } },
-      { value: '4', label: { sr: '4 dana', en: '4 days' } },
-      { value: '5+', label: { sr: '5 i više', en: '5 or more' } }
+      { value: '30', label: { sr: '30 minuta', en: '30 minutes' } },
+      { value: '45', label: { sr: '45 minuta', en: '45 minutes' } },
+      { value: '60', label: { sr: '60 minuta', en: '60 minutes' } }
+    ]
+  },
+  {
+    id: 'kettlebell',
+    type: 'choice',
+    required: true,
+    label: { sr: 'Imaš li kettlebell?', en: 'Do you have kettlebells?' },
+    options: [
+      { value: 'dva', label: { sr: 'Da, dva', en: 'Yes, two' } },
+      { value: 'jedan', label: { sr: 'Da, jedan', en: 'Yes, one' } },
+      { value: 'nema', label: { sr: 'Nemam još', en: 'Not yet' } }
     ]
   },
   {
     id: 'mjesto',
     type: 'choice',
     required: true,
-    label: { sr: 'Gdje treniraš?', en: 'Where do you train?' },
+    label: { sr: 'Gdje bi trenirao?', en: 'Where would you train?' },
     options: [
-      { value: 'teretana', label: { sr: 'Teretana', en: 'Gym' } },
       { value: 'kuca', label: { sr: 'Kod kuće', en: 'At home' } },
       { value: 'napolju', label: { sr: 'Napolju', en: 'Outdoors' } },
+      { value: 'teretana', label: { sr: 'Teretana', en: 'Gym' } },
       { value: 'kombinovano', label: { sr: 'Kombinovano', en: 'A mix' } }
     ]
   },
@@ -327,16 +306,10 @@ const JOIN_QUESTIONS = [
 ];
 
 // Odgovor "još ne znam" za pitanja čiji odgovori dolaze iz podataka.
-const UNSURE_OPTION = { value: 'ne-znam', label: { sr: 'Još ne znam', en: 'Not sure yet' } };
+const UNSURE_OPTION = { value: 'ne-znam', label: { sr: 'Ne znam', en: 'Not sure' } };
 
 // Odgovori za pitanje, sa rešenim izvorima iz podataka.
 function questionOptions(q) {
-  if (q.options === 'programs') {
-    return PROGRAMS.map(p => ({
-      value: p.id,
-      label: { sr: p.name.sr + ' · ' + p.duration.sr, en: p.name.en + ' · ' + p.duration.en }
-    })).concat(UNSURE_OPTION);
-  }
   if (q.options === 'levels') {
     return LEVELS.map(l => ({ value: l.id, label: l.name })).concat(UNSURE_OPTION);
   }
@@ -347,30 +320,19 @@ function questionOptions(q) {
 // Jedan oblik adrese za svaku stranicu, da se linkovi nikad ne razilaze.
 // Relativni su, pa sajt radi i na domenu i u podfolderu (GitHub Pages).
 const LEVEL_URL_PARAM = 'n';
-const PROGRAM_URL_PARAM = 'p';
 
 function levelHref(id) {
   return 'nivo?' + LEVEL_URL_PARAM + '=' + encodeURIComponent(id);
 }
 
-function programHref(id) {
-  return 'program?' + PROGRAM_URL_PARAM + '=' + encodeURIComponent(id);
-}
-
-// Prijava se uvek otvara na početnoj stranici; podstranice šalju ovamo sa
-// izabranim programom i/ili nivoom.
+// Prijava se uvek otvara na početnoj stranici; stranica nivoa šalje ovamo
+// sa izabranim nivoom.
 function joinHref(opts) {
   const params = new URLSearchParams();
-  params.set('prijava', (opts && opts.program) || '1');
+  params.set('prijava', '1');
   if (opts && opts.level) params.set('nivo', opts.level);
   if (opts && opts.source) params.set('izvor', opts.source);
   return './?' + params.toString();
-}
-
-// ===== Cena =====
-function formatPrice(program) {
-  if (typeof program.price !== 'number') return '';
-  return program.price.toLocaleString('de-DE') + ' €';
 }
 
 // ===== Metapodaci za pretragu =====

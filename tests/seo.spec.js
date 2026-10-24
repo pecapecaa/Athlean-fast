@@ -1,8 +1,8 @@
 // Search-metadata tests.
 //
-// The level and programme pages are one HTML file each, told apart by a
-// query parameter, so their canonical link and structured data are built at
-// render time — invisible to any check that only reads the HTML file.
+// The level pages are one HTML file, told apart by a query parameter, so
+// their canonical link and structured data are built at render time —
+// invisible to any check that only reads the HTML file.
 //
 // Run:  ./tests/run.sh
 
@@ -33,12 +33,12 @@ const jsonLd = page => page.evaluate(() =>
 function content() {
   const src = fs.readFileSync(path.join(__dirname, '..', 'data.js'), 'utf8');
   const load = new Function('window', 'document', 'localStorage', 'console',
-    src + '\n;return { SITE_ORIGIN, LEVELS, PROGRAMS, levelHref, programHref };');
+    src + '\n;return { SITE_ORIGIN, LEVELS, levelHref };');
   return load({}, {}, null, { warn() {} });
 }
 
 async function run() {
-  const { SITE_ORIGIN, LEVELS, PROGRAMS, levelHref, programHref } = content();
+  const { SITE_ORIGIN, LEVELS, levelHref } = content();
   const browser = await chromium.launch({ args: ['--no-sandbox'] });
   const page = await browser.newPage();
 
@@ -72,38 +72,14 @@ async function run() {
     }
   }
 
-  // ---- 3. Every programme page too — and claims no price it does not have.
+  // ---- 3. The sitemap lists every page, and nothing that does not exist.
   {
-    console.log('\n3. Programme pages');
-    for (const p of PROGRAMS) {
-      await page.goto(`${BASE}/${programHref(p.id)}`);
-      await page.waitForTimeout(120);
-      const c = await canonical(page);
-      const service = (await jsonLd(page)).find(x => x['@type'] === 'Service');
-      const ok = c.count === 1 && c.href === SITE_ORIGIN + programHref(p.id)
-        && service && service.name.includes(p.name.sr)
-        && service.url === SITE_ORIGIN + programHref(p.id);
-      check(p.name.sr, ok, `canonical=${JSON.stringify(c)} service=${JSON.stringify(service)}`);
-      const hasOffer = !!(service && service.offers);
-      check(`${p.name.sr}: an offer only when a price is set`,
-        hasOffer === (typeof p.price === 'number'));
-      if (hasOffer) {
-        const shown = await page.evaluate(() => document.body.innerText);
-        check(`${p.name.sr}: the price on the page and in the data agree`,
-          service.offers.price === p.price && shown.includes(String(p.price)));
-      }
-    }
-  }
-
-  // ---- 4. The sitemap lists every page, and nothing that does not exist.
-  {
-    console.log('\n4. sitemap.xml and robots.txt');
+    console.log('\n3. sitemap.xml and robots.txt');
     const xml = fs.readFileSync(path.join(__dirname, '..', 'sitemap.xml'), 'utf8');
     const locs = (xml.match(/<loc>(.*?)<\/loc>/g) || []).map(m => m.replace(/<\/?loc>/g, ''));
     const expected = [
       SITE_ORIGIN,
       ...LEVELS.map(l => SITE_ORIGIN + levelHref(l.id)),
-      ...PROGRAMS.map(p => SITE_ORIGIN + programHref(p.id)),
     ];
     check(`lists all ${expected.length} pages`, locs.length === expected.length, `found ${locs.length}`);
     const missing = expected.filter(u => !locs.includes(u));
@@ -114,24 +90,19 @@ async function run() {
     check('robots.txt points at the sitemap', robots.includes('Sitemap: ' + SITE_ORIGIN + 'sitemap.xml'));
   }
 
-  // ---- 5. An unknown id is not advertised as a real page.
+  // ---- 4. An unknown id is not advertised as a real page.
   {
-    console.log('\n5. Unknown ids');
+    console.log('\n4. Unknown ids');
     await page.goto(`${BASE}/nivo?n=ne-postoji`);
     await page.waitForTimeout(150);
-    check('level: no ExercisePlan', !(await jsonLd(page)).some(x => x['@type'] === 'ExercisePlan'));
-    check('level: the not-found block shows',
+    check('no ExercisePlan', !(await jsonLd(page)).some(x => x['@type'] === 'ExercisePlan'));
+    check('the not-found block shows',
       await page.evaluate(() => !document.getElementById('levelNotFound').hidden));
-    await page.goto(`${BASE}/program?p=ne-postoji`);
-    await page.waitForTimeout(150);
-    check('programme: no Service', !(await jsonLd(page)).some(x => x['@type'] === 'Service'));
-    check('programme: the not-found block shows',
-      await page.evaluate(() => !document.getElementById('programNotFound').hidden));
   }
 
-  // ---- 6. The .html form still works and lands on the published address.
+  // ---- 5. The .html form still works and lands on the published address.
   {
-    console.log('\n6. Old .html links');
+    console.log('\n5. Old .html links');
     const l = LEVELS[0];
     const res = await page.goto(`${BASE}/nivo.html?n=${l.id}`);
     await page.waitForTimeout(120);
