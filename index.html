@@ -32,10 +32,10 @@
   <!-- Ne blokira prvi prikaz: ako Google Fonts kasni, stranica se crta
        rezervnim fontom. -->
   <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
-    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Lato:wght@400;700&display=swap">
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Lato:wght@400;700&display=swap">
   <noscript>
     <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Lato:wght@400;700&display=swap">
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Lato:wght@400;700&display=swap">
   </noscript>
   <link rel="stylesheet" href="styles.css?v=6">
 
@@ -83,7 +83,7 @@
       <div class="hero-bg" id="heroBg"></div>
       <div class="hero-overlay"></div>
       <div class="container hero-content">
-        <img class="hero-emblem" src="images/logo-mark.svg" alt="" width="750" height="530">
+        <span class="hero-emblem"><img src="images/logo-mark.svg" alt="" width="750" height="530"></span>
         <h1 class="hero-title">
           <span data-sr="Atletski izvajano tijelo." data-en="An athletic, sculpted body.">Atletski izvajano tijelo.</span>
           <span class="hero-title-accent" data-sr="Brzo do rezultata." data-en="Results, fast.">Brzo do rezultata.</span>
@@ -101,6 +101,26 @@
       </div>
       <a href="#about" class="scroll-indicator" aria-label="Nastavi niže"><span class="scroll-arrow"></span></a>
     </section>
+
+    <!-- Pokretna traka: ukras, isti tekst je i drugde na stranici. -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span data-sr="Atletski izvajano tijelo" data-en="Athletic, sculpted body">Atletski izvajano tijelo</span>
+          <img src="images/logo-mark.svg" alt="" width="750" height="530">
+          <span class="marquee-outline" data-sr="Brzo do rezultata" data-en="Results, fast">Brzo do rezultata</span>
+          <img src="images/logo-mark.svg" alt="" width="750" height="530">
+          <span data-sr="Može svako" data-en="Anyone can">Može svako</span>
+          <img src="images/logo-mark.svg" alt="" width="750" height="530">
+          <span class="marquee-outline" data-sr="Bilo kada" data-en="Any time">Bilo kada</span>
+          <img src="images/logo-mark.svg" alt="" width="750" height="530">
+          <span data-sr="Bilo gdje" data-en="Anywhere">Bilo gdje</span>
+          <img src="images/logo-mark.svg" alt="" width="750" height="530">
+          <span class="marquee-outline" data-sr="30 minuta" data-en="30 minutes">30 minuta</span>
+          <img src="images/logo-mark.svg" alt="" width="750" height="530">
+        </div>
+      </div>
+    </div>
 
     <!-- 1. Šta je AthLean Fast -->
     <section class="section" id="about">

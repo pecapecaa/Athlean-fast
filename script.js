@@ -719,7 +719,17 @@ function initHeroVideo() {
 }
 
 // ===== Init =====
+// The band moves by half its width, so it carries its words twice; the
+// copy is made here to keep the HTML to one list.
+function fillMarquee() {
+  document.querySelectorAll('.marquee-track').forEach(track => {
+    const group = track.querySelector('.marquee-group');
+    if (group && track.children.length === 1) track.appendChild(group.cloneNode(true));
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  fillMarquee();
   const progress = document.createElement('div');
   progress.className = 'scroll-progress';
   document.body.appendChild(progress);
