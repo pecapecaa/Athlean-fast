@@ -26,11 +26,9 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 - **Mail na koji stižu prijave:** `RECIPIENT_EMAIL` u `script.js`. FormSubmit
   pri prvoj prijavi šalje jednokratni link za potvrdu na tu adresu.
 - **Tekst „Šta je AthLean Fast":** `index.html`.
-- **Boje i fontovi:** promenljive na vrhu `styles.css` (`:root`).
-  Kraljevsko plava (`--royal`) naglašava najvažnije (dugmad, istaknut tekst),
-  zlatna (`--gold`) služi za tanke akcente. Sekcije se smenjuju svetle
-  (`.section-light`) i tamne (`.section-dark`), sa kosim ivicama između.
-  Naslovi su Oswald (tanji rezovi, 400–500), tekst Lato.
+- **Boje i fontovi:** promenljive na vrhu `styles.css` (`:root`). Crna je
+  osnova, plava (`--blue`) naglašava najvažnije, a zlatna (`--gold`) i bela
+  služe za akcente.
 - **Logo:** vektorski, u `images/`:
   - `logo.svg` je horizontalni (meni i futer)
   - `logo-stacked.svg` je uspravni
