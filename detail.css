@@ -2,7 +2,7 @@
    Loaded after styles.css on nivo.html; it reuses every token and shared
    component (buttons, cards, footer) and adds only what the page needs. */
 
-.page-detail { background: var(--black); }
+.page-detail { background: var(--surface); }
 
 /* ===== Chrome ===== */
 .wp-progress {
@@ -17,7 +17,7 @@
   display: block;
   width: 0;
   height: 100%;
-  background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+  background: var(--gold);
 }
 
 /* Section index down the right edge; labels appear on hover only. */
@@ -49,7 +49,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(13, 15, 18, 0.25);
   transition: background 0.25s, transform 0.25s;
 }
 
@@ -57,7 +57,7 @@
   position: absolute;
   right: 22px;
   font-style: normal;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -69,7 +69,9 @@
 }
 
 .wp-rail a:hover em { opacity: 1; transform: none; }
-.wp-rail a.is-active i { background: var(--blue-bright); transform: scale(1.4); }
+.wp-rail a.is-active i { background: var(--royal); transform: scale(1.4); }
+.wp-rail--dark i { background: rgba(255, 255, 255, 0.3); }
+.wp-rail--dark em { color: var(--on-dark); }
 
 /* ===== Hero ===== */
 .wp-hero {
@@ -77,9 +79,10 @@
   overflow: hidden;
   padding: calc(var(--nav-h) + 40px) 0 90px;
   background:
-    radial-gradient(ellipse 60% 60% at 75% 30%, rgba(47, 85, 255, 0.28) 0%, transparent 70%),
-    repeating-linear-gradient(-35deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 28px),
-    linear-gradient(180deg, #070a1c 0%, var(--black) 80%);
+    radial-gradient(ellipse at 78% 30%, rgba(42, 75, 215, 0.38) 0%, transparent 55%),
+    repeating-linear-gradient(-35deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 26px),
+    linear-gradient(160deg, #0d1330 0%, var(--dark) 70%);
+  color: var(--on-dark);
 }
 
 .wp-crumbs {
@@ -87,15 +90,15 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 36px;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--on-dark-muted);
 }
 
 .wp-crumbs a { transition: color 0.2s; }
-.wp-crumbs a:hover { color: var(--blue-bright); }
+.wp-crumbs a:hover { color: var(--gold-light); }
 .wp-crumbs-current { color: var(--gold); }
 
 .wp-hero-grid {
@@ -114,57 +117,68 @@
   max-height: 74vh;
   border-radius: var(--radius);
   overflow: hidden;
-  background: var(--card);
-  border: 1px solid var(--line-strong);
-  box-shadow: 0 30px 70px rgba(47, 85, 255, 0.2);
+  background: var(--dark-2);
+  border: 1px solid var(--line-dark);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
 
 .wp-stage img,
-.wp-stage video { width: 100%; height: 100%; object-fit: cover; }
+.wp-stage video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wp-stage::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 40%;
+  height: 3px;
+  background: var(--gold);
+  pointer-events: none;
+}
 
 .wp-type-mark {
   display: inline-block;
   margin-bottom: 18px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-family: var(--font-display);
-  font-size: 0.66rem;
-  font-weight: 800;
-  letter-spacing: 2px;
+  padding: 5px 12px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  background: var(--blue);
+  background: var(--royal);
   color: var(--white);
 }
 
 .wp-eyebrow {
-  font-family: var(--font-display);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .wp-title {
-  font-size: clamp(2.4rem, 5.6vw, 4.4rem);
-  font-weight: 900;
-  line-height: 0.98;
-  letter-spacing: -1px;
+  font-size: clamp(2.8rem, 6.4vw, 5.2rem);
+  font-weight: 400;
+  line-height: 0.95;
+  color: var(--white);
   margin-bottom: 14px;
 }
 
 .wp-subtitle {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--blue-bright);
+  color: var(--on-dark);
   margin-bottom: 18px;
 }
 
 .wp-lead {
-  font-size: 1.06rem;
+  font-size: 1.08rem;
   line-height: 1.75;
-  color: var(--text-muted);
+  color: var(--on-dark-muted);
   max-width: 54ch;
   margin-bottom: 28px;
 }
@@ -172,30 +186,32 @@
 .wp-facts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
   margin-bottom: 30px;
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
 }
 
 .wp-fact {
-  padding: 16px 18px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 14px;
+  padding: 16px 16px 16px 0;
+  border-right: 1px solid var(--line-dark);
 }
 
+.wp-fact + .wp-fact { padding-left: 16px; }
+.wp-fact:last-child { border-right: none; }
+
 .wp-fact dt {
-  font-size: 0.64rem;
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--on-dark-muted);
   margin-bottom: 4px;
 }
 
 .wp-fact dd {
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: 1.15rem;
+  font-weight: 400;
   color: var(--white);
 }
 
@@ -203,7 +219,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
+  gap: 16px 22px;
   margin-bottom: 26px;
 }
 
@@ -220,7 +236,7 @@
   gap: 8px;
   font-size: 0.86rem;
   font-weight: 700;
-  color: var(--text);
+  color: var(--on-dark);
 }
 
 .wp-assurances svg { color: var(--gold); flex-shrink: 0; }
@@ -246,7 +262,10 @@
 
 /* ===== Sections ===== */
 .wp-section { padding: 100px 0; }
-.wp-section--ink { background: var(--ink); }
+.wp-section--alt { background: var(--surface-2); }
+.wp-section--dark { background: var(--dark); color: var(--on-dark); }
+.wp-section--dark .section-title { color: var(--white); }
+.wp-section--dark .section-kicker { color: var(--gold); }
 
 .wp-note {
   max-width: 52ch;
@@ -255,6 +274,8 @@
   font-size: 0.9rem;
   color: var(--text-muted);
 }
+
+.wp-section--dark .wp-note { color: var(--on-dark-muted); }
 
 /* Workout: numbered moves with their dose. */
 .wp-steps {
@@ -271,26 +292,26 @@
   align-items: center;
   gap: 18px;
   padding: 18px 22px;
-  background: var(--card);
+  background: var(--white);
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 12px;
 }
 
 .wp-step-no {
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--blue-bright);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--royal-ink);
   min-width: 2ch;
 }
 
 .wp-step-name {
   display: block;
   font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 1.15rem;
+  font-weight: 400;
   text-transform: uppercase;
-  color: var(--white);
+  letter-spacing: 0.4px;
 }
 
 .wp-step-note {
@@ -300,13 +321,12 @@
 }
 
 .wp-step-dose {
-  padding: 7px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(227, 178, 90, 0.5);
-  color: var(--gold-light);
+  padding: 6px 14px;
+  border-radius: 40px;
+  background: var(--dark);
+  color: var(--white);
   font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 800;
+  font-weight: 400;
   white-space: nowrap;
 }
 
@@ -324,41 +344,42 @@
   gap: 14px;
   align-items: flex-start;
   padding: 18px 22px;
-  background: var(--card);
+  background: var(--white);
   border: 1px solid var(--line);
-  border-radius: 14px;
-  font-size: 1.04rem;
+  border-radius: 12px;
+  font-size: 1.05rem;
 }
 
-.wp-checklist svg { color: var(--blue-bright); flex-shrink: 0; margin-top: 4px; }
+.wp-checklist svg { color: var(--royal-ink); flex-shrink: 0; margin-top: 4px; }
 
 .wp-honest {
   max-width: 820px;
   margin: 22px auto 0;
   padding: 20px 24px;
-  border-left: 3px solid var(--gold);
-  background: rgba(227, 178, 90, 0.07);
-  border-radius: 0 14px 14px 0;
+  border-left: 2px solid var(--gold);
+  background: rgba(214, 170, 85, 0.1);
+  border-radius: 0 12px 12px 0;
 }
 
 .wp-honest-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-ink);
   margin-bottom: 6px;
 }
 
-.wp-honest p { color: var(--text); }
-
 /* Focus: five-step bars that fill in when reached. */
-.wp-bars { max-width: 640px; margin: 0 auto; }
+.wp-bars {
+  max-width: 640px;
+  margin: 0 auto;
+}
 
 .wp-bar {
   padding: 16px 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-dark);
 }
 
 .wp-bar:last-child { border-bottom: none; }
@@ -372,8 +393,8 @@
 
 .wp-bar-label {
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 800;
+  font-size: 1.1rem;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--white);
@@ -394,7 +415,7 @@
 .wp-dot {
   height: 8px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   overflow: hidden;
 }
 
@@ -402,7 +423,7 @@
   content: '';
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+  background: var(--royal-bright);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s ease;
@@ -423,8 +444,8 @@
   position: fixed;
   left: 0; right: 0; bottom: 0;
   z-index: 95;
-  background: rgba(5, 5, 6, 0.96);
-  border-top: 1px solid var(--line);
+  background: rgba(13, 15, 18, 0.97);
+  border-top: 1px solid var(--line-dark);
   backdrop-filter: blur(10px);
 }
 
@@ -441,8 +462,8 @@
 
 .wp-sticky-name {
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 800;
+  font-size: 1.1rem;
+  font-weight: 400;
   text-transform: uppercase;
   color: var(--white);
   white-space: nowrap;
@@ -450,7 +471,11 @@
   text-overflow: ellipsis;
 }
 
-.wp-sticky-sub { font-size: 0.8rem; color: var(--text-muted); }
+.wp-sticky-sub {
+  font-size: 0.8rem;
+  color: var(--on-dark-muted);
+}
+
 .wp-sticky .btn { flex-shrink: 0; padding: 12px 24px; }
 
 /* The quick-contact buttons step up while the bar is showing. */
@@ -494,20 +519,23 @@
 }
 
 @media (max-width: 980px) {
-  .wp-hero-grid { grid-template-columns: 1fr; gap: 40px; }
-  .wp-stage { max-width: 340px; max-height: none; }
-}
+  .wp-hero-grid,
+    .wp-stage { max-width: 340px; max-height: none; }
+    }
 
 @media (max-width: 768px) {
   .wp-hero { padding-bottom: 70px; }
   .wp-section { padding: 72px 0; }
   .wp-stage { max-width: 280px; }
-  .wp-facts { grid-template-columns: 1fr 1fr; }
+  .wp-facts { grid-template-columns: 1fr; }
+  .wp-fact,
+  .wp-fact + .wp-fact { padding: 12px 0; border-right: none; border-bottom: 1px solid var(--line-dark); }
+  .wp-fact:last-child { border-bottom: none; }
   .wp-buy .btn { width: 100%; }
   .wp-step { grid-template-columns: auto 1fr; gap: 6px 14px; padding: 16px; }
-  .wp-step-dose { grid-column: 2; justify-self: start; font-size: 0.8rem; }
-  .wp-related .cards-grid { grid-template-columns: none; max-width: none; }
-  .wp-sticky-sub { display: none; }
+  .wp-step-dose { grid-column: 2; justify-self: start; font-size: 0.9rem; }
+  .wp-related .cards-grid,
+      .wp-sticky-sub { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
