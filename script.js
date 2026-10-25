@@ -12,10 +12,10 @@ let currentLang = 'sr';
 const MSG = {
   before: { sr: 'Prije', en: 'Before' },
   after: { sr: 'Poslije', en: 'After' },
-  compare: { sr: 'Prije i poslije: pomjeri liniju', en: 'Before and after: move the line' },
-  viewSlider: { sr: 'Opcija 1 · klizač', en: 'Option 1 · slider' },
-  viewPair: { sr: 'Opcija 2 · jedna pored druge', en: 'Option 2 · side by side' },
-  viewReel: { sr: 'Opcija 3 · traka koja klizi', en: 'Option 3 · moving strip' },
+  reel: {
+    sr: 'Transformacije: povuci ili koristi strelice',
+    en: 'Transformations: drag or use the arrow keys'
+  },
   fillContact: { sr: 'Popuni ime, email i telefon', en: 'Please fill in your name, email and phone' },
   badEmail: { sr: 'Unesi ispravnu email adresu', en: 'Please enter a valid email address' },
   badPhone: { sr: 'Unesi ispravan broj telefona', en: 'Please enter a valid phone number' },
@@ -45,10 +45,9 @@ const JOIN_STEPS = {
 const t = entry => entry[currentLang] || entry.sr;
 
 // ===== Rendering =====
-// One transformation, drawn the way it is asked for: a slider, a pair side
-// by side, or a card in the moving strip.
-// The time it took and what changed lead, the way ShredFast shows them;
-// name and words follow.
+// The transformations run in one strip: each card is the before and after
+// photos side by side, and under them how long it took and what changed
+// (the way ShredFast shows it), then the client's words, name and a note.
 function statsHtml(item) {
   if (!item.period && !item.result) return '';
   return `<span class="tf-stats">${
@@ -56,15 +55,13 @@ function statsHtml(item) {
     item.result ? `<span class="tf-result">${esc(t(item.result))}</span>` : ''}</span>`;
 }
 
-function transformationCaption(item, cls) {
-  if (!item.quote && !item.name && !item.detail && !item.period && !item.result) return '';
+function reelCaptionHtml(item) {
+  if (!item.period && !item.result && !item.quote && !item.name && !item.detail) return '';
   return `
-      <figcaption class="${cls}">
-        ${statsHtml(item)}
-        ${item.quote ? `<p class="transformation-quote">${esc(t(item.quote))}</p>` : ''}
-        ${item.name ? `<strong>${esc(t(item.name))}</strong>` : ''}
-        ${item.detail ? `<span class="tf-detail">${esc(t(item.detail))}</span>` : ''}
-      </figcaption>`;
+      <figcaption class="reel-caption">${statsHtml(item)}${
+        item.quote ? `<p class="reel-quote">${esc(t(item.quote))}</p>` : ''}${
+        item.name ? `<span class="reel-name">${esc(t(item.name))}</span>` : ''}${
+        item.detail ? `<span class="reel-detail">${esc(t(item.detail))}</span>` : ''}</figcaption>`;
 }
 
 function shotHtml(src, label, after, hidden) {
@@ -75,78 +72,38 @@ function shotHtml(src, label, after, hidden) {
         </div>`;
 }
 
-function sliderHtml(item) {
-  return `
-    <figure class="transformation">
-      <div class="compare">
-        <img src="${esc(item.after)}" alt="${esc(t(MSG.after))}" loading="lazy" decoding="async">
-        <div class="compare-before">
-          <img src="${esc(item.before)}" alt="${esc(t(MSG.before))}" loading="lazy" decoding="async">
-        </div>
-        <span class="shot-label shot-label--before">${esc(t(MSG.before))}</span>
-        <span class="shot-label shot-label--after">${esc(t(MSG.after))}</span>
-        <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="${esc(t(MSG.compare))}">
-        <span class="compare-handle" aria-hidden="true"><span class="compare-knob">${ICONS.drag}</span></span>
-      </div>${transformationCaption(item, 'transformation-caption')}
-    </figure>`;
-}
-
-function pairHtml(item) {
-  return `
-    <figure class="transformation transformation--pair">
-      <div class="transformation-pair">${shotHtml(item.before, MSG.before, false)}${shotHtml(item.after, MSG.after, true)}
-      </div>${transformationCaption(item, 'transformation-caption')}
-    </figure>`;
-}
-
+// The second set of cards is only there so the strip runs on without a
+// seam; screen readers skip it.
 function reelCardHtml(item, copy) {
   return `
     <figure class="reel-card"${copy ? ' aria-hidden="true"' : ''}>
       <div class="transformation-pair">${shotHtml(item.before, MSG.before, false, copy)}${shotHtml(item.after, MSG.after, true, copy)}
-      </div>${item.name || item.detail || item.period || item.result ? `
-      <figcaption class="reel-caption">${statsHtml(item)}${
-        item.name ? `<span class="reel-name">${esc(t(item.name))}</span>` : ''}${
-        item.detail ? `<span class="reel-detail">${esc(t(item.detail))}</span>` : ''}</figcaption>` : ''}
+      </div>${reelCaptionHtml(item)}
     </figure>`;
 }
 
 function renderTransformations() {
-  const el = document.getElementById('transformationsGrid');
-  if (!el) return;
-  const view = typeof TRANSFORMATIONS_VIEW === 'string' ? TRANSFORMATIONS_VIEW : 'klizac';
-  const choosing = view === 'izbor';
-  const label = msg => (choosing ? `<p class="tf-option">${esc(t(msg))}</p>` : '');
-  const grid = (items, draw) => `<div class="transformations">${items.map(draw).join('')}</div>`;
-  // The strip carries its cards twice so it can run on without a seam.
-  const reel = items => `
-    <div class="tf-reel" aria-roledescription="carousel">
-      <div class="tf-reel-track">${items.map(i => reelCardHtml(i, false)).join('')}${items.map(i => reelCardHtml(i, true)).join('')}</div>
+  const el = document.getElementById('transformationsReel');
+  if (!el || !TRANSFORMATIONS.length) return;
+  const cards = copy => TRANSFORMATIONS.map(item => reelCardHtml(item, copy)).join('');
+  el.innerHTML = `
+    <div class="tf-reel" tabindex="0" aria-roledescription="carousel" aria-label="${esc(t(MSG.reel))}">
+      <div class="tf-reel-track">${cards(false)}${cards(true)}</div>
     </div>`;
-
-  const groups = [];
-  if (view === 'klizac') groups.push(grid(TRANSFORMATIONS, sliderHtml));
-  if (view === 'pored') groups.push(grid(TRANSFORMATIONS, pairHtml));
-  if (view === 'traka') groups.push(reel(TRANSFORMATIONS));
-  if (choosing) {
-    const sliders = TRANSFORMATIONS.filter(i => i.layout !== 'pair');
-    const pairs = TRANSFORMATIONS.filter(i => i.layout === 'pair');
-    if (sliders.length) groups.push(label(MSG.viewSlider) + grid(sliders, sliderHtml));
-    if (pairs.length) groups.push(label(MSG.viewPair) + grid(pairs, pairHtml));
-    groups.push(label(MSG.viewReel) + reel(TRANSFORMATIONS));
-  }
-  el.innerHTML = groups.map(g => `<div class="tf-group">${g}</div>`).join('');
-  el.querySelectorAll('.compare').forEach(wireCompare);
-  hintCompare(el);
-  el.querySelectorAll('.tf-reel').forEach(runReel);
+  runReel(el.querySelector('.tf-reel'));
 }
 
 // ===== Moving strip =====
 // The cards drift slowly from left to right on their own and can be dragged
-// either way; a drag pauses the drift for a moment. The card nearest the
+// either way, or stepped a card at a time with the arrow keys; either pauses
+// the drift for a moment. The card nearest the
 // middle is shown full size, the ones towards the edges smaller and dimmer.
 // The track holds the cards twice and wraps by one copy's width, so it
 // never runs out. Only moves while it is on screen.
 const REEL_SPEED = 28; // px per second
+const REEL_HOLD = 2500; // ms the drift waits after a drag or a key
+const LESS_MOTION = window.matchMedia
+  && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function runReel(reel) {
   const track = reel.querySelector('.tf-reel-track');
@@ -207,7 +164,7 @@ function runReel(reel) {
   const release = () => {
     if (dragX === null) return;
     dragX = null;
-    heldUntil = performance.now() + 2500;
+    heldUntil = performance.now() + REEL_HOLD;
     reel.classList.remove('is-dragging');
   };
   reel.addEventListener('pointerup', release);
@@ -216,6 +173,15 @@ function runReel(reel) {
   // mouse: after a tap a phone reports an "enter" that never leaves.
   reel.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && dragX === null) heldUntil = Infinity; });
   reel.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && dragX === null) heldUntil = 0; });
+  // The arrow keys bring the next card from that side towards the middle.
+  reel.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    const step = centers.length > 1 ? centers[1] - centers[0] : reel.clientWidth / 2;
+    offset += e.key === 'ArrowRight' ? -step : step;
+    heldUntil = performance.now() + REEL_HOLD;
+    place();
+  });
 
   measure();
   place();
@@ -226,83 +192,6 @@ function runReel(reel) {
     if (e.isIntersecting) wake();
     else visible = false;
   }).observe(reel);
-}
-
-// ===== Before / after slider =====
-const LESS_MOTION = window.matchMedia
-  && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let compareTracked = false;
-
-function wireCompare(box) {
-  const range = box.querySelector('.compare-range');
-  const set = value => {
-    const pos = Math.max(0, Math.min(100, value));
-    box.style.setProperty('--pos', pos + '%');
-    range.value = String(Math.round(pos));
-  };
-  const fromPointer = e => {
-    const r = box.getBoundingClientRect();
-    return ((e.clientX - r.left) / r.width) * 100;
-  };
-  const used = () => {
-    box.dataset.touched = '1';
-    if (!compareTracked) { compareTracked = true; clEvent('transformacija_pomjerena'); }
-  };
-
-  let dragging = false;
-  let moved = false;
-  range.addEventListener('input', () => { used(); set(Number(range.value)); });
-  box.addEventListener('pointerdown', e => {
-    if (e.button) return;
-    dragging = true;
-    moved = false;
-    box.dataset.touched = '1';
-    box.setPointerCapture(e.pointerId);
-  });
-  box.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    moved = true;
-    set(fromPointer(e));
-  });
-  // A tap or click without a drag jumps the line to that spot.
-  box.addEventListener('pointerup', e => {
-    if (!dragging) return;
-    if (!moved) set(fromPointer(e));
-    dragging = false;
-    used();
-  });
-  // The browser took the gesture over for scrolling.
-  box.addEventListener('pointercancel', () => { dragging = false; });
-}
-
-// The first time a frame is properly in view, the line swings once to
-// each side so it is obvious it can be moved.
-function hintCompare(root) {
-  if (LESS_MOTION || !('IntersectionObserver' in window)) return;
-  const io = new IntersectionObserver((entries, obs) => {
-    entries.forEach(en => {
-      if (!en.isIntersecting) return;
-      obs.unobserve(en.target);
-      sweepCompare(en.target);
-    });
-  }, { threshold: 0.6 });
-  root.querySelectorAll('.compare').forEach(box => io.observe(box));
-}
-
-function sweepCompare(box) {
-  const stops = [50, 26, 74, 50];
-  const duration = 2000;
-  const start = performance.now();
-  const ease = x => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
-  const step = now => {
-    if (box.dataset.touched) return;
-    const p = Math.min((now - start) / duration, 1);
-    const leg = Math.min(Math.floor(p * 3), 2);
-    const local = ease(p * 3 - leg);
-    box.style.setProperty('--pos', (stops[leg] + (stops[leg + 1] - stops[leg]) * local) + '%');
-    if (p < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
 }
 
 function renderLevels() {

@@ -195,18 +195,10 @@ const MENTORSHIP = [
 ];
 
 // ===== Transformacije =====
-// Slike pre/posle su uspravne (3:5). Nova transformacija je još jedan objekat
-// u nizu.
+// Prikazuju se u traci koja polako klizi sama, redom kao u nizu. Slike
+// pre/posle su uspravne (3:5). Nova transformacija je još jedan objekat u
+// nizu.
 //
-// Kako se prikazuju, bira se jednom rečju:
-//   'klizac'  jedna slika preko druge, sa linijom koja se pomera
-//   'pored'   "Prije" i "Poslije" jedna pored druge
-//   'traka'   sve transformacije u traci koja polako klizi sama
-//   'izbor'   sva tri načina, jedan ispod drugog, dok se ne izabere: oni bez
-//             layout idu u klizač, oni sa layout: 'pair' jedno pored drugog,
-//             a u traci su svi
-const TRANSFORMATIONS_VIEW = 'izbor';
-
 // Ispod slika, ako postoje (nisu obavezni):
 //   period: za koliko je postignuto, npr. { sr: '3 mjeseca', en: '3 months' }
 //   result: šta je postignuto, npr. { sr: '−8 kg', en: '−8 kg' }
@@ -235,7 +227,6 @@ const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/transformacija-3-prije.jpg',
     after: 'images/transformacije/transformacija-3-poslije.jpg',
-    layout: 'pair',
     period: { sr: '4 mjeseca', en: '4 months' },
     result: { sr: '−8 kg', en: '−8 kg' }
   },
@@ -243,27 +234,23 @@ const TRANSFORMATIONS = [
     // Ista klijentkinja, ista slika prije, posle 7 mjeseci
     before: 'images/transformacije/transformacija-3-prije.jpg',
     after: 'images/transformacije/transformacija-3b-poslije.jpg',
-    layout: 'pair',
     period: { sr: '7 mjeseci', en: '7 months' }
   },
   {
     before: 'images/transformacije/transformacija-4-prije.jpg',
     after: 'images/transformacije/transformacija-4-poslije.jpg',
-    layout: 'pair',
     period: { sr: '3 mjeseca', en: '3 months' },
     result: { sr: '+10 kg', en: '+10 kg' }
   },
   {
     before: 'images/transformacije/transformacija-5-prije.jpg',
     after: 'images/transformacije/transformacija-5-poslije.jpg',
-    layout: 'pair',
     period: { sr: '6 mjeseci', en: '6 months' },
     result: { sr: '−11 kg', en: '−11 kg' }
   },
   {
     before: 'images/transformacije/transformacija-6-prije.jpg',
     after: 'images/transformacije/transformacija-6-poslije.jpg',
-    layout: 'pair',
     period: { sr: '3 mjeseca', en: '3 months' }
   }
 ];

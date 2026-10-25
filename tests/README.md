@@ -52,10 +52,9 @@ pravoj adresi.
   povratku sa stranice nivoa
 - da deljeni link `/#mentorship` stiže gde treba
 - da kartice otvaraju svoje stranice i da „Nazad" vraća na početnu
-- da svaka transformacija prikazuje obe slike, kako je zadato u `data.js`
-  (klizač, jedna pored druge ili traka), da traka nosi sve transformacije,
-  sama klizi s leva na desno i može da se povuče, i da se linija klizača
-  pomera i strelicama na tastaturi
+- da traka sa transformacijama nosi sve iz `data.js` (obe slike, trajanje,
+  kilažu, napomenu), da sama klizi s leva na desno, da može da se povuče i
+  da se pomera strelicama na tastaturi
 - da se slike kettlebella učitaju i da padnu kad dođu na ekran, i ponovo
   pri povratku
 - da su kontakt podaci iz `data.js` upisani na svakoj stranici

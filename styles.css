@@ -925,117 +925,7 @@ button {
 }
 
 /* ===== TRANSFORMATIONS =====
-   Before and after in one frame: the line is dragged (or moved with the
-   arrow keys) to uncover the change. Three to a row, the last row centred. */
-.transformations {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 22px;
-}
-
-.transformation {
-  flex: 0 1 calc((100% - 44px) / 3);
-  max-width: 380px;
-  overflow: hidden;
-  background: var(--card);
-  border-radius: var(--radius);
-}
-
-.compare {
-  --pos: 50%;
-  position: relative;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  background: var(--card-2);
-  cursor: ew-resize;
-  /* A sideways drag moves the line; an upward one still scrolls the page. */
-  touch-action: pan-y;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.compare img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 15%;
-  pointer-events: none;
-  -webkit-user-drag: none;
-}
-
-.compare-before {
-  position: absolute;
-  inset: 0;
-  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
-}
-
-.compare-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--pos);
-  width: 2px;
-  margin-left: -1px;
-  background: var(--white);
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-}
-
-.compare-knob {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 2px solid var(--white);
-  background: var(--blue);
-  color: var(--white);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 24px var(--blue-glow);
-}
-
-/* The slider itself is invisible; it is there for the keyboard and for
-   screen readers. Dragging is handled on the frame. */
-.compare-range {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.compare-range:focus-visible + .compare-handle .compare-knob {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
-
-/* While a way is being chosen, each one carries a small label. */
-.tf-group + .tf-group { margin-top: 80px; }
-
-.tf-option {
-  display: table;
-  margin: 0 auto 26px;
-  padding: 7px 18px;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-/* The moving strip: full width, the edges fading into the page, the card
+   One moving strip: full width, the edges fading into the page, the card
    in the middle full size and lit, the others smaller and dimmer as they
    move away from it (--near, set by runReel in script.js). */
 .tf-reel {
@@ -1051,6 +941,8 @@ button {
 }
 
 .tf-reel.is-dragging { cursor: grabbing; }
+
+.tf-reel:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
 
 .tf-reel-track {
   display: flex;
@@ -1097,13 +989,7 @@ button {
 
 .reel-detail { font-size: 0.85rem; color: var(--gold); }
 
-/* The other way: before and after side by side, each photo whole. Wider
-   than a slider card, so each half is big enough to see. */
-.transformation--pair {
-  flex-basis: calc((100% - 22px) / 2);
-  max-width: 480px;
-}
-
+/* Before and after side by side, each photo whole. */
 .transformation-pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1143,42 +1029,29 @@ button {
 .shot-label--before { left: 12px; }
 .shot-label--after { right: 12px; background: var(--blue); }
 
-.transformation-caption { padding: 20px 24px 24px; text-align: center; }
-
 /* A client's own words, when there are any. */
-.transformation-quote {
-  margin-bottom: 14px;
-  font-size: 1rem;
+.reel-quote {
+  max-width: 34ch;
+  margin: 6px 0 8px;
+  font-size: 0.95rem;
   font-style: italic;
-  line-height: 1.6;
+  line-height: 1.55;
+  text-align: center;
   color: var(--text);
 }
 
-.transformation-quote::before {
+.reel-quote::before {
   content: '\201C';
   display: block;
   font-family: var(--font-display);
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   font-style: normal;
   line-height: 0.8;
   color: var(--gold);
 }
 
-.transformation-caption strong {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 400;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--white);
-}
-
-.transformation-caption .tf-detail { display: block; font-size: 0.92rem; color: var(--gold); }
-
 /* How long it took and what changed: the first thing under the photos,
    side by side, the kilos in blue so they are read first. */
-.transformation-caption .tf-stats,
 .tf-stats {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1188,7 +1061,6 @@ button {
   margin-bottom: 6px;
 }
 
-.transformation-caption .tf-period,
 .tf-period {
   display: inline-flex;
   align-items: center;
@@ -1203,7 +1075,6 @@ button {
 
 .tf-period svg { width: 18px; height: 18px; color: var(--blue-bright); stroke-width: 1.6; }
 
-.transformation-caption .tf-result,
 .tf-result {
   padding-left: 18px;
   border-left: 1px solid var(--line);
@@ -1216,7 +1087,6 @@ button {
 }
 
 .tf-result:first-child { padding-left: 0; border-left: 0; }
-.transformation-caption .tf-stats + strong { margin-top: 4px; }
 
 /* ===== INSTAGRAM =====
    The handle runs huge and faint behind a card that is one tap to the
@@ -1948,9 +1818,7 @@ button {
    side by side or sideways. */
 @media (max-width: 860px) {
   .cards-grid,
-  .transformations,
   .locations { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
-  .transformation { flex-basis: 100%; max-width: none; }
   .tf-reel { --reel-h: 290px; }
   .tf-reel-track { gap: 18px; }
   .tf-reel { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); }

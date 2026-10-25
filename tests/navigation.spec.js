@@ -111,61 +111,51 @@ async function run() {
     await page.close();
   }
 
-  // ---- 6. Each before/after photo is one frame with a line to move.
+  // ---- 6. The transformations run in one strip that moves by itself.
   {
     console.log('\n6. Transformations');
     const page = await browser.newPage();
     await page.goto(BASE + '/');
-    const shown = await page.$$eval('#transformationsGrid .transformation', els =>
-      els.map(f => (f.querySelector('.compare') ? 'slider' : 'pair') + ':' + f.querySelectorAll('img').length));
-    const plan = await page.evaluate(() => {
-      const kind = t => (t.layout === 'pair' ? 'pair' : 'slider');
-      const view = TRANSFORMATIONS_VIEW;
-      const grids = view === 'klizac' ? TRANSFORMATIONS.map(() => 'slider')
-        : view === 'pored' ? TRANSFORMATIONS.map(() => 'pair')
-        : view === 'izbor' ? [...TRANSFORMATIONS.filter(t => kind(t) === 'slider'), ...TRANSFORMATIONS.filter(t => kind(t) === 'pair')].map(kind)
-        : [];
-      return { grids: grids.map(k => k + ':2'), reel: view === 'izbor' || view === 'traka', count: TRANSFORMATIONS.length };
-    });
-    check('every transformation shows both photos, the way data.js asks',
-      shown.join(',') === plan.grids.join(','), shown.join(','));
-    const periods = await page.evaluate(() => {
-      const want = TRANSFORMATIONS.flatMap(t => [t.period, t.result, t.detail]).filter(Boolean).map(v => v.sr);
-      const text = document.getElementById('transformationsGrid').textContent;
+    const count = await page.evaluate(() => TRANSFORMATIONS.length);
+    const cards = await page.$$eval('#transformationsReel .reel-card', els => els.map(c => c.querySelectorAll('img').length));
+    check('the strip carries every transformation (twice, to run on), both photos each',
+      cards.length === count * 2 && cards.every(n => n === 2), String(cards.length));
+    check('only the strip is left', (await page.$$('#transformationsReel > *')).length === 1);
+    const missing = await page.evaluate(() => {
+      const want = TRANSFORMATIONS.flatMap(t => [t.period, t.result, t.detail, t.name]).filter(Boolean).map(v => v.sr);
+      const text = document.getElementById('transformationsReel').textContent;
       return want.filter(p => !text.includes(p));
     });
-    check('how long each one took, what changed and any note are shown under it', periods.length === 0, 'missing: ' + periods.join(', '));
-    if (plan.reel) {
-      const cards = await page.$$eval('#transformationsGrid .reel-card', els => els.map(c => c.querySelectorAll('img').length));
-      check('the strip carries every transformation (twice, to run on)',
-        cards.length === plan.count * 2 && cards.every(n => n === 2), String(cards.length));
-      const reel = page.locator('.tf-reel');
-      await reel.scrollIntoViewIfNeeded();
-      const x = () => page.$eval('.tf-reel-track', t => new DOMMatrix(getComputedStyle(t).transform).m41);
-      await page.waitForTimeout(300);
-      const x0 = await x();
-      await page.waitForTimeout(800);
-      const x1 = await x();
-      check('the strip drifts by itself from left to right', x1 > x0 + 5, `${x0} -> ${x1}`);
-      const box = await reel.boundingBox();
-      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-      await page.mouse.down();
-      const before = await x();
-      await page.mouse.move(box.x + box.width / 2 - 120, box.y + box.height / 2, { steps: 6 });
-      const after = await x();
-      await page.mouse.up();
-      // The strip wraps by one set of cards, which looks the same; count the
-      // move modulo that width.
-      const copy = await page.$eval('.tf-reel-track', t => t.scrollWidth / 2);
-      const moved = (((before - after) % copy) + copy) % copy;
-      check('and can be dragged', Math.abs(moved - 120) < 3, `${before} -> ${after}`);
-    }
-    const range = page.locator('#transformationsGrid .compare-range').first();
-    await range.focus();
+    check('how long each one took, what changed and any note are shown under it', missing.length === 0, 'missing: ' + missing.join(', '));
+
+    const reel = page.locator('.tf-reel');
+    await reel.scrollIntoViewIfNeeded();
+    const x = () => page.$eval('.tf-reel-track', t => new DOMMatrix(getComputedStyle(t).transform).m41);
+    // The strip wraps by one set of cards, which looks the same; count a
+    // move modulo that width.
+    const copy = await page.$eval('.tf-reel-track', t => t.scrollWidth / 2);
+    const shift = (from, to) => ((((to - from) % copy) + copy) % copy);
+    await page.waitForTimeout(300);
+    const x0 = await x();
+    await page.waitForTimeout(800);
+    const x1 = await x();
+    check('the strip drifts by itself from left to right', x1 > x0 + 5, `${x0} -> ${x1}`);
+
+    const box = await reel.boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    const before = await x();
+    await page.mouse.move(box.x + box.width / 2 - 120, box.y + box.height / 2, { steps: 6 });
+    const after = await x();
+    await page.mouse.up();
+    check('and can be dragged', Math.abs(shift(after, before) - 120) < 3, `${before} -> ${after}`);
+
+    const step = await page.$$eval('.reel-card', c => c[1].offsetLeft - c[0].offsetLeft);
+    await reel.focus();
+    const k0 = await x();
     await page.keyboard.press('ArrowRight');
-    await page.keyboard.press('ArrowRight');
-    const pos = await page.$eval('#transformationsGrid .compare', el => el.style.getPropertyValue('--pos'));
-    check('the arrow keys move the line', pos === '52%', pos);
+    const k1 = await x();
+    check('the arrow keys step it a card at a time', Math.abs(shift(k1, k0) - step) < 3, `${k0} -> ${k1}, step ${step}`);
     await page.close();
   }
 
