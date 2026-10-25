@@ -561,14 +561,14 @@ function mobileJoinBar() {
   const bar = document.getElementById('mobileJoin');
   const hero = document.querySelector('.hero-buttons');
   if (!bar || !hero || !('IntersectionObserver' in window)) return;
-  const btn = bar.querySelector('button');
+  const controls = bar.querySelectorAll('button, a');
   let pastHero = false;
   const inTheWay = new Set();
   const update = () => {
     const show = pastHero && inTheWay.size === 0;
     bar.classList.toggle('is-on', show);
     bar.setAttribute('aria-hidden', String(!show));
-    btn.tabIndex = show ? 0 : -1;
+    controls.forEach(c => { c.tabIndex = show ? 0 : -1; });
     document.body.classList.toggle('has-mobile-join', show);
   };
   new IntersectionObserver(([e]) => {

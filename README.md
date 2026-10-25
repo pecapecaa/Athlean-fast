@@ -43,6 +43,9 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 
 ## Snimci i slike
 
+- Fotografija trenera: `images/trener.jpg` (uspravna, 4:5), u delu „Šta je
+  AthLean Fast".
+
 - Uvodni video: `videos/hero.mp4` (po želji i `videos/hero.webm`). Dok fajla
   nema, prikazuje se statična pozadina, ništa drugo ne treba menjati.
 - Video po nivou: upisati putanju u `video` kod nivoa u `data.js`
