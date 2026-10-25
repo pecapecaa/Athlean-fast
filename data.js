@@ -215,7 +215,9 @@ const TRANSFORMATIONS = [
   },
   {
     before: 'images/transformacije/transformacija-1-prije.jpg',
-    after: 'images/transformacije/transformacija-1-poslije.jpg'
+    after: 'images/transformacije/transformacija-1-poslije.jpg',
+    period: { sr: '12 mjeseci', en: '12 months' },
+    result: { sr: '−20 kg', en: '−20 kg' }
   },
   {
     before: 'images/transformacije/transformacija-2-prije.jpg',
