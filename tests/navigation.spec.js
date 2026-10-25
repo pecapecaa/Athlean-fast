@@ -38,8 +38,8 @@ async function run() {
     const inPage = barLinks.filter(h => h.startsWith('#'));
     check('the bar has no menu: the logo is its only link into the page',
       inPage.length === 1 && inPage[0] === '#hero', barLinks.join(','));
-    check('Instagram is one tap away in the bar',
-      barLinks.some(h => h.includes('instagram.com/sima.markoo')), barLinks.join(','));
+    check('Instagram is one tap away on the page',
+      await page.$$eval('#instagram a', els => els.some(e => e.href.includes('instagram.com/sima.markoo'))));
     await page.click('.scroll-indicator');
     await page.waitForTimeout(250);
     check('the scroll arrow leaves the address clean', hashOf(page) === '', page.url());

@@ -46,8 +46,8 @@ nepostojeći nivo ne objavi lažnu stranicu i da stari `.html` link završi na
 pravoj adresi.
 
 `navigation.spec.js` — proverava:
-- da početna nema meni (samo logo i Instagram), jer se cela stranica samo
-  skroluje
+- da početna nema meni (samo logo), jer se cela stranica samo skroluje, i
+  da Instagram ima svoj deo na stranici
 - da adresa ostaje čista (bez `#sekcija`) pri kretanju po početnoj i pri
   povratku sa stranice nivoa
 - da deljeni link `/#mentorship` stiže gde treba
