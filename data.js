@@ -237,6 +237,13 @@ const TRANSFORMATIONS = [
     result: { sr: '−8 kg', en: '−8 kg' }
   },
   {
+    // Ista klijentkinja, ista slika prije, posle 7 mjeseci
+    before: 'images/transformacije/transformacija-3-prije.jpg',
+    after: 'images/transformacije/transformacija-3b-poslije.jpg',
+    layout: 'pair',
+    period: { sr: '7 mjeseci', en: '7 months' }
+  },
+  {
     before: 'images/transformacije/transformacija-4-prije.jpg',
     after: 'images/transformacije/transformacija-4-poslije.jpg',
     layout: 'pair',
