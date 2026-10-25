@@ -127,9 +127,31 @@ async function run() {
     await page.close();
   }
 
-  // ---- 7. Contact details come from one place and reach every page.
+  // ---- 7. The kettlebells are plain images and drop each time they arrive.
   {
-    console.log('\n7. Contact details');
+    console.log('\n7. Kettlebells');
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await page.goto(BASE + '/');
+    const stage = page.locator('.kb-stage');
+    const dropped = () => page.$eval('.kb-drop', el => el.classList.contains('is-dropped'));
+    check('not dropped before they are reached', !(await dropped()));
+    await stage.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
+    check('drop when they come into view', await dropped());
+    const loaded = await page.$$eval('.kb-solid', els => els.map(e => e.complete && e.naturalWidth > 0));
+    check('both kettlebell images load', loaded.length === 2 && loaded.every(Boolean), loaded.join(','));
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.waitForTimeout(300);
+    check('reset once out of view', !(await dropped()));
+    await stage.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
+    check('and drop again on the way back', await dropped());
+    await page.close();
+  }
+
+  // ---- 8. Contact details come from one place and reach every page.
+  {
+    console.log('\n8. Contact details');
     const page = await browser.newPage();
     for (const url of ['/', `/nivo?n=${LEVEL}`]) {
       await page.goto(BASE + url);

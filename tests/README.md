@@ -54,6 +54,8 @@ pravoj adresi.
 - da kartice otvaraju svoje stranice i da „Nazad" vraća na početnu
 - da je svaka transformacija jedna slika sa linijom koja se pomera (i
   strelicama na tastaturi)
+- da se slike kettlebella učitaju i da padnu kad dođu na ekran, i ponovo
+  pri povratku
 - da su kontakt podaci iz `data.js` upisani na svakoj stranici
 
 `tools-version.js --check` (prvi korak u `run.sh`): oznaka `?v=` uz svaki

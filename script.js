@@ -554,60 +554,19 @@ function animateCounters() {
   });
 }
 
-// Variant 1: the kettlebells fall and slam into the floor the first time
-// their section is reached. Armed here, so without script they just stand.
+// The kettlebells fall and slam into the floor once they are well in view,
+// and again each time they come back into view after leaving it, so a quick
+// scroll past does not use the moment up. Armed here, so without script (or
+// with reduced motion) they simply stand there.
 function dropOnArrival() {
   const el = document.querySelector('.kb-drop');
-  if (!el || LESS_MOTION || !('IntersectionObserver' in window)) return;
+  const stage = el && el.querySelector('.kb-stage');
+  if (!stage || LESS_MOTION || !('IntersectionObserver' in window)) return;
   el.classList.add('is-armed');
-  const io = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting) return;
-    io.disconnect();
-    el.classList.add('is-dropped');
-  }, { threshold: 0.45 });
-  io.observe(el);
-}
-
-// Variant 2: the section holds the screen while it is scrolled through and
-// the kettlebell swings with the scroll: one and a half swings, from the
-// backswing to the top. A faint trail follows it while it moves.
-function swingOnScroll() {
-  const el = document.querySelector('.kb-swing');
-  if (!el) return;
-  const arm = el.querySelector('.kb-arm');
-  const ghosts = el.querySelectorAll('.kb-ghost');
-  const angleAt = p => 25 + 60 * Math.sin(2 * Math.PI * 1.5 * p - Math.PI / 2);
-  let last = null;
-  let settle = null;
-
-  const show = p => {
-    const a = angleAt(p);
-    const dir = last === null ? 0 : Math.sign(a - last);
-    arm.setAttribute('transform', 'rotate(' + (-a).toFixed(2) + ')');
-    ghosts.forEach((g, i) => {
-      g.setAttribute('transform', 'rotate(' + (-(a - dir * (i + 1) * 7)).toFixed(2) + ')');
-    });
-    el.style.setProperty('--swing', p.toFixed(3));
-    if (dir) {
-      el.classList.add('is-moving');
-      clearTimeout(settle);
-      settle = setTimeout(() => el.classList.remove('is-moving'), 160);
-    }
-    last = a;
-  };
-
-  if (LESS_MOTION) {
-    show(1);
-    return;
-  }
-  const update = () => {
-    const r = el.getBoundingClientRect();
-    const travel = r.height - window.innerHeight;
-    show(travel > 0 ? Math.max(0, Math.min(1, -r.top / travel)) : 1);
-  };
-  onScrollFrame(update);
-  window.addEventListener('resize', update);
-  update();
+  new IntersectionObserver(([e]) => {
+    if (e.intersectionRatio >= 0.6) el.classList.add('is-dropped');
+    else if (!e.isIntersecting) el.classList.remove('is-dropped');
+  }, { threshold: [0, 0.6] }).observe(stage);
 }
 
 // On a phone, "Pridruži se" waits at the bottom of the screen once the hero
@@ -866,7 +825,6 @@ document.addEventListener('DOMContentLoaded', () => {
   openJoinFromUrl();
   animateCounters();
   dropOnArrival();
-  swingOnScroll();
   mobileJoinBar();
   trackSections();
   initHeroVideo();

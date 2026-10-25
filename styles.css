@@ -49,10 +49,7 @@ body {
   color: var(--text);
   background: var(--bg);
   line-height: 1.6;
-  /* clip, not hidden: hidden would make the body a scroll container of its
-     own and break position: sticky (the swing section) inside it. */
   overflow-x: hidden;
-  overflow-x: clip;
   overscroll-behavior-x: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -695,13 +692,10 @@ button {
   }
 }
 
-/* Holds shared SVG drawings; takes no room on the page. */
-.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
-
 /* ===== KETTLEBELLS =====
-   "2 kettlebella. 30 minuta. Iskren rad." told twice, two ways, so one can
-   be kept: they drop and slam (.kb-drop), or one swings as the page is
-   scrolled (.kb-swing). Both draw the same solid kettlebell (#kbSolid). */
+   "2 kettlebella. 30 minuta. Iskren rad.": two kettlebells drop and slam
+   into the floor, then the words slam in after them. The kettlebell is a
+   plain image, so it shows on every phone. */
 .manifest-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -723,7 +717,7 @@ button {
 
 .manifest-line--accent { color: var(--blue-bright); }
 
-/* --- 1. Drop and slam: plays once when the section is reached. --- */
+/* Plays each time the kettlebells come into view (dropOnArrival). */
 .kb-drop { overflow: hidden; }
 
 .kb-stage {
@@ -841,63 +835,6 @@ button {
   0% { opacity: 0; transform: scale(1.8); filter: blur(6px); }
   70% { opacity: 1; transform: scale(0.97); filter: none; }
   100% { opacity: 1; transform: none; }
-}
-
-/* --- 2. Swing: the section holds the screen while it is scrolled through
-   and the kettlebell swings with it (swingOnScroll in script.js). --- */
-.kb-swing {
-  position: relative;
-  height: 210vh;
-  background: radial-gradient(ellipse 45% 50% at 30% 55%, rgba(23, 57, 196, 0.32) 0%, transparent 70%), var(--bg-alt);
-}
-
-.kb-swing-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.kb-swing-sticky .manifest-grid { width: 100%; grid-template-columns: 1.25fr 0.75fr; }
-.kb-swing .manifest-line { font-size: clamp(2.2rem, 3.4vw, 3.2rem); }
-.kb-drop .manifest-grid { grid-template-columns: 1.1fr 0.9fr; }
-
-.kb-swing-svg {
-  width: 100%;
-  max-width: 600px;
-  max-height: 76vh;
-  justify-self: center;
-  overflow: visible;
-  filter: drop-shadow(0 20px 40px rgba(23, 57, 196, 0.35));
-}
-
-.kb-swing-arc {
-  fill: none;
-  stroke: rgba(59, 95, 224, 0.45);
-  stroke-width: 1.5;
-  stroke-dasharray: 3 9;
-  stroke-linecap: round;
-}
-
-.kb-arm-line {
-  stroke: url(#kbArm);
-  stroke-width: 3;
-  stroke-linecap: round;
-}
-
-.kb-pivot { fill: var(--gold); }
-
-.kb-ghost { opacity: 0; transition: opacity 0.3s; }
-.kb-swing.is-moving .kb-ghost:nth-child(1) { opacity: 0.3; }
-.kb-swing.is-moving .kb-ghost:nth-child(2) { opacity: 0.16; }
-.kb-swing.is-moving .kb-ghost:nth-child(3) { opacity: 0.08; }
-
-.kb-swing .manifest-line {
-  opacity: clamp(0.1, (var(--swing, 0) - var(--at)) * 4, 1);
-  transform: translateX(calc((1 - clamp(0, (var(--swing, 0) - var(--at)) * 4, 1)) * 30px));
 }
 
 /* ===== LEVEL CARDS ===== */
@@ -1915,12 +1852,8 @@ button {
   .transformation { flex-basis: 100%; max-width: none; }
   .about { grid-template-columns: 1fr; gap: 36px; max-width: 560px; text-align: center; }
   .manifest-grid,
-  .kb-drop .manifest-grid,
-  .kb-swing-sticky .manifest-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+  .kb-drop .manifest-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
   .kb-stage { max-width: 420px; margin: 0 auto; }
-  .kb-swing-sticky .manifest-grid { gap: 10px; }
-  .kb-swing-svg { max-height: 46vh; }
-  .kb-swing .manifest-line { font-size: clamp(2rem, 9vw, 2.8rem); }
   .card-media { aspect-ratio: 16 / 10; }
 }
 
