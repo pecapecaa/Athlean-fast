@@ -52,6 +52,21 @@ function renderTransformations() {
         ${item.name ? `<strong>${esc(t(item.name))}</strong>` : ''}
         ${item.detail ? `<span>${esc(t(item.detail))}</span>` : ''}
       </figcaption>` : '';
+    if (item.layout === 'pair') {
+      return `
+    <figure class="transformation transformation--pair">
+      <div class="transformation-pair">
+        <div class="transformation-shot">
+          <img src="${esc(item.before)}" alt="${esc(t(MSG.before))}" loading="lazy" decoding="async">
+          <span class="shot-label shot-label--before">${esc(t(MSG.before))}</span>
+        </div>
+        <div class="transformation-shot">
+          <img src="${esc(item.after)}" alt="${esc(t(MSG.after))}" loading="lazy" decoding="async">
+          <span class="shot-label shot-label--after">${esc(t(MSG.after))}</span>
+        </div>
+      </div>${caption}
+    </figure>`;
+    }
     return `
     <figure class="transformation">
       <div class="compare">

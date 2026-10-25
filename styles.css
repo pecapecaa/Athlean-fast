@@ -1019,6 +1019,34 @@ button {
   outline-offset: 3px;
 }
 
+/* The other way: before and after side by side, each photo whole. Wider
+   than a slider card, so each half is big enough to see. */
+.transformation--pair {
+  flex-basis: calc((100% - 22px) / 2);
+  max-width: 480px;
+}
+
+.transformation-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  background: var(--bg);
+}
+
+.transformation-shot {
+  position: relative;
+  aspect-ratio: 3 / 5;
+  overflow: hidden;
+  background: var(--card-2);
+}
+
+.transformation-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 15%;
+}
+
 .shot-label {
   position: absolute;
   top: 12px;

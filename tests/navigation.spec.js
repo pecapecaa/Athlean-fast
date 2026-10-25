@@ -116,8 +116,12 @@ async function run() {
     console.log('\n6. Transformations');
     const page = await browser.newPage();
     await page.goto(BASE + '/');
-    const frames = await page.$$eval('#transformationsGrid .compare', els => els.length);
-    check('every transformation is a before/after frame', frames === await page.evaluate(() => TRANSFORMATIONS.length), String(frames));
+    const shown = await page.$$eval('#transformationsGrid .transformation', els =>
+      els.map(f => (f.querySelector('.compare') ? 'slider' : 'pair') + ':' + f.querySelectorAll('img').length));
+    const wanted = await page.evaluate(() =>
+      TRANSFORMATIONS.map(t => (t.layout === 'pair' ? 'pair' : 'slider') + ':2'));
+    check('every transformation shows both photos, the way data.js asks',
+      shown.join(',') === wanted.join(','), shown.join(','));
     const range = page.locator('#transformationsGrid .compare-range').first();
     await range.focus();
     await page.keyboard.press('ArrowRight');
