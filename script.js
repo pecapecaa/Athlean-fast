@@ -583,6 +583,7 @@ function mobileJoinBar() {
     const show = pastHero && inTheWay.size === 0;
     bar.classList.toggle('is-on', show);
     bar.setAttribute('aria-hidden', String(!show));
+    document.body.classList.toggle('past-hero', pastHero);
     controls.forEach(c => { c.tabIndex = show ? 0 : -1; });
     document.body.classList.toggle('has-mobile-join', show);
   };
