@@ -1095,6 +1095,8 @@ button {
   color: var(--text-muted);
 }
 
+.reel-detail { font-size: 0.85rem; color: var(--gold); }
+
 /* The other way: before and after side by side, each photo whole. Wider
    than a slider card, so each half is big enough to see. */
 .transformation--pair {
@@ -1172,7 +1174,7 @@ button {
   color: var(--white);
 }
 
-.transformation-caption span { font-size: 0.92rem; color: var(--gold); }
+.transformation-caption .tf-detail { display: block; font-size: 0.92rem; color: var(--gold); }
 
 /* How long it took and what changed: the first thing under the photos,
    side by side, the kilos in blue so they are read first. */

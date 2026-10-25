@@ -57,13 +57,13 @@ function statsHtml(item) {
 }
 
 function transformationCaption(item, cls) {
-  if (!item.quote && !item.name && !item.period && !item.result) return '';
+  if (!item.quote && !item.name && !item.detail && !item.period && !item.result) return '';
   return `
       <figcaption class="${cls}">
         ${statsHtml(item)}
         ${item.quote ? `<p class="transformation-quote">${esc(t(item.quote))}</p>` : ''}
         ${item.name ? `<strong>${esc(t(item.name))}</strong>` : ''}
-        ${item.detail ? `<span>${esc(t(item.detail))}</span>` : ''}
+        ${item.detail ? `<span class="tf-detail">${esc(t(item.detail))}</span>` : ''}
       </figcaption>`;
 }
 
@@ -103,8 +103,10 @@ function reelCardHtml(item, copy) {
   return `
     <figure class="reel-card"${copy ? ' aria-hidden="true"' : ''}>
       <div class="transformation-pair">${shotHtml(item.before, MSG.before, false, copy)}${shotHtml(item.after, MSG.after, true, copy)}
-      </div>${item.name || item.period || item.result ? `
-      <figcaption class="reel-caption">${statsHtml(item)}${item.name ? `<span class="reel-name">${esc(t(item.name))}</span>` : ''}</figcaption>` : ''}
+      </div>${item.name || item.detail || item.period || item.result ? `
+      <figcaption class="reel-caption">${statsHtml(item)}${
+        item.name ? `<span class="reel-name">${esc(t(item.name))}</span>` : ''}${
+        item.detail ? `<span class="reel-detail">${esc(t(item.detail))}</span>` : ''}</figcaption>` : ''}
     </figure>`;
 }
 

@@ -227,7 +227,10 @@ const TRANSFORMATIONS = [
   },
   {
     before: 'images/transformacije/transformacija-2-prije.jpg',
-    after: 'images/transformacije/transformacija-2-poslije.jpg'
+    after: 'images/transformacije/transformacija-2-poslije.jpg',
+    period: { sr: '6 mjeseci', en: '6 months' },
+    result: { sr: '−9 kg', en: '−9 kg' },
+    detail: { sr: 'Trening nakon trudnoće', en: 'Training after pregnancy' }
   },
   {
     before: 'images/transformacije/transformacija-3-prije.jpg',
@@ -253,7 +256,9 @@ const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/transformacija-5-prije.jpg',
     after: 'images/transformacije/transformacija-5-poslije.jpg',
-    layout: 'pair'
+    layout: 'pair',
+    period: { sr: '6 mjeseci', en: '6 months' },
+    result: { sr: '−11 kg', en: '−11 kg' }
   },
   {
     before: 'images/transformacije/transformacija-6-prije.jpg',
