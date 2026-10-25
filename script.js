@@ -554,19 +554,20 @@ function animateCounters() {
   });
 }
 
-// The kettlebells fall and slam into the floor once they are well in view,
-// and again each time they come back into view after leaving it, so a quick
-// scroll past does not use the moment up. Armed here, so without script (or
-// with reduced motion) they simply stand there.
+// The kettlebells start falling the moment the spot where they land peeks
+// in at the bottom of the screen: they come down from the top while the
+// page is still being scrolled, and have landed by the time the eye gets
+// there. They fall again each time they come back after leaving the
+// screen. Armed here, so without script (or with reduced motion) they
+// just stand.
 function dropOnArrival() {
   const el = document.querySelector('.kb-drop');
   const stage = el && el.querySelector('.kb-stage');
   if (!stage || LESS_MOTION || !('IntersectionObserver' in window)) return;
   el.classList.add('is-armed');
   new IntersectionObserver(([e]) => {
-    if (e.intersectionRatio >= 0.6) el.classList.add('is-dropped');
-    else if (!e.isIntersecting) el.classList.remove('is-dropped');
-  }, { threshold: [0, 0.6] }).observe(stage);
+    el.classList.toggle('is-dropped', e.isIntersecting);
+  }).observe(stage);
 }
 
 // On a phone, "Pridruži se" waits at the bottom of the screen once the hero

@@ -675,8 +675,8 @@ button {
    Two kettlebells drop onto the top edge of the "Pridruži se" card and the
    line on the card slams in after them. Each kettlebell is a plain image
    (a 3D render), so it shows on every phone. Plays each time they come
-   into view (dropOnArrival in script.js). */
-.kb-drop { overflow: hidden; }
+   into view (dropOnArrival in script.js); they fall from the top of the
+   screen, over whatever is above, so the whole fall is seen. */
 
 /* Sits just above the card, the feet resting on its top edge. */
 .kb-stage {
@@ -728,26 +728,27 @@ button {
   pointer-events: none;
 }
 
-/* Armed by script; without it everything simply stands in place. */
-.kb-drop.is-armed .kb-solid { transform: translateY(-120vh); }
+/* Armed by script; without it everything simply stands in place. Hidden
+   while waiting, so they never hang over the section above. */
+.kb-drop.is-armed .kb-solid { opacity: 0; transform: translateY(-100vh); }
 .kb-drop.is-armed .kb-unit::after { opacity: 0; }
 .kb-drop.is-armed .slam { opacity: 0; }
 
-.kb-drop.is-dropped .kb-solid { animation: kbDrop 0.9s both; }
-.kb-drop.is-dropped .kb-unit::after { animation: kbShadow 0.9s both; }
-.kb-drop.is-dropped .kb-dust { animation: kbDust 0.9s ease-out 0.55s both; }
+.kb-drop.is-dropped .kb-solid { animation: kbDrop 0.75s both; }
+.kb-drop.is-dropped .kb-unit::after { animation: kbShadow 0.75s both; }
+.kb-drop.is-dropped .kb-dust { animation: kbDust 0.8s ease-out 0.46s both; }
 .kb-drop.is-dropped .kb-unit--2 .kb-solid,
-.kb-drop.is-dropped .kb-unit--2::after { animation-delay: 0.16s; }
-.kb-drop.is-dropped .kb-unit--2 .kb-dust { animation-delay: 0.71s; }
-.kb-drop.is-dropped .kb-stage { animation: kbShake 0.45s ease-out 0.55s; }
-.kb-drop.is-dropped .slam { animation: slam 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) both; animation-delay: var(--delay); }
+.kb-drop.is-dropped .kb-unit--2::after { animation-delay: 0.12s; }
+.kb-drop.is-dropped .kb-unit--2 .kb-dust { animation-delay: 0.58s; }
+.kb-drop.is-dropped .kb-stage { animation: kbShake 0.4s ease-out 0.46s; }
+.kb-drop.is-dropped .slam { animation: slam 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.3) both; animation-delay: var(--delay); }
 
 @keyframes kbDrop {
-  0% { transform: translateY(-120vh); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  0% { opacity: 1; transform: translateY(-100vh); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
   62% { transform: translateY(0) scale(1.06, 0.9); animation-timing-function: ease-out; }
   76% { transform: translateY(-14px) scale(0.98, 1.02); animation-timing-function: ease-in; }
   88% { transform: translateY(0) scale(1.02, 0.98); }
-  100% { transform: none; }
+  100% { opacity: 1; transform: none; }
 }
 
 @keyframes kbShadow {

@@ -135,9 +135,15 @@ async function run() {
     const stage = page.locator('.kb-stage');
     const dropped = () => page.$eval('.kb-drop', el => el.classList.contains('is-dropped'));
     check('not dropped before they are reached', !(await dropped()));
-    await stage.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(400);
-    check('drop when they come into view', await dropped());
+    // Landing spot just peeking in at the bottom: they must already be
+    // falling, or a visitor who keeps scrolling has passed them before
+    // they land.
+    await page.evaluate(() => {
+      const r = document.querySelector('.kb-stage').getBoundingClientRect();
+      window.scrollTo({ top: r.top + scrollY - innerHeight * 0.96, behavior: 'instant' });
+    });
+    await page.waitForTimeout(300);
+    check('drop as soon as their spot peeks in at the bottom', await dropped());
     const loaded = await page.$$eval('.kb-solid', els => els.map(e => e.complete && e.naturalWidth > 0));
     check('both kettlebell images load', loaded.length === 2 && loaded.every(Boolean), loaded.join(','));
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
