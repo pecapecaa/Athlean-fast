@@ -196,9 +196,17 @@ const MENTORSHIP = [
 
 // ===== Transformacije =====
 // Slike pre/posle su uspravne (3:5). Nova transformacija je još jedan objekat
-// u nizu. Dva načina prikaza, da se izabere jedan:
-//   bez layout:       jedna slika preko druge, sa linijom koja se pomera
-//   layout: 'pair':   "Prije" i "Poslije" jedna pored druge
+// u nizu.
+//
+// Kako se prikazuju, bira se jednom rečju:
+//   'klizac'  jedna slika preko druge, sa linijom koja se pomera
+//   'pored'   "Prije" i "Poslije" jedna pored druge
+//   'traka'   sve transformacije u traci koja polako klizi sama
+//   'izbor'   sva tri načina, jedan ispod drugog, dok se ne izabere: oni bez
+//             layout idu u klizač, oni sa layout: 'pair' jedno pored drugog,
+//             a u traci su svi
+const TRANSFORMATIONS_VIEW = 'izbor';
+
 // Ispod slika, ako postoje (nisu obavezni):
 //   quote:  utisak klijenta, npr. { sr: 'Za 4 mjeseca...', en: 'In 4 months...' }
 //   name:   ime, npr. { sr: 'Ana', en: 'Ana' }
@@ -226,6 +234,16 @@ const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/transformacija-4-prije.jpg',
     after: 'images/transformacije/transformacija-4-poslije.jpg',
+    layout: 'pair'
+  },
+  {
+    before: 'images/transformacije/transformacija-5-prije.jpg',
+    after: 'images/transformacije/transformacija-5-poslije.jpg',
+    layout: 'pair'
+  },
+  {
+    before: 'images/transformacije/transformacija-6-prije.jpg',
+    after: 'images/transformacije/transformacija-6-poslije.jpg',
     layout: 'pair'
   }
 ];

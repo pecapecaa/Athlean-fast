@@ -52,6 +52,9 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   zvuka (sajt ga ionako pušta bez zvuka) i do oko 10 MB, da se brzo učita.
 - Video po nivou: upisati putanju u `video` kod nivoa u `data.js`
   (npr. `videos/pocetni.mp4`), a `poster` zameniti slikom iz snimka.
+- Način prikaza transformacija: `TRANSFORMATIONS_VIEW` u `data.js`
+  (`'klizac'`, `'pored'`, `'traka'`, ili `'izbor'` za sva tri dok se ne
+  odluči).
 - Transformacije: slike pre/posle (uspravne, 3:5) u `images/transformacije/`,
   putanje u `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata). Utisak
   klijenta (`quote`), ime i trajanje se dopisuju uz istu transformaciju i

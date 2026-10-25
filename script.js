@@ -13,6 +13,9 @@ const MSG = {
   before: { sr: 'Prije', en: 'Before' },
   after: { sr: 'Poslije', en: 'After' },
   compare: { sr: 'Prije i poslije: pomjeri liniju', en: 'Before and after: move the line' },
+  viewSlider: { sr: 'Opcija 1 · klizač', en: 'Option 1 · slider' },
+  viewPair: { sr: 'Opcija 2 · jedna pored druge', en: 'Option 2 · side by side' },
+  viewReel: { sr: 'Opcija 3 · traka koja klizi', en: 'Option 3 · moving strip' },
   fillContact: { sr: 'Popuni ime, email i telefon', en: 'Please fill in your name, email and phone' },
   badEmail: { sr: 'Unesi ispravnu email adresu', en: 'Please enter a valid email address' },
   badPhone: { sr: 'Unesi ispravan broj telefona', en: 'Please enter a valid phone number' },
@@ -42,32 +45,28 @@ const JOIN_STEPS = {
 const t = entry => entry[currentLang] || entry.sr;
 
 // ===== Rendering =====
-function renderTransformations() {
-  const el = document.getElementById('transformationsGrid');
-  if (!el) return;
-  el.innerHTML = TRANSFORMATIONS.map(item => {
-    const caption = (item.quote || item.name) ? `
-      <figcaption class="transformation-caption">
+// One transformation, drawn the way it is asked for: a slider, a pair side
+// by side, or a card in the moving strip.
+function transformationCaption(item, cls) {
+  if (!item.quote && !item.name) return '';
+  return `
+      <figcaption class="${cls}">
         ${item.quote ? `<p class="transformation-quote">${esc(t(item.quote))}</p>` : ''}
         ${item.name ? `<strong>${esc(t(item.name))}</strong>` : ''}
         ${item.detail ? `<span>${esc(t(item.detail))}</span>` : ''}
-      </figcaption>` : '';
-    if (item.layout === 'pair') {
-      return `
-    <figure class="transformation transformation--pair">
-      <div class="transformation-pair">
+      </figcaption>`;
+}
+
+function shotHtml(src, label, after, hidden) {
+  return `
         <div class="transformation-shot">
-          <img src="${esc(item.before)}" alt="${esc(t(MSG.before))}" loading="lazy" decoding="async">
-          <span class="shot-label shot-label--before">${esc(t(MSG.before))}</span>
-        </div>
-        <div class="transformation-shot">
-          <img src="${esc(item.after)}" alt="${esc(t(MSG.after))}" loading="lazy" decoding="async">
-          <span class="shot-label shot-label--after">${esc(t(MSG.after))}</span>
-        </div>
-      </div>${caption}
-    </figure>`;
-    }
-    return `
+          <img src="${esc(src)}" alt="${hidden ? '' : esc(t(label))}" loading="lazy" decoding="async">
+          <span class="shot-label shot-label--${after ? 'after' : 'before'}">${esc(t(label))}</span>
+        </div>`;
+}
+
+function sliderHtml(item) {
+  return `
     <figure class="transformation">
       <div class="compare">
         <img src="${esc(item.after)}" alt="${esc(t(MSG.after))}" loading="lazy" decoding="async">
@@ -78,11 +77,143 @@ function renderTransformations() {
         <span class="shot-label shot-label--after">${esc(t(MSG.after))}</span>
         <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="${esc(t(MSG.compare))}">
         <span class="compare-handle" aria-hidden="true"><span class="compare-knob">${ICONS.drag}</span></span>
-      </div>${caption}
+      </div>${transformationCaption(item, 'transformation-caption')}
     </figure>`;
-  }).join('');
+}
+
+function pairHtml(item) {
+  return `
+    <figure class="transformation transformation--pair">
+      <div class="transformation-pair">${shotHtml(item.before, MSG.before, false)}${shotHtml(item.after, MSG.after, true)}
+      </div>${transformationCaption(item, 'transformation-caption')}
+    </figure>`;
+}
+
+function reelCardHtml(item, copy) {
+  return `
+    <figure class="reel-card"${copy ? ' aria-hidden="true"' : ''}>
+      <div class="transformation-pair">${shotHtml(item.before, MSG.before, false, copy)}${shotHtml(item.after, MSG.after, true, copy)}
+      </div>${item.name ? `
+      <figcaption class="reel-caption">${esc(t(item.name))}${item.detail ? ' · ' + esc(t(item.detail)) : ''}</figcaption>` : ''}
+    </figure>`;
+}
+
+function renderTransformations() {
+  const el = document.getElementById('transformationsGrid');
+  if (!el) return;
+  const view = typeof TRANSFORMATIONS_VIEW === 'string' ? TRANSFORMATIONS_VIEW : 'klizac';
+  const choosing = view === 'izbor';
+  const label = msg => (choosing ? `<p class="tf-option">${esc(t(msg))}</p>` : '');
+  const grid = (items, draw) => `<div class="transformations">${items.map(draw).join('')}</div>`;
+  // The strip carries its cards twice so it can run on without a seam.
+  const reel = items => `
+    <div class="tf-reel" aria-roledescription="carousel">
+      <div class="tf-reel-track">${items.map(i => reelCardHtml(i, false)).join('')}${items.map(i => reelCardHtml(i, true)).join('')}</div>
+    </div>`;
+
+  const groups = [];
+  if (view === 'klizac') groups.push(grid(TRANSFORMATIONS, sliderHtml));
+  if (view === 'pored') groups.push(grid(TRANSFORMATIONS, pairHtml));
+  if (view === 'traka') groups.push(reel(TRANSFORMATIONS));
+  if (choosing) {
+    const sliders = TRANSFORMATIONS.filter(i => i.layout !== 'pair');
+    const pairs = TRANSFORMATIONS.filter(i => i.layout === 'pair');
+    if (sliders.length) groups.push(label(MSG.viewSlider) + grid(sliders, sliderHtml));
+    if (pairs.length) groups.push(label(MSG.viewPair) + grid(pairs, pairHtml));
+    groups.push(label(MSG.viewReel) + reel(TRANSFORMATIONS));
+  }
+  el.innerHTML = groups.map(g => `<div class="tf-group">${g}</div>`).join('');
   el.querySelectorAll('.compare').forEach(wireCompare);
   hintCompare(el);
+  el.querySelectorAll('.tf-reel').forEach(runReel);
+}
+
+// ===== Moving strip =====
+// The cards drift slowly from left to right on their own and can be dragged
+// either way; a drag pauses the drift for a moment. The card nearest the
+// middle is shown full size, the ones towards the edges smaller and dimmer.
+// The track holds the cards twice and wraps by one copy's width, so it
+// never runs out. Only moves while it is on screen.
+const REEL_SPEED = 28; // px per second
+
+function runReel(reel) {
+  const track = reel.querySelector('.tf-reel-track');
+  const cards = Array.from(track.children);
+  let copy = 0;          // width of one set of cards
+  let offset = 0;        // how far the strip has moved to the right
+  let visible = false;
+  let heldUntil = 0;
+  let last = 0;
+  let centers = [];
+
+  const measure = () => {
+    copy = track.scrollWidth / 2;
+    centers = cards.map(c => c.offsetLeft + c.offsetWidth / 2);
+  };
+  const place = () => {
+    if (!copy) return;
+    offset = ((offset % copy) + copy) % copy;
+    const shift = offset - copy;
+    track.style.transform = `translate3d(${shift}px, 0, 0)`;
+    const mid = reel.clientWidth / 2;
+    const reach = reel.clientWidth / 2 + 1;
+    cards.forEach((card, i) => {
+      const d = Math.min(Math.abs(centers[i] + shift - mid) / reach, 1);
+      card.style.setProperty('--near', (1 - d).toFixed(3));
+    });
+  };
+  const frame = now => {
+    if (!reel.isConnected) return;
+    const dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
+    last = now;
+    if (!LESS_MOTION && now > heldUntil) offset += REEL_SPEED * dt;
+    place();
+    if (visible) requestAnimationFrame(frame);
+  };
+  const wake = () => {
+    if (visible) return;
+    visible = true;
+    last = 0;
+    requestAnimationFrame(frame);
+  };
+
+  // Dragging, with a pointer or a finger; an upward swipe still scrolls.
+  let dragX = null;
+  reel.addEventListener('pointerdown', e => {
+    if (e.button) return;
+    dragX = e.clientX;
+    heldUntil = Infinity;
+    reel.classList.add('is-dragging');
+    reel.setPointerCapture(e.pointerId);
+  });
+  reel.addEventListener('pointermove', e => {
+    if (dragX === null) return;
+    offset += e.clientX - dragX;
+    dragX = e.clientX;
+    place();
+  });
+  const release = () => {
+    if (dragX === null) return;
+    dragX = null;
+    heldUntil = performance.now() + 2500;
+    reel.classList.remove('is-dragging');
+  };
+  reel.addEventListener('pointerup', release);
+  reel.addEventListener('pointercancel', release);
+  // Resting a mouse on it holds it still, to look closer. Only a real
+  // mouse: after a tap a phone reports an "enter" that never leaves.
+  reel.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && dragX === null) heldUntil = Infinity; });
+  reel.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && dragX === null) heldUntil = 0; });
+
+  measure();
+  place();
+  track.querySelectorAll('img').forEach(img => img.addEventListener('load', () => { measure(); place(); }, { once: true }));
+  window.addEventListener('resize', () => { measure(); place(); });
+  if (!('IntersectionObserver' in window)) return wake();
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) wake();
+    else visible = false;
+  }).observe(reel);
 }
 
 // ===== Before / after slider =====
