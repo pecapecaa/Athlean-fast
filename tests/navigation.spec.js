@@ -129,6 +129,12 @@ async function run() {
     });
     check('every transformation shows both photos, the way data.js asks',
       shown.join(',') === plan.grids.join(','), shown.join(','));
+    const periods = await page.evaluate(() => {
+      const want = TRANSFORMATIONS.filter(t => t.period).map(t => t.period.sr);
+      const text = document.getElementById('transformationsGrid').textContent;
+      return want.filter(p => !text.includes(p));
+    });
+    check('how long each one took is shown under it', periods.length === 0, 'missing: ' + periods.join(', '));
     if (plan.reel) {
       const cards = await page.$$eval('#transformationsGrid .reel-card', els => els.map(c => c.querySelectorAll('img').length));
       check('the strip carries every transformation (twice, to run on)',

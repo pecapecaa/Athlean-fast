@@ -208,15 +208,17 @@ const MENTORSHIP = [
 const TRANSFORMATIONS_VIEW = 'izbor';
 
 // Ispod slika, ako postoje (nisu obavezni):
+//   period: za koliko je postignuto, npr. { sr: '3 mjeseca', en: '3 months' }
 //   quote:  utisak klijenta, npr. { sr: 'Za 4 mjeseca...', en: 'In 4 months...' }
 //   name:   ime, npr. { sr: 'Ana', en: 'Ana' }
-//   detail: npr. { sr: '4 mjeseca', en: '4 months' }
+//   detail: npr. { sr: 'Trener', en: 'Coach' }
 const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/marko-prije.jpg',
     after: 'images/transformacije/marko-poslije.jpg',
     name: { sr: 'Marko Simović', en: 'Marko Simović' },
-    detail: { sr: 'Trener AthLean Fast', en: 'AthLean Fast coach' }
+    detail: { sr: 'Trener AthLean Fast', en: 'AthLean Fast coach' },
+    period: { sr: '6 mjeseci', en: '6 months' }
   },
   {
     before: 'images/transformacije/transformacija-1-prije.jpg',
@@ -244,7 +246,8 @@ const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/transformacija-6-prije.jpg',
     after: 'images/transformacije/transformacija-6-poslije.jpg',
-    layout: 'pair'
+    layout: 'pair',
+    period: { sr: '3 mjeseca', en: '3 months' }
   }
 ];
 
