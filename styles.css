@@ -1174,13 +1174,23 @@ button {
 
 .transformation-caption span { font-size: 0.92rem; color: var(--gold); }
 
-/* How long it took: the first thing under the photos. */
+/* How long it took and what changed: the first thing under the photos,
+   side by side, the kilos in blue so they are read first. */
+.transformation-caption .tf-stats,
+.tf-stats {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 18px;
+  margin-bottom: 6px;
+}
+
 .transformation-caption .tf-period,
 .tf-period {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 6px;
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 300;
@@ -1190,7 +1200,21 @@ button {
 }
 
 .tf-period svg { width: 18px; height: 18px; color: var(--blue-bright); stroke-width: 1.6; }
-.transformation-caption .tf-period + strong { margin-top: 4px; }
+
+.transformation-caption .tf-result,
+.tf-result {
+  padding-left: 18px;
+  border-left: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: var(--blue-bright);
+}
+
+.tf-result:first-child { padding-left: 0; border-left: 0; }
+.transformation-caption .tf-stats + strong { margin-top: 4px; }
 
 /* ===== INSTAGRAM =====
    The handle runs huge and faint behind a card that is one tap to the

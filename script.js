@@ -47,16 +47,20 @@ const t = entry => entry[currentLang] || entry.sr;
 // ===== Rendering =====
 // One transformation, drawn the way it is asked for: a slider, a pair side
 // by side, or a card in the moving strip.
-// The time it took leads, the way ShredFast shows it; name and words follow.
-function periodHtml(item) {
-  return item.period ? `<span class="tf-period">${ICONS.clock}${esc(t(item.period))}</span>` : '';
+// The time it took and what changed lead, the way ShredFast shows them;
+// name and words follow.
+function statsHtml(item) {
+  if (!item.period && !item.result) return '';
+  return `<span class="tf-stats">${
+    item.period ? `<span class="tf-period">${ICONS.clock}${esc(t(item.period))}</span>` : ''}${
+    item.result ? `<span class="tf-result">${esc(t(item.result))}</span>` : ''}</span>`;
 }
 
 function transformationCaption(item, cls) {
-  if (!item.quote && !item.name && !item.period) return '';
+  if (!item.quote && !item.name && !item.period && !item.result) return '';
   return `
       <figcaption class="${cls}">
-        ${periodHtml(item)}
+        ${statsHtml(item)}
         ${item.quote ? `<p class="transformation-quote">${esc(t(item.quote))}</p>` : ''}
         ${item.name ? `<strong>${esc(t(item.name))}</strong>` : ''}
         ${item.detail ? `<span>${esc(t(item.detail))}</span>` : ''}
@@ -99,8 +103,8 @@ function reelCardHtml(item, copy) {
   return `
     <figure class="reel-card"${copy ? ' aria-hidden="true"' : ''}>
       <div class="transformation-pair">${shotHtml(item.before, MSG.before, false, copy)}${shotHtml(item.after, MSG.after, true, copy)}
-      </div>${item.name || item.period ? `
-      <figcaption class="reel-caption">${periodHtml(item)}${item.name ? `<span class="reel-name">${esc(t(item.name))}</span>` : ''}</figcaption>` : ''}
+      </div>${item.name || item.period || item.result ? `
+      <figcaption class="reel-caption">${statsHtml(item)}${item.name ? `<span class="reel-name">${esc(t(item.name))}</span>` : ''}</figcaption>` : ''}
     </figure>`;
 }
 

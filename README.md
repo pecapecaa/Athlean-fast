@@ -57,8 +57,8 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   odluči).
 - Transformacije: slike pre/posle (uspravne, 3:5) u `images/transformacije/`,
   putanje u `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata). Utisak
-  klijenta (`quote`), ime i trajanje se dopisuju uz istu transformaciju i
-  pojavljuju se ispod slike.
+  klijenta (`quote`), ime, trajanje (`period`) i rezultat (`result`, npr.
+  „−8 kg") se dopisuju uz istu transformaciju i pojavljuju se ispod slike.
 
 ## Domen
 

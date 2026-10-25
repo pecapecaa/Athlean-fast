@@ -209,6 +209,7 @@ const TRANSFORMATIONS_VIEW = 'izbor';
 
 // Ispod slika, ako postoje (nisu obavezni):
 //   period: za koliko je postignuto, npr. { sr: '3 mjeseca', en: '3 months' }
+//   result: šta je postignuto, npr. { sr: '−8 kg', en: '−8 kg' }
 //   quote:  utisak klijenta, npr. { sr: 'Za 4 mjeseca...', en: 'In 4 months...' }
 //   name:   ime, npr. { sr: 'Ana', en: 'Ana' }
 //   detail: npr. { sr: 'Trener', en: 'Coach' }
@@ -231,12 +232,16 @@ const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/transformacija-3-prije.jpg',
     after: 'images/transformacije/transformacija-3-poslije.jpg',
-    layout: 'pair'
+    layout: 'pair',
+    period: { sr: '4 mjeseca', en: '4 months' },
+    result: { sr: '−8 kg', en: '−8 kg' }
   },
   {
     before: 'images/transformacije/transformacija-4-prije.jpg',
     after: 'images/transformacije/transformacija-4-poslije.jpg',
-    layout: 'pair'
+    layout: 'pair',
+    period: { sr: '3 mjeseca', en: '3 months' },
+    result: { sr: '+10 kg', en: '+10 kg' }
   },
   {
     before: 'images/transformacije/transformacija-5-prije.jpg',
