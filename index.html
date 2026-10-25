@@ -171,39 +171,83 @@
       </div>
     </section>
 
-    <!-- "Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada": dva
-         kettlebella se iscrtavaju i reči se pale dok se skroluje. -->
-    <section class="section manifest" id="manifest">
+    <!-- Kettlebell, nacrtan jednom; obe varijante ispod ga koriste. -->
+    <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="kbBody" cx="0.36" cy="0.3" r="0.8">
+          <stop offset="0" stop-color="#9a9aa8"/>
+          <stop offset="0.18" stop-color="#4a4a55"/>
+          <stop offset="0.55" stop-color="#1c1c22"/>
+          <stop offset="1" stop-color="#060607"/>
+        </radialGradient>
+        <linearGradient id="kbHandle" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8a8a98"/>
+          <stop offset="0.35" stop-color="#2c2c34"/>
+          <stop offset="1" stop-color="#09090b"/>
+        </linearGradient>
+        <linearGradient id="kbArm" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#d6aa55" stop-opacity="0.9"/>
+          <stop offset="1" stop-color="#d6aa55" stop-opacity="0.15"/>
+        </linearGradient>
+        <clipPath id="kbFlat"><rect x="0" y="0" width="200" height="208"/></clipPath>
+        <symbol id="kbSolid" viewBox="0 0 200 230">
+          <path d="M42 112 C30 18 170 18 158 112 L136 108 C144 58 56 58 64 108 Z" fill="url(#kbHandle)"/>
+          <path d="M50 98 C44 46 92 32 124 38" fill="none" stroke="#fff" stroke-opacity="0.3" stroke-width="3" stroke-linecap="round"/>
+          <path d="M150 98 C156 60 140 42 118 37" fill="none" stroke="#3b5fe0" stroke-opacity="0.8" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="100" cy="146" r="70" fill="url(#kbBody)" clip-path="url(#kbFlat)"/>
+          <rect x="67" y="204" width="66" height="5" rx="2.5" fill="#040405"/>
+          <path d="M160 108 A70 70 0 0 1 138 202" fill="none" stroke="#4d72ff" stroke-opacity="0.95" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M38 170 A70 70 0 0 0 64 204" fill="none" stroke="#d6aa55" stroke-opacity="0.45" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="72" cy="110" rx="22" ry="11" transform="rotate(-35 72 110)" fill="#fff" fill-opacity="0.32"/>
+          <image href="images/logo-mark.svg" x="61" y="124" width="78" height="55"/>
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- Varijanta 1: dva kettlebella padnu i lupe o pod, reči tresnu za njima. -->
+    <section class="section kb-drop" id="kettlebell-pad">
       <div class="container manifest-grid">
-        <svg class="kb-draw" viewBox="0 50 360 205" aria-hidden="true" focusable="false">
-          <defs>
-            <linearGradient id="kbGold" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#f0cf86"/>
-              <stop offset="0.5" stop-color="#d6aa55"/>
-              <stop offset="1" stop-color="#a87b2f"/>
-            </linearGradient>
-          </defs>
-          <g class="kb" style="--s: 0; --d: 0.55">
-          <path pathLength="1" d="M50 127 C38 45 162 45 150 127"/>
-          <path pathLength="1" d="M70 112 C62 67 138 67 130 112"/>
-          <path pathLength="1" d="M50 127 A70 70 0 1 0 150 127"/>
-          <path pathLength="1" d="M70 112 A70 70 0 0 1 130 112"/>
-          <path pathLength="1" d="M64 235 L136 235"/>
-          </g>
-          <g class="kb" style="--s: 0.25; --d: 0.55">
-          <path pathLength="1" d="M210 127 C198 45 322 45 310 127"/>
-          <path pathLength="1" d="M230 112 C222 67 298 67 290 112"/>
-          <path pathLength="1" d="M210 127 A70 70 0 1 0 310 127"/>
-          <path pathLength="1" d="M230 112 A70 70 0 0 1 290 112"/>
-          <path pathLength="1" d="M224 235 L296 235"/>
-          </g>
-          <image class="kb-mark" href="images/logo-mark.svg" x="72" y="168" width="56" height="40"/>
-          <image class="kb-mark" href="images/logo-mark.svg" x="232" y="168" width="56" height="40"/>
-        </svg>
+        <div class="kb-stage">
+          <div class="kb-unit">
+            <svg class="kb-solid" viewBox="0 0 200 230" aria-hidden="true" focusable="false"><use href="#kbSolid"/></svg>
+            <span class="kb-dust"></span>
+          </div>
+          <div class="kb-unit kb-unit--2">
+            <svg class="kb-solid" viewBox="0 0 200 230" aria-hidden="true" focusable="false"><use href="#kbSolid"/></svg>
+            <span class="kb-dust"></span>
+          </div>
+          <span class="kb-floor"></span>
+        </div>
         <div class="manifest-text">
-          <p class="manifest-line" style="--at: 0.15" data-sr="2 kettlebella." data-en="2 kettlebells.">2 kettlebella.</p>
-          <p class="manifest-line" style="--at: 0.4" data-sr="30 minuta." data-en="30 minutes.">30 minuta.</p>
-          <p class="manifest-line manifest-line--accent" style="--at: 0.65" data-sr="Iskren rad." data-en="Honest work.">Iskren rad.</p>
+          <p class="manifest-line slam" style="--delay: 0.7s" data-sr="2 kettlebella." data-en="2 kettlebells.">2 kettlebella.</p>
+          <p class="manifest-line slam" style="--delay: 0.85s" data-sr="30 minuta." data-en="30 minutes.">30 minuta.</p>
+          <p class="manifest-line manifest-line--accent slam" style="--delay: 1s" data-sr="Iskren rad." data-en="Honest work.">Iskren rad.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Varijanta 2: kettlebell zamahuje (swing) dok se skroluje. -->
+    <section class="kb-swing" id="kettlebell-swing">
+      <div class="kb-swing-sticky">
+        <div class="container manifest-grid">
+          <svg class="kb-swing-svg" viewBox="-235 -105 550 390" aria-hidden="true" focusable="false">
+            <path class="kb-swing-arc" d="M-112.4 160.6 A196 196 0 0 0 195.3 17.1"/>
+            <g class="kb-ghosts">
+            <g class="kb-ghost"><use href="#kbSolid" x="-100" y="50" width="200" height="230"/></g>
+            <g class="kb-ghost"><use href="#kbSolid" x="-100" y="50" width="200" height="230"/></g>
+            <g class="kb-ghost"><use href="#kbSolid" x="-100" y="50" width="200" height="230"/></g>
+            </g>
+            <g class="kb-arm">
+              <line class="kb-arm-line" x1="0" y1="0" x2="0" y2="92"/>
+              <use href="#kbSolid" x="-100" y="50" width="200" height="230"/>
+            </g>
+            <circle class="kb-pivot" r="6"/>
+          </svg>
+          <div class="manifest-text">
+            <p class="manifest-line" style="--at: 0.1" data-sr="2 kettlebella." data-en="2 kettlebells.">2 kettlebella.</p>
+            <p class="manifest-line" style="--at: 0.4" data-sr="30 minuta." data-en="30 minutes.">30 minuta.</p>
+            <p class="manifest-line manifest-line--accent" style="--at: 0.7" data-sr="Iskren rad." data-en="Honest work.">Iskren rad.</p>
+          </div>
         </div>
       </div>
     </section>
