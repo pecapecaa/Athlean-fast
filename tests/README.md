@@ -56,6 +56,11 @@ pravoj adresi.
   strelicama na tastaturi)
 - da su kontakt podaci iz `data.js` upisani na svakoj stranici
 
+`tools-version.js --check` (prvi korak u `run.sh`): oznaka `?v=` uz svaki
+stil i skriptu na stranicama mora da odgovara sadržaju fajla. Kad se fajl
+promeni a oznaka ne, telefoni i pregledači uzmu staru kopiju iz keša, pa
+dobiju novu stranicu sa starim stilom ili skriptom.
+
 ## Kad menjaš sadržaj
 
 Posle dodavanja ili brisanja nivoa u `data.js` pokreni:
@@ -66,5 +71,9 @@ Sitemap i robots.txt se generišu iz `data.js` da ne bi mogli da se razmimoiđu.
 
 ## Pre svakog pusha
 
-Pokreni `./tests/run.sh`. I proveri da test stvarno hvata grešku: privremeno
+Posle izmene bilo kog `.css` ili `.js` fajla pokreni:
+
+    node tools-version.js
+
+Pa `./tests/run.sh`. I proveri da test stvarno hvata grešku: privremeno
 pokvari kod, vidi da test pukne, pa vrati.

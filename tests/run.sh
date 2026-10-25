@@ -9,6 +9,11 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 PORT="${PORT:-8299}"
+
+# A page that loads a changed stylesheet or script under its old ?v= stamp
+# gets the cached old copy in visitors' browsers. Caught here, before a push.
+node tools-version.js --check
+
 export NODE_PATH="${NODE_PATH:-/opt/node22/lib/node_modules}"
 
 node tests/server.js "$PORT" >/dev/null 2>&1 &

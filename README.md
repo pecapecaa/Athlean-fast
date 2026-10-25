@@ -65,6 +65,13 @@ Kad se poveže pravi domen:
    u `nivo.html`.
 3. Pokrenuti `node tools-sitemap.js`.
 
+## Posle svake izmene stila ili skripte
+
+    node tools-version.js
+
+Upisuje novu oznaku (`?v=`) uz stilove i skripte na stranicama, da posetioci
+ne dobiju staru kopiju iz keša. Testovi padaju ako se ovo zaboravi.
+
 ## Testovi
 
     ./tests/run.sh
