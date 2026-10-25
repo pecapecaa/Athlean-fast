@@ -698,22 +698,27 @@ function initHeroVideo() {
   // The static background shows straight away; the video fades over it only
   // once it actually plays.
   if (bg) bg.classList.add('visible');
+  // Whichever clip is actually there: the smaller WebM first where the
+  // browser plays it, then the MP4, so uploading only hero.mp4 is enough.
+  // A missing file raises no prompt <video> error, so each is checked first.
   const probe = document.createElement('video');
-  const src = (video.dataset.srcWebm && probe.canPlayType('video/webm; codecs="vp9"'))
-    ? video.dataset.srcWebm
-    : video.dataset.src;
+  const candidates = [];
+  if (video.dataset.srcWebm && probe.canPlayType('video/webm; codecs="vp9"')) candidates.push(video.dataset.srcWebm);
+  if (video.dataset.src) candidates.push(video.dataset.src);
+  const exists = url => fetch(url, { method: 'HEAD' }).then(res => res.ok, () => false);
+  const pick = list => (list.length
+    ? exists(list[0]).then(ok => (ok ? list[0] : pick(list.slice(1))))
+    : Promise.reject(new Error('no clip')));
 
-  // A missing file does not raise a prompt <video> error, so check first.
-  fetch(src, { method: 'HEAD' })
-    .then(res => {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+  pick(candidates)
+    .then(src => {
       video.addEventListener('playing', useVideo, { once: true });
       video.addEventListener('error', useStatic, { once: true });
       if (video.dataset.poster) video.poster = video.dataset.poster;
       video.src = src;
       const attempt = video.play();
       if (attempt && attempt.catch) attempt.catch(useStatic);
-      setTimeout(() => { if (!settled) useStatic(); }, 6000);
+      setTimeout(() => { if (!settled) useStatic(); }, 12000);
     })
     .catch(useStatic);
 }
