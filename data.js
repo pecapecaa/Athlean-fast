@@ -13,13 +13,14 @@ const SITE_ORIGIN = 'https://pecapecaa.github.io/Athlean-fast/';
 const BRAND = 'AthLean Fast';
 
 // ===== Kontakt =====
-// PRIVREMENO: broj, mail i Instagram. Upisuje se na sve stranice odavde.
+// PRIVREMENO: broj i mail (Instagram je pravi). Upisuje se na sve stranice
+// odavde.
 const CONTACT = {
   phone: '+387 XX XXX XXX',
   phoneHref: '+38700000000',
   whatsapp: '38700000000',
   email: 'upiti@example.com',
-  instagram: { handle: 'Instagram', url: 'https://www.instagram.com/' }
+  instagram: { handle: '@sima.markoo', url: 'https://www.instagram.com/sima.markoo/' }
 };
 
 // ===== Kakve rezultate donosi =====

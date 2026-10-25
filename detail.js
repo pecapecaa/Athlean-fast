@@ -7,6 +7,10 @@ const REDUCED_MOTION = window.matchMedia
 function wireNav() {
   applyContact();
   document.addEventListener('click', e => {
+    if (e.target.closest('a[href*="instagram.com"]')) {
+      clEvent('instagram_kliknut');
+      return;
+    }
     const contact = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
     if (contact) clEvent(contact.getAttribute('href').startsWith('tel:') ? 'telefon_kliknut' : 'email_kliknut');
   });

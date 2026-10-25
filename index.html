@@ -67,6 +67,7 @@
         <button type="button" class="lang-toggle" id="langToggle" aria-label="Jezik / Language">
           <span class="lang-active">SR</span> / <span>EN</span>
         </button>
+        <a class="nav-ig" href="#" data-contact="instagram-link" target="_blank" rel="noopener" aria-label="Instagram @sima.markoo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg></a>
         <button type="button" class="nav-join" id="navJoin" data-join="meni" data-sr="Pridruži se" data-en="Join">Pridruži se</button>
       </div>
     </div>
@@ -170,6 +171,43 @@
       </div>
     </section>
 
+    <!-- "Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada": dva
+         kettlebella se iscrtavaju i reči se pale dok se skroluje. -->
+    <section class="section manifest" id="manifest">
+      <div class="container manifest-grid">
+        <svg class="kb-draw" viewBox="0 50 360 205" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="kbGold" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f0cf86"/>
+              <stop offset="0.5" stop-color="#d6aa55"/>
+              <stop offset="1" stop-color="#a87b2f"/>
+            </linearGradient>
+          </defs>
+          <g class="kb" style="--s: 0; --d: 0.55">
+          <path pathLength="1" d="M50 127 C38 45 162 45 150 127"/>
+          <path pathLength="1" d="M70 112 C62 67 138 67 130 112"/>
+          <path pathLength="1" d="M50 127 A70 70 0 1 0 150 127"/>
+          <path pathLength="1" d="M70 112 A70 70 0 0 1 130 112"/>
+          <path pathLength="1" d="M64 235 L136 235"/>
+          </g>
+          <g class="kb" style="--s: 0.25; --d: 0.55">
+          <path pathLength="1" d="M210 127 C198 45 322 45 310 127"/>
+          <path pathLength="1" d="M230 112 C222 67 298 67 290 112"/>
+          <path pathLength="1" d="M210 127 A70 70 0 1 0 310 127"/>
+          <path pathLength="1" d="M230 112 A70 70 0 0 1 290 112"/>
+          <path pathLength="1" d="M224 235 L296 235"/>
+          </g>
+          <image class="kb-mark" href="images/logo-mark.svg" x="72" y="168" width="56" height="40"/>
+          <image class="kb-mark" href="images/logo-mark.svg" x="232" y="168" width="56" height="40"/>
+        </svg>
+        <div class="manifest-text">
+          <p class="manifest-line" style="--at: 0.15" data-sr="2 kettlebella." data-en="2 kettlebells.">2 kettlebella.</p>
+          <p class="manifest-line" style="--at: 0.4" data-sr="30 minuta." data-en="30 minutes.">30 minuta.</p>
+          <p class="manifest-line manifest-line--accent" style="--at: 0.65" data-sr="Iskren rad." data-en="Honest work.">Iskren rad.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- 3. Prilagođeno svima -->
     <section class="section" id="levels">
       <div class="container">
@@ -207,8 +245,29 @@
       </div>
     </section>
 
+    <!-- Instagram: veliko, odmah prepoznatljivo, jedan dodir do profila. -->
+    <section class="section section--alt ig" id="instagram">
+      <div class="ig-backdrop" aria-hidden="true">
+        <div class="ig-backdrop-track">
+          <span data-contact="instagram-handle">@sima.markoo</span>
+          <span data-contact="instagram-handle">@sima.markoo</span>
+          <span data-contact="instagram-handle">@sima.markoo</span>
+          <span data-contact="instagram-handle">@sima.markoo</span>
+        </div>
+      </div>
+      <div class="container">
+        <a class="ig-card" href="#" data-contact="instagram-link" target="_blank" rel="noopener">
+          <span class="ig-avatar"><img src="images/trener.jpg" alt="" width="900" height="1125" loading="lazy" decoding="async"></span>
+          <span class="ig-kicker">Instagram</span>
+          <span class="ig-handle" data-contact="instagram-handle">@sima.markoo</span>
+          <span class="ig-line" data-sr="Treninzi, savjeti i transformacije. Prati i budi dio ekipe." data-en="Workouts, tips and transformations. Follow and join the crew.">Treninzi, savjeti i transformacije. Prati i budi dio ekipe.</span>
+          <span class="ig-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg><span data-sr="Prati na Instagramu" data-en="Follow on Instagram">Prati na Instagramu</span></span>
+        </a>
+      </div>
+    </section>
+
     <!-- 5. Pridruži se -->
-    <section class="section section--follow" id="join">
+    <section class="section" id="join">
       <div class="container">
         <div class="join-band">
           <h2 data-sr="Pridruži se" data-en="Join us">Pridruži se</h2>

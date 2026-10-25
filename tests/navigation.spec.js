@@ -35,7 +35,11 @@ async function run() {
     const page = await browser.newPage();
     await page.goto(BASE + '/');
     const barLinks = await page.$$eval('.navbar a', els => els.map(e => e.getAttribute('href')));
-    check('the bar has no menu, only the logo', barLinks.length === 1 && barLinks[0] === '#hero', barLinks.join(','));
+    const inPage = barLinks.filter(h => h.startsWith('#'));
+    check('the bar has no menu: the logo is its only link into the page',
+      inPage.length === 1 && inPage[0] === '#hero', barLinks.join(','));
+    check('Instagram is one tap away in the bar',
+      barLinks.some(h => h.includes('instagram.com/sima.markoo')), barLinks.join(','));
     await page.click('.scroll-indicator');
     await page.waitForTimeout(250);
     check('the scroll arrow leaves the address clean', hashOf(page) === '', page.url());

@@ -142,6 +142,27 @@ button {
 
 .lang-toggle .lang-active { color: var(--gold); }
 
+.nav-ig {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
+}
+
+@media (hover: hover) {
+  .nav-ig:hover {
+    background: linear-gradient(45deg, #f58529, #dd2a7b 45%, #8134af 75%, #515bd4);
+    border-color: transparent;
+    color: var(--white);
+  }
+}
+
 .nav-join {
   display: inline-block;
   background: var(--blue);
@@ -476,9 +497,6 @@ button {
 .section { position: relative; padding: 120px 0; }
 .section--alt { background: var(--bg-alt); }
 
-/* Continues the section above on the same ground, so one gap, not two. */
-.section--follow { padding-top: 0; }
-
 .section-header {
   text-align: center;
   max-width: 780px;
@@ -673,6 +691,57 @@ button {
     box-shadow: 0 16px 40px rgba(23, 57, 196, 0.16);
   }
 }
+
+/* ===== MANIFEST: two kettlebells drawn on scroll =====
+   --draw runs from 0 to 1 as the section is scrolled to the middle of the
+   screen (drawOnScroll in script.js). Each kettlebell has its own start
+   (--s) and length (--d) within that, each line its own moment (--at). */
+.manifest {
+  overflow: hidden;
+  background: radial-gradient(ellipse 50% 60% at 30% 50%, rgba(23, 57, 196, 0.22) 0%, transparent 70%), var(--bg);
+}
+
+.manifest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1060px;
+}
+
+.kb-draw {
+  width: 100%;
+  max-width: 480px;
+  justify-self: center;
+  overflow: visible;
+  filter: drop-shadow(0 0 16px rgba(214, 170, 85, 0.25));
+}
+
+.kb path {
+  fill: none;
+  stroke: url(#kbGold);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, (var(--draw, 0) - var(--s)) / var(--d), 1));
+}
+
+.kb-mark { opacity: clamp(0, (var(--draw, 0) - 0.82) * 6, 1); }
+
+.manifest-line {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white);
+  opacity: clamp(0.08, (var(--draw, 0) - var(--at)) * 5, 1);
+  transform: translateX(calc((1 - clamp(0, (var(--draw, 0) - var(--at)) * 5, 1)) * 30px));
+}
+
+.manifest-line--accent { color: var(--blue-bright); }
 
 /* ===== LEVEL CARDS ===== */
 .cards-grid {
@@ -966,6 +1035,133 @@ button {
 }
 
 .transformation-caption span { font-size: 0.92rem; color: var(--gold); }
+
+/* ===== INSTAGRAM =====
+   The handle runs huge and faint behind a card that is one tap to the
+   profile; the only place the site wears Instagram's own colours. */
+.ig { overflow: hidden; }
+
+.ig-backdrop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.ig-backdrop-track {
+  display: flex;
+  gap: 80px;
+  width: max-content;
+  animation: marquee 70s linear infinite;
+}
+
+.ig-backdrop span {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 16vw, 14rem);
+  font-weight: 300;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+}
+
+.ig .container { position: relative; z-index: 1; }
+
+.ig-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 48px 32px 40px;
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  background: rgba(22, 22, 24, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+}
+
+@media (hover: hover) {
+  .ig-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(221, 42, 123, 0.5);
+    box-shadow: 0 24px 60px rgba(221, 42, 123, 0.16);
+  }
+}
+
+/* The story ring, turning slowly. */
+.ig-avatar {
+  position: relative;
+  isolation: isolate;
+  width: 128px;
+  height: 128px;
+  margin-bottom: 22px;
+  border-radius: 50%;
+}
+
+.ig-avatar::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  z-index: -1;
+  border-radius: 50%;
+  background: conic-gradient(#feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5, #feda75);
+  animation: ringSpin 5s linear infinite;
+}
+
+.ig-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 12%;
+  border-radius: 50%;
+  border: 4px solid var(--card);
+}
+
+@keyframes ringSpin { to { transform: rotate(360deg); } }
+
+.ig-kicker {
+  font-size: 0.76rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.ig-handle {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  font-weight: 300;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  color: var(--white);
+}
+
+.ig-line {
+  max-width: 34ch;
+  margin: 12px 0 28px;
+  color: var(--text-muted);
+}
+
+.ig-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 14px 36px;
+  border-radius: 999px;
+  background: linear-gradient(45deg, #f58529, #dd2a7b 45%, #8134af 75%, #515bd4);
+  box-shadow: 0 10px 30px rgba(221, 42, 123, 0.3);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white);
+}
 
 /* ===== JOIN BAND =====
    The one block of solid blue on the page: the call everything leads to. */
@@ -1561,6 +1757,8 @@ button {
   .locations { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
   .transformation { flex-basis: 100%; max-width: none; }
   .about { grid-template-columns: 1fr; gap: 36px; max-width: 560px; text-align: center; }
+  .manifest-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+  .kb-draw { max-width: 340px; }
   .card-media { aspect-ratio: 16 / 10; }
 }
 
@@ -1623,6 +1821,8 @@ button {
   .hero-video { display: none; }
   .is-counted { animation: none; }
   .marquee-track,
+  .ig-backdrop-track,
+  .ig-avatar::before,
   .hero-bg::before,
   .hero-emblem::after { animation: none; }
 }

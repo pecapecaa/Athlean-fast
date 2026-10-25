@@ -554,6 +554,28 @@ function animateCounters() {
   });
 }
 
+// The two kettlebells draw themselves, and the words light up, as their
+// section is scrolled from the bottom of the screen to its middle.
+function drawOnScroll() {
+  const el = document.querySelector('.manifest');
+  if (!el) return;
+  if (LESS_MOTION) {
+    el.style.setProperty('--draw', '1');
+    return;
+  }
+  const update = () => {
+    const r = el.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const start = vh * 0.9;
+    const end = vh * 0.5 - r.height / 2;
+    const p = (start - r.top) / Math.max(start - end, 1);
+    el.style.setProperty('--draw', Math.max(0, Math.min(1, p)).toFixed(3));
+  };
+  onScrollFrame(update);
+  window.addEventListener('resize', update);
+  update();
+}
+
 // On a phone, "Pridruži se" waits at the bottom of the screen once the hero
 // is passed. It steps aside where the page already offers the same button
 // (the join band) or a form of its own (contact).
@@ -767,6 +789,10 @@ document.addEventListener('DOMContentLoaded', () => {
       goToSection(target, 'smooth');
       return;
     }
+    if (e.target.closest('a[href*="instagram.com"]')) {
+      clEvent('instagram_kliknut');
+      return;
+    }
     const contact = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
     if (contact) clEvent(contact.getAttribute('href').startsWith('tel:') ? 'telefon_kliknut' : 'email_kliknut');
   });
@@ -805,6 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
   landOnHash();
   openJoinFromUrl();
   animateCounters();
+  drawOnScroll();
   mobileJoinBar();
   trackSections();
   initHeroVideo();
