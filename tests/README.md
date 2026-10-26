@@ -5,10 +5,11 @@
 Podiže lokalni server, pokrene sve provere i ugasi server. Izlazni kod 0
 znači da je sve prošlo.
 
-Server je `tests/server.js`, a ne običan fajl-server: Cloudflare Pages (i
-GitHub Pages) poslužuje `nivo.html` na adresi `/nivo`, a Cloudflare trajno
-preusmerava `.html` oblik na nju. Sa običnim serverom testirali bismo drugačiji
-sajt od onog koji posetioci dobijaju.
+Server je `tests/server.js`, a ne običan fajl-server: GitHub Pages poslužuje
+`nivo.html` na adresi `/nivo`, kako sajt i linkuje. Sa običnim serverom
+testirali bismo drugačiji sajt od onog koji posetioci dobijaju. Server pri tom
+`.html` oblik adrese preusmerava na kratki (kao Cloudflare Pages), da nijedan
+link na sajtu ne bi slučajno vodio na duži oblik.
 
 ## Šta se proverava
 

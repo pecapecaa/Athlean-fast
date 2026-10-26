@@ -1,4 +1,2 @@
-# Interni poslovni podaci — nabavne cene i marze ne smeju na javni repozitorijum
-*.xlsx
-*.xls
+# Privremeni fajlovi koje Word i Excel ostave dok je dokument otvoren
 ~$*

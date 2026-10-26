@@ -135,7 +135,7 @@ async function run() {
       s['Ime i prezime'] === 'Test Klijent' && s['Email'] === 'test@example.com' && s['Telefon'] === '065 123 4567');
     check('answers arrive as readable labels, not codes',
       s['Koji ti je glavni cilj?'] === 'Izdefinisati tijelo' &&
-      s['Koliko si utreniran?'] === 'Srednji nivo' &&
+      s['Koji nivo ti odgovara?'] === 'Srednji nivo' &&
       s['Koliko vremena imaš za trening?'] === '45 minuta' &&
       s['Imaš li kettlebell?'] === 'Da, dva', JSON.stringify(s));
     check('the free-text note is included',

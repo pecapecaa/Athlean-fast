@@ -66,8 +66,7 @@ function render(level, detail) {
 
   document.getElementById('wpFacts').innerHTML = [
     ['Trajanje', level.duration],
-    ['Oprema', level.equipment.sr],
-    ['Gdje', 'Bilo gdje']
+    ['Oprema', level.equipment.sr]
   ].map(([k, v]) => '<div class="wp-fact"><dt>' + k + '</dt><dd>' + esc(v) + '</dd></div>').join('');
 
   document.getElementById('wpWorkout').innerHTML = detail.workout.map((move, i) =>

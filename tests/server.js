@@ -1,7 +1,9 @@
-// A static server that serves the site the way Cloudflare Pages does.
+// A static server that serves the site the way GitHub Pages does, only
+// stricter.
 //
-// Pages does two things a plain file server does not: it serves foo.html at
-// /foo, and it permanently redirects /foo.html to /foo. Testing against a
+// It does two things a plain file server does not: it serves foo.html at
+// /foo, as GitHub Pages does, and it permanently redirects /foo.html to /foo,
+// as Cloudflare Pages does, so a link to the long form is caught here. Testing against a
 // plain file server means testing a different site than the one visitors
 // get — the URLs in the sitemap, in every canonical link and in every
 // internal link would look right locally and redirect in production.

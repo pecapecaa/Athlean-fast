@@ -21,7 +21,7 @@ const MSG = {
   badPhone: { sr: 'Unesi ispravan broj telefona', en: 'Please enter a valid phone number' },
   badAge: { sr: 'Godine treba da budu između 14 i 99', en: 'Age should be between 14 and 99' },
   answerAll: { sr: 'Odgovori na sva obavezna pitanja', en: 'Please answer all the required questions' },
-  sending: { sr: 'Slanje...', en: 'Sending...' },
+  sending: { sr: 'Slanje…', en: 'Sending…' },
   joinFailed: {
     sr: 'Slanje nije uspjelo. Pokušaj ponovo ili se javi telefonom.',
     en: 'Sending failed. Please try again or give us a call.'
@@ -34,7 +34,7 @@ const MSG = {
 const JOIN_STEPS = {
   1: {
     title: { sr: 'Pridruži se', en: 'Join' },
-    desc: { sr: 'Prvo par podataka o tebi, da znamo kome se javljamo.', en: 'First a few details about you, so we know who to get back to.' }
+    desc: { sr: 'Prvo par podataka o tebi, da znam kome se javljam.', en: 'First a few details about you, so I know who I am getting back to.' }
   },
   2: {
     title: { sr: 'Upitnik', en: 'Questionnaire' },

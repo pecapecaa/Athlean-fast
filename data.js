@@ -71,7 +71,7 @@ const LEVELS = [
     subtitle: { sr: 'Za one koji tek kreću', en: 'For those just starting out' },
     desc: {
       sr: 'Učiš osnovne pokrete sa kettlebellom i vlastitim tijelom. Gradiš tehniku, naviku i kondiciju bez preopterećenja.',
-      en: 'Learn the basic movements with a kettlebell and your own body. Build technique, the habit and conditioning without overload.'
+      en: 'Learn the basic movements with a kettlebell and your own body. Build technique, habit and conditioning without overload.'
     },
     duration: '30 min',
     equipment: { sr: '1–2 kettlebella', en: '1–2 kettlebells' },
@@ -112,12 +112,12 @@ const LEVELS = [
 // PRIVREMENO: primeri treninga dok ne stignu pravi.
 const LEVEL_DETAILS = {
   pocetni: {
-    lead: 'Prvi korak je najvažniji. Učiš pravilnu tehniku osnovnih pokreta sa kettlebellom i vlastitim tijelom, korak po korak, bez preopterećenja i bez povreda.',
+    lead: 'Prvi korak je najvažniji. Učiš pravilnu tehniku osnovnih pokreta sa kettlebellom i vlastitim tijelom, postepeno, bez preopterećenja i bez povreda.',
     workout: [
       { name: 'Zagrijavanje', dose: '5 min', note: 'Mobilnost zglobova i lagani kardio' },
       { name: 'Goblet čučanj', dose: '3 × 12', note: 'Kettlebell uz grudi, leđa prava' },
       { name: 'Kettlebell swing', dose: '3 × 15', note: 'Snaga dolazi iz kukova, ne iz ruku' },
-      { name: 'Sklekovi', dose: '3 × 8–10', note: 'Na koljenima, dok ne ojača' },
+      { name: 'Sklekovi', dose: '3 × 8–10', note: 'Na koljenima, dok ne ojačaš' },
       { name: 'Veslanje kettlebellom', dose: '3 × 10 po ruci', note: 'Lopatica ide ka kičmi' },
       { name: 'Iskorak u mjestu', dose: '3 × 10 po nozi', note: 'Kontrolisano, bez žurbe' },
       { name: 'Plank', dose: '3 × 30 s', note: 'Stomak i zadnjica zategnuti' }
@@ -139,11 +139,11 @@ const LEVEL_DETAILS = {
       { name: 'Prednji čučanj sa 2 kettlebella', dose: '4 × 10', note: 'Laktovi ispod kettlebella' },
       { name: 'Renegade veslanje', dose: '3 × 8 po ruci', note: 'Iz pozicije skleka, kukovi mirni' },
       { name: 'Farmer\'s walk', dose: '3 × 40 m', note: '2 kettlebella, uspravno držanje' },
-      { name: 'Kružni finiš', dose: '3 kruga × 40 s', note: 'Burpees, penjači, skokovi' }
+      { name: 'Kružni finiš', dose: '3 kruga × 40 s', note: 'Burpee, penjači, skokovi' }
     ],
     forYou: [
-      'Treniraš redovno, ali si zapeo na istom mjestu',
-      'Osnovne pokrete radiš pravilno i spreman si za veći tempo',
+      'Treniraš redovno, ali je napredak stao',
+      'Osnovne pokrete radiš pravilno i vrijeme je za veći tempo',
       'Želiš vidljivije rezultate u snazi i izgledu'
     ],
     notForYou: 'Ako tek počinješ, kreni od početnog nivoa: najbrži napredak dolazi iz dobre osnove.',
@@ -152,20 +152,20 @@ const LEVEL_DETAILS = {
   napredni: {
     lead: 'Trening kao kod sportista. Teški kompleksi sa 2 kettlebella, eksplozivni pokreti i metabolički finiš za atletski izvajano tijelo.',
     workout: [
-      { name: 'Zagrijavanje i aktivacija', dose: '10 min', note: 'Dinamička mobilnost i aktivacija' },
-      { name: 'Dupli clean & jerk', dose: '5 × 5', note: '2 kettlebella, eksplozivno' },
+      { name: 'Zagrijavanje i aktivacija', dose: '10 min', note: 'Dinamička mobilnost cijelog tijela' },
+      { name: 'Dupli clean & jerk', dose: '5 × 5', note: 'Eksplozivno, snaga iz nogu' },
       { name: 'Dupli prednji čučanj', dose: '5 × 6', note: 'Puna dubina, puna kontrola' },
       { name: 'Snatch', dose: '4 × 8 po ruci', note: 'Kettlebell mekano preko šake' },
       { name: 'Pistol čučanj', dose: '4 × 5 po nozi', note: 'Kettlebell kao kontrateg' },
       { name: 'Veslanje sa 2 kettlebella', dose: '4 × 8', note: 'Pretklon, neutralna leđa' },
-      { name: 'Metabolički finiš', dose: '10 min', note: 'Svakog minuta 10 swingova i 5 burpeesa' }
+      { name: 'Metabolički finiš', dose: '10 min', note: 'Svakog minuta 10 swingova i 5 burpeeja' }
     ],
     forYou: [
       'Imaš bar godinu ili dvije ozbiljnog treninga iza sebe',
       'Želiš atletske performanse, a ne samo izgled',
-      'Spreman si na zahtjevne treninge i disciplinu'
+      'Zahtjevni treninzi i disciplina te ne plaše'
     ],
-    notForYou: 'Ako nemaš ozbiljnu osnovu, ovaj intenzitet nosi rizik od povrede. Kreni od nivoa niže, stići ćeš brže nego što misliš.',
+    notForYou: 'Ako nemaš ozbiljnu osnovu, ovaj intenzitet nosi rizik od povrede. Kreni nivo niže, stići ćeš brže nego što misliš.',
     focus: { snaga: 5, kondicija: 5, tehnika: 4, mobilnost: 3, intenzitet: 5 }
   }
 };
@@ -180,7 +180,7 @@ const MENTORSHIP = [
   {
     icon: 'plan',
     title: { sr: 'Plan treninga', en: 'Training plan' },
-    text: { sr: 'Treninzi sa kettlebellom i vlastitim tijelom, složeni za tebe.', en: 'Kettlebell and bodyweight sessions, put together for you.' }
+    text: { sr: 'Treninzi sa kettlebellom i vlastitim tijelom, napravljeni baš za tebe.', en: 'Kettlebell and bodyweight sessions, made just for you.' }
   },
   {
     icon: 'library',
@@ -233,7 +233,7 @@ const TRANSFORMATIONS = [
     result: { sr: '−8 kg', en: '−8 kg' }
   },
   {
-    // Ista klijentkinja, ista slika prije, posle 7 mjeseci
+    // Ista klijentkinja i ista slika pre, posle 7 meseci
     before: 'images/transformacije/transformacija-3-prije.jpg',
     after: 'images/transformacije/transformacija-3b-poslije.jpg',
     period: { sr: '7 mjeseci', en: '7 months' }
@@ -298,7 +298,7 @@ const JOIN_QUESTIONS = [
     id: 'nivo',
     type: 'choice',
     required: true,
-    label: { sr: 'Koliko si utreniran?', en: 'How trained are you?' },
+    label: { sr: 'Koji nivo ti odgovara?', en: 'Which level suits you?' },
     options: 'levels'
   },
   {
@@ -327,7 +327,7 @@ const JOIN_QUESTIONS = [
     id: 'mjesto',
     type: 'choice',
     required: true,
-    label: { sr: 'Gdje bi trenirao?', en: 'Where would you train?' },
+    label: { sr: 'Gdje ti odgovara da treniraš?', en: 'Where would you like to train?' },
     options: [
       { value: 'kuca', label: { sr: 'Kod kuće', en: 'At home' } },
       { value: 'napolju', label: { sr: 'Napolju', en: 'Outdoors' } },

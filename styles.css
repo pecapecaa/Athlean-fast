@@ -88,8 +88,6 @@ button {
   padding: 0 24px;
 }
 
-.accent { color: var(--blue-bright); }
-
 /* ===== NAVBAR =====
    Logo and the one action that matters. No menu: the page is read top to
    bottom, nothing sends anyone sideways. */
@@ -632,15 +630,6 @@ button {
   line-height: 1;
   white-space: nowrap;
   color: var(--blue-bright);
-}
-
-.feature-unit {
-  margin-top: 8px;
-  font-size: 0.74rem;
-  font-weight: 400;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--text-muted);
 }
 
 .feature h3 { font-size: 1.2rem; margin-bottom: 10px; }

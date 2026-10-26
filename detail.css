@@ -169,10 +169,10 @@
   color: var(--text-muted);
 }
 
-/* The three facts as ShredFast-style panels. */
+/* The facts as ShredFast-style panels. */
 .wp-facts {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-bottom: 34px;
 }

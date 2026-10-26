@@ -32,7 +32,6 @@ const ICONS = {
   library: svgIcon('<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M10 8.5v5l4.5-2.5z"/><path d="M7 21h10"/>', 34),
   timer: svgIcon('<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 2.5h4M12 2.5V6M18.5 6.5l1.5-1.5"/>', 34),
   calendar: svgIcon('<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8.5 15l2.2 2.2 4.8-4.7"/>', 34),
-  instagram: svgIcon('<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>', 20),
   pin: svgIcon('<path d="M12 21s-7-6.1-7-11.5a7 7 0 0114 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>', 22)
 };
 
@@ -62,7 +61,7 @@ function levelCardHtml(level, lang) {
 // A result or a coaching feature: a big figure or an icon, a title, a line.
 function featureHtml(item, lang) {
   const head = item.big
-    ? `<div class="feature-big">${esc(item.big)}</div>${item.unit ? `<div class="feature-unit">${esc(tr(item.unit, lang))}</div>` : ''}`
+    ? `<div class="feature-big">${esc(item.big)}</div>`
     : `<div class="feature-icon">${ICONS[item.icon] || ''}</div>`;
   return `
     <div class="feature${item.big === '24/7' ? ' feature--highlight' : ''}">
