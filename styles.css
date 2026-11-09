@@ -19,14 +19,12 @@
   --blue: #1739c4;             /* fills behind white text */
   --blue-hover: #2448d6;
   --blue-bright: #3b5fe0;      /* large figures, titles and icons on black */
-  --velvet: #011244;           /* the logo's backdrop */
+  /* The darkest blue in the satin of the logo photo. Every blue background
+     is this one colour: the arrival, the hero without a clip, the levels
+     and the level page. */
+  --velvet: #00072d;
   --velvet-light: #0b2273;
   --blue-glow: rgba(23, 57, 196, 0.45);
-  /* The satin behind the gold logo. The arrival, the hero without a clip
-     and the levels all sit on this one blue. */
-  --satin:
-    radial-gradient(ellipse 55% 45% at 50% 38%, rgba(23, 57, 196, 0.45) 0%, transparent 70%),
-    linear-gradient(160deg, var(--velvet-light) 0%, #021f62 30%, var(--velvet) 62%, #010b33 100%);
 
   --gold: #d6aa55;
   --gold-light: #f0cf86;
@@ -255,7 +253,7 @@ button {
   opacity: 0;
   transition: opacity 1.2s ease;
   overflow: hidden;
-  background: var(--satin);
+  background: var(--velvet);
 }
 
 .hero-bg.visible { opacity: 1; }
@@ -280,8 +278,9 @@ button {
   to { background-position: 100% 100%; }
 }
 
-/* Over the still the wash can be lighter than over footage. */
-.hero-bg.visible + .hero-overlay { opacity: 0.75; }
+/* Over the still the blue shows as it is: white text reads on it without
+   a wash, and only the bottom fades into the page. */
+.hero-bg.visible + .hero-overlay { background: linear-gradient(180deg, transparent 72%, var(--bg) 100%); }
 
 .hero-overlay {
   position: absolute;
@@ -476,7 +475,7 @@ button {
 /* ===== SECTIONS ===== */
 .section { position: relative; padding: 120px 0; }
 .section--alt { background: var(--bg-alt); }
-.section--satin { background: var(--satin); }
+.section--velvet { background: var(--velvet); }
 
 .section-header {
   text-align: center;
@@ -1784,7 +1783,7 @@ button {
 
 /* ===== ARRIVAL =====
    The first time in a session the page opens on the gold logo alone, on
-   the satin, then fades into the hero. The fade is CSS, so the logo never
+   the dark blue, then fades into the hero. The fade is CSS, so the logo never
    stays up if the script fails; a tap, a key or a scroll only ends it
    sooner (script.js). */
 .intro { display: none; }
@@ -1800,7 +1799,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--satin);
+  background: var(--velvet);
   animation: introOut 0.8s ease var(--intro) forwards;
 }
 

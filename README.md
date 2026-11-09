@@ -34,6 +34,9 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   - crna osnova
   - kraljevsko plava (`--blue`, `--blue-bright`) je prepoznatljiva boja:
     dugmad, veliki brojevi, najvažnije
+  - tamnoplava (`--velvet`, #00072d) je najtamnija plava sa fotografije
+    logoa i jedina plava pozadina: ulaz, početna dok nema videa, nivoi i
+    stranica nivoa
   - bela je za kontrast, zlatna (`--gold`) samo za sitne detalje
   - naslovi su Oswald, tekst Lato
 - **Logo:** vektorski, u `images/`:
