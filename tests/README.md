@@ -59,6 +59,9 @@ pravoj adresi.
 - da se slike kettlebella učitaju i da padnu kad dođu na ekran, i ponovo
   pri povratku
 - da su kontakt podaci iz `data.js` upisani na svakoj stranici
+- da prvi ulazak počinje zlatnim logom koji sam nestane posle par sekundi
+  (ili odmah na dodir), samo jednom po poseti, i ne kad link vodi pravo na
+  deo stranice ili kad posetilac traži manje pokreta
 
 `tools-version.js --check` (prvi korak u `run.sh`): oznaka `?v=` uz svaki
 stil i skriptu na stranicama mora da odgovara sadržaju fajla. Kad se fajl

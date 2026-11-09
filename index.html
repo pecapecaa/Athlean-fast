@@ -37,7 +37,7 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Lato:wght@400;700&display=swap">
   </noscript>
-  <link rel="stylesheet" href="styles.css?v=0b8d3123">
+  <link rel="stylesheet" href="styles.css?v=61744363">
 
   <script>
     // Sopstveni događaji i tagovi za analitiku (Microsoft Clarity). Sve kroz
@@ -53,9 +53,25 @@
     window.clKeep = function (reason) {
       try { if (window.clarity) window.clarity('upgrade', reason); } catch (e) {}
     };
+    // Prvi ulazak u sesiji počinje samo zlatnim logom na plavoj, pa prelazi
+    // u početnu. Ne kad se dolazi pravo na deo stranice ili na prijavu, ni
+    // kad posetilac traži manje pokreta. Ovde, pre crtanja, da se početna
+    // ne bi pojavila pa nestala.
+    (function () {
+      try {
+        if (location.hash || /[?&]prijava=/.test(location.search)) return;
+        if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (sessionStorage.getItem('afIntro')) return;
+        sessionStorage.setItem('afIntro', '1');
+        document.documentElement.classList.add('has-intro');
+      } catch (e) {}
+    })();
   </script>
 </head>
 <body>
+  <div class="intro" id="intro" aria-hidden="true">
+    <img src="images/logo-stacked.svg" alt="" width="788" height="548">
+  </div>
   <a class="skip-link" href="#main" data-sr="Preskoči na sadržaj" data-en="Skip to content">Preskoči na sadržaj</a>
 
   <nav class="navbar" id="navbar">
@@ -85,12 +101,12 @@
       <div class="container hero-content">
         <span class="hero-emblem"><img src="images/logo-mark.svg" alt="" width="750" height="530"></span>
         <h1 class="hero-title">
-          <span data-sr="Atletski izvajano tijelo." data-en="An athletic, sculpted body.">Atletski izvajano tijelo.</span>
-          <span class="hero-title-accent" data-sr="Brzo do rezultata." data-en="Results, fast.">Brzo do rezultata.</span>
+          <span data-sr="Izgradi atletsko tijelo" data-en="Build an athletic body">Izgradi atletsko tijelo</span>
+          <span class="hero-title-accent" data-sr="Brzo." data-en="Fast.">Brzo.</span>
         </h1>
-        <p class="hero-subtitle" data-sr="Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada." data-en="All you need is 2 kettlebells and 30 minutes of honest work.">Sve što trebaš su 2 kettlebella i 30 minuta iskrenog rada.</p>
+        <p class="hero-subtitle" data-sr="Sve što trebaš su 2 kettlebella i 30 minuta." data-en="All you need is 2 kettlebells and 30 minutes.">Sve što trebaš su 2 kettlebella i 30 minuta.</p>
         <div class="hero-buttons">
-          <button type="button" class="btn btn-primary btn-lg" data-join="hero" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
+          <button type="button" class="btn btn-primary btn-lg" data-join="hero" data-sr="Treniraj sa nama" data-en="Train with us">Treniraj sa nama</button>
           <a href="#about" class="btn-link" data-sr="Saznaj više" data-en="Learn more">Saznaj više</a>
         </div>
         <ul class="hero-points">
@@ -171,7 +187,7 @@
     </section>
 
     <!-- 3. Prilagođeno svima -->
-    <section class="section" id="levels">
+    <section class="section section--satin" id="levels">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker" data-sr="Nivoi" data-en="Levels">Nivoi</div>
@@ -200,8 +216,8 @@
     <section class="section" id="transformations">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker" data-sr="Transformacije" data-en="Transformations">Transformacije</div>
-          <h2 class="section-title" data-sr="Pravi ljudi, pravi rezultati" data-en="Real people, real results">Pravi ljudi, pravi rezultati</h2>
+          <div class="section-kicker" data-sr="Pravi ljudi" data-en="Real people">Pravi ljudi</div>
+          <h2 class="section-title" data-sr="AthLean Fast rezultati" data-en="AthLean Fast results">AthLean Fast rezultati</h2>
         </div>
         <div id="transformationsReel"></div>
       </div>
@@ -431,6 +447,6 @@
 
   <script src="data.js?v=95686fbc"></script>
   <script src="components.js?v=22f3d17d"></script>
-  <script src="script.js?v=1cccf0b7"></script>
+  <script src="script.js?v=afab89a7"></script>
 </body>
 </html>

@@ -202,6 +202,43 @@ async function run() {
     await page.close();
   }
 
+  // ---- 9. A first visit opens on the gold logo, which then gives way.
+  {
+    console.log('\n9. Logo on arrival');
+    const shown = p => p.evaluate(() => {
+      const el = document.getElementById('intro');
+      if (!el) return false;
+      const style = getComputedStyle(el);
+      return style.display !== 'none' && style.visibility !== 'hidden';
+    });
+
+    const page = await browser.newPage();
+    await page.goto(BASE + '/');
+    check('a first visit opens on the logo', await shown(page));
+    await page.waitForTimeout(3500);
+    check('which gives way to the page by itself', !(await shown(page)));
+    await page.goto(BASE + '/');
+    check('only once a visit', !(await shown(page)));
+    await page.close();
+
+    const tap = await browser.newPage();
+    await tap.goto(BASE + '/');
+    await tap.mouse.click(20, 400);
+    await tap.waitForTimeout(600);
+    check('a tap sends it off at once', !(await shown(tap)));
+    await tap.close();
+
+    const deep = await browser.newPage();
+    await deep.goto(BASE + '/#levels');
+    check('not when a link leads straight to a section', !(await shown(deep)));
+    await deep.close();
+
+    const calm = await browser.newPage({ reducedMotion: 'reduce' });
+    await calm.goto(BASE + '/');
+    check('not for a visitor who asked for less motion', !(await shown(calm)));
+    await calm.close();
+  }
+
   await browser.close();
   console.log(`\n${pass} passed, ${fail} failed`);
   if (fail) { console.log('failed: ' + failures.join(', ')); process.exit(1); }

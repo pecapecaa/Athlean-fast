@@ -13,8 +13,8 @@ const MSG = {
   before: { sr: 'Prije', en: 'Before' },
   after: { sr: 'Poslije', en: 'After' },
   reel: {
-    sr: 'Transformacije: povuci ili koristi strelice',
-    en: 'Transformations: drag or use the arrow keys'
+    sr: 'AthLean Fast rezultati: povuci ili koristi strelice',
+    en: 'AthLean Fast results: drag or use the arrow keys'
   },
   fillContact: { sr: 'Popuni ime, email i telefon', en: 'Please fill in your name, email and phone' },
   badEmail: { sr: 'Unesi ispravnu email adresu', en: 'Please enter a valid email address' },
@@ -787,6 +787,31 @@ function initHeroVideo() {
     .catch(useStatic);
 }
 
+// ===== Logo on arrival =====
+// The splash leaves by itself (styles.css); any sign that the visitor wants
+// the page, a tap, a key, a wheel or a scroll, sends it off at once. Once it
+// has faded it is taken out of the page.
+function endIntroOnInput() {
+  const intro = document.getElementById('intro');
+  const root = document.documentElement;
+  if (!intro) return;
+  if (!root.classList.contains('has-intro')) {
+    intro.remove();
+    return;
+  }
+  const events = ['pointerdown', 'keydown', 'wheel', 'touchmove', 'scroll'];
+  const skip = () => {
+    events.forEach(type => window.removeEventListener(type, skip, true));
+    root.classList.add('intro-skip');
+  };
+  events.forEach(type => window.addEventListener(type, skip, { capture: true, passive: true }));
+  intro.addEventListener('animationend', e => {
+    if (e.animationName !== 'introOut' && e.animationName !== 'introSkip') return;
+    events.forEach(type => window.removeEventListener(type, skip, true));
+    intro.remove();
+  });
+}
+
 // ===== Init =====
 // The band moves by half its width, so it carries its words twice; the
 // copy is made here to keep the HTML to one list.
@@ -798,6 +823,7 @@ function fillMarquee() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  endIntroOnInput();
   fillMarquee();
   const progress = document.createElement('div');
   progress.className = 'scroll-progress';
