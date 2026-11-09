@@ -43,9 +43,11 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 
 ## Snimci i slike
 
-- Logo na ulasku: pri prvom ulasku u posetu početna se otvara samo zlatnim
-  logom (`images/logo-stacked.svg`) na plavoj, pa posle oko 2 sekunde prelazi
-  u uvodni deo. Trajanje je `--intro` u `styles.css`.
+- Logo na ulasku: pri prvom ulasku u posetu početna se otvara samo
+  originalnom fotografijom logoa (`images/logo-satin.webp`, i `.jpg` za
+  starije pregledače), pa posle oko 2 sekunde prelazi u uvodni deo. Trajanje
+  je `--intro` u `styles.css`. Plava svuda na sajtu (`--satin`) je izmerena
+  sa te fotografije.
 
 - Fotografija trenera: `images/trener.jpg` (uspravna, 4:5), u delu „Šta je
   AthLean Fast".

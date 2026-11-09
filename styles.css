@@ -22,11 +22,16 @@
   --velvet: #011244;           /* the logo's backdrop */
   --velvet-light: #0b2273;
   --blue-glow: rgba(23, 57, 196, 0.45);
-  /* The satin behind the gold logo. The arrival, the hero without a clip
-     and the levels all sit on this one blue. */
-  --satin:
-    radial-gradient(ellipse 55% 45% at 50% 38%, rgba(23, 57, 196, 0.45) 0%, transparent 70%),
-    linear-gradient(160deg, var(--velvet-light) 0%, #021f62 30%, var(--velvet) 62%, #010b33 100%);
+  /* The satin behind the gold logo, its tones measured off the logo photo
+     (images/logo-satin.jpg): the arrival, the hero without a clip and the
+     levels all sit on this one blue. --satin-folds lays its long diagonal
+     light and shadow over it. */
+  --satin: linear-gradient(160deg, #011753 0%, #00144d 34%, #001046 66%, #000c3b 100%);
+  --satin-folds: linear-gradient(118deg,
+    transparent 0%, rgba(30, 70, 170, 0.16) 12%, transparent 24%,
+    rgba(0, 4, 30, 0.45) 36%, transparent 48%,
+    rgba(30, 70, 170, 0.18) 60%, transparent 72%,
+    rgba(0, 4, 30, 0.4) 84%, transparent 100%);
 
   --gold: #d6aa55;
   --gold-light: #f0cf86;
@@ -266,11 +271,7 @@ button {
   content: '';
   position: absolute;
   inset: -20%;
-  background: linear-gradient(118deg,
-    transparent 0%, rgba(255, 255, 255, 0.05) 12%, transparent 24%,
-    rgba(0, 0, 0, 0.3) 36%, transparent 48%,
-    rgba(255, 255, 255, 0.06) 60%, transparent 72%,
-    rgba(0, 0, 0, 0.25) 84%, transparent 100%);
+  background: var(--satin-folds);
   background-size: 160% 160%;
   animation: satinDrift 18s ease-in-out infinite alternate;
 }
@@ -476,7 +477,7 @@ button {
 /* ===== SECTIONS ===== */
 .section { position: relative; padding: 120px 0; }
 .section--alt { background: var(--bg-alt); }
-.section--satin { background: var(--satin); }
+.section--satin { background: var(--satin-folds), var(--satin); }
 
 .section-header {
   text-align: center;
@@ -1800,15 +1801,32 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--satin);
+  background: var(--satin-folds), var(--satin);
   animation: introOut 0.8s ease var(--intro) forwards;
 }
 
-.intro img {
-  width: clamp(210px, 48vw, 400px);
-  height: auto;
-  filter: drop-shadow(0 10px 40px rgba(214, 170, 85, 0.35));
+/* The logo photo, as large as fits whole; its edges fade into the satin
+   around it, which carries the same blue. A stylesheet image, so it is
+   only fetched when the arrival is shown. */
+.intro-logo {
+  width: min(100vw, calc(100vh * 1145 / 1374));
+  width: min(100vw, calc(100svh * 1145 / 1374));
+  aspect-ratio: 1145 / 1374;
+  background: url('images/logo-satin.jpg') center / cover no-repeat;
+  background-image: image-set(url('images/logo-satin.webp') type('image/webp'), url('images/logo-satin.jpg') type('image/jpeg'));
+  /* On a wide screen the photo fills the height, so only its sides need to
+     melt away; the lettering starts 9% in, the fade stays inside that. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
   animation: introLogo 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* On a phone it fills the width: its top and bottom melt away instead. */
+@media (max-aspect-ratio: 1145 / 1374) {
+  .intro-logo {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  }
 }
 
 /* A new name, so the quick fade starts from where the logo is now rather
