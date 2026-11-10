@@ -38,7 +38,8 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
     logoa i jedina plava pozadina: ulaz, početna dok nema videa, nivoi i
     stranica nivoa
   - bela je za kontrast, zlatna (`--gold`) samo za sitne detalje
-  - naslovi su Oswald, tekst Lato
+  - font je Figtree, besplatna zamena za Proxima Nova koji koristi ShredFast;
+    veličine i debljine su prepisane sa njihovog sajta
 - **Logo:** vektorski, u `images/`:
   - `logo.svg` je horizontalni (gornja traka i futer)
   - `logo-stacked.svg` je uspravni
