@@ -73,8 +73,9 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 (tanki Oswald, tanke ikonice), da se dve verzije uporede:
 https://pecapecaa.github.io/Athlean-fast/elegantna/
 
-Ne menja se i ne ulazi u pretragu (`noindex`). Kad se izabere jedna
-verzija, fascikla se briše.
+Stil joj se ne menja (dodat je samo potpis u futeru) i ne ulazi u
+pretragu (`noindex`). `node tools-version.js` obeležava i njene stranice.
+Kad se izabere jedna verzija, fascikla se briše.
 
 ## Domen
 

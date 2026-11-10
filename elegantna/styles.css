@@ -1446,6 +1446,24 @@ button {
 
 .footer-note { opacity: 0.75; }
 
+/* Who made the site: the last and quietest line; the name turns gold only
+   under the pointer. */
+.footer-credit {
+  margin-top: 12px;
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(243, 244, 246, 0.34);
+}
+
+.footer-credit a {
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s, border-color 0.25s;
+}
+
+.footer-credit a:hover,
+.footer-credit a:focus-visible { color: var(--gold); border-color: currentColor; }
+
 /* ===== JOIN (questionnaire) ===== */
 .join-overlay {
   position: fixed;

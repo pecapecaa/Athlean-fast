@@ -193,6 +193,20 @@ async function run() {
     await page.close();
   }
 
+  // ---- 7b. A client's mail counts; the site maker's line does not.
+  {
+    console.log('\n7b. Mail clicks');
+    const page = await fresh();
+    await page.goto(BASE + '/');
+    // Only the click is under test, not the mail app opening.
+    await page.evaluate(() => window.addEventListener('click', e => e.preventDefault()));
+    await page.evaluate(() => document.querySelector('.footer-credit a').click());
+    check('the maker\'s credit is not counted as a client mail', !(await events(page)).includes('email_kliknut'));
+    await page.evaluate(() => document.querySelector('.footer-contact a[href^="mailto:"]').click());
+    check('a click on the AthLean Fast mail still is', (await events(page)).includes('email_kliknut'));
+    await page.close();
+  }
+
   // ---- 8. With Clarity blocked the site works exactly the same.
   {
     console.log('\n8. With Clarity blocked entirely (adblocker)');

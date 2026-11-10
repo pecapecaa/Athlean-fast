@@ -12,7 +12,7 @@ function wireNav() {
       return;
     }
     const contact = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
-    if (contact) clEvent(contact.getAttribute('href').startsWith('tel:') ? 'telefon_kliknut' : 'email_kliknut');
+    if (contact && !contact.closest('.footer-credit')) clEvent(contact.getAttribute('href').startsWith('tel:') ? 'telefon_kliknut' : 'email_kliknut');
   });
 }
 

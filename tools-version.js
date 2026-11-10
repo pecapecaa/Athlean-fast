@@ -13,11 +13,13 @@ const path = require('path');
 const crypto = require('crypto');
 
 const ROOT = __dirname;
-const PAGES = ['index.html', 'nivo.html', '404.html'];
+const PAGES = ['index.html', 'nivo.html', '404.html', 'elegantna/index.html', 'elegantna/nivo.html'];
 const ASSET = /(href|src)="([\w.-]+\.(?:css|js))\?v=([\w]+)"/g;
 
-const hashOf = file => crypto.createHash('sha1')
-  .update(fs.readFileSync(path.join(ROOT, file)))
+// A page's assets sit next to it: elegantna/index.html loads
+// elegantna/styles.css.
+const hashOf = (page, file) => crypto.createHash('sha1')
+  .update(fs.readFileSync(path.join(ROOT, path.dirname(page), file)))
   .digest('hex')
   .slice(0, 8);
 
@@ -29,7 +31,7 @@ for (const page of PAGES) {
   if (!fs.existsSync(pagePath)) continue;
   const html = fs.readFileSync(pagePath, 'utf8');
   const out = html.replace(ASSET, (whole, attr, file, version) => {
-    const fresh = hashOf(file);
+    const fresh = hashOf(page, file);
     if (fresh !== version) stale.push(`${page}: ${file}?v=${version} (current ${fresh})`);
     return `${attr}="${file}?v=${fresh}"`;
   });
