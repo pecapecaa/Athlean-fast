@@ -70,6 +70,10 @@
 .wp-rail a:hover em { opacity: 1; transform: none; }
 .wp-rail a.is-active i { background: var(--blue-bright); transform: scale(1.4); }
 
+/* The page is drawn by nivo.js after load; until then the footer would sit
+   on screen and jump down. Holding the screen keeps it below the fold. */
+.page-level main { min-height: 100vh; min-height: 100svh; }
+
 /* ===== Hero: the clip, then the level ===== */
 .wp-hero {
   position: relative;
@@ -192,7 +196,7 @@
 .wp-subtitle {
   font-size: 1.2rem;
   font-weight: 400;
-  color: var(--blue-bright);
+  color: #7f98f6;   /* the brand blue, lightened to read on the dark blue */
   margin-bottom: 18px;
 }
 

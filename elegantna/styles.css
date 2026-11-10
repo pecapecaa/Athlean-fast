@@ -1485,7 +1485,7 @@ button {
   font-size: 0.68rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(243, 244, 246, 0.34);
+  color: rgba(243, 244, 246, 0.5);
 }
 
 /* An address reads in lower case and with its own spacing. */

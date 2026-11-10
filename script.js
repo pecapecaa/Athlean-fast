@@ -185,8 +185,13 @@ function runReel(reel) {
 
   measure();
   place();
-  track.querySelectorAll('img').forEach(img => img.addEventListener('load', () => { measure(); place(); }, { once: true }));
-  window.addEventListener('resize', () => { measure(); place(); });
+  // Cards are a fixed width, so photos arriving move nothing; only a resize
+  // does, and it is measured once a frame at most (measuring forces layout).
+  let remeasure = 0;
+  window.addEventListener('resize', () => {
+    if (remeasure) return;
+    remeasure = requestAnimationFrame(() => { remeasure = 0; measure(); place(); });
+  });
   if (!('IntersectionObserver' in window)) return wake();
   new IntersectionObserver(([e]) => {
     if (e.isIntersecting) wake();

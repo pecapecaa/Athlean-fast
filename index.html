@@ -15,17 +15,17 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="AthLean Fast">
   <meta property="og:locale" content="sr_RS">
-  <meta property="og:title" content="AthLean Fast: atletski izvajano tijelo, brzo do rezultata">
-  <meta property="og:description" content="Sistem treninga sa vlastitim tijelom i kettlebellom. 2 kettlebella i 30 minuta iskrenog rada.">
+  <meta property="og:title" content="AthLean Fast | Izgradi atletsko tijelo. Brzo.">
+  <meta property="og:description" content="2 kettlebella i 30 minuta. Online plan treninga i ishrane i trener uz tebe 24/7. Može svako, bilo kada, bilo gdje.">
   <meta property="og:url" content="https://pecapecaa.github.io/Athlean-fast/">
-  <meta property="og:image" content="https://pecapecaa.github.io/Athlean-fast/images/og-share.png">
+  <meta property="og:image" content="https://pecapecaa.github.io/Athlean-fast/images/og-share.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="AthLean Fast">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AthLean Fast: atletski izvajano tijelo, brzo do rezultata">
-  <meta name="twitter:description" content="Sistem treninga sa vlastitim tijelom i kettlebellom.">
-  <meta name="twitter:image" content="https://pecapecaa.github.io/Athlean-fast/images/og-share.png">
+  <meta name="twitter:title" content="AthLean Fast | Izgradi atletsko tijelo. Brzo.">
+  <meta name="twitter:description" content="2 kettlebella i 30 minuta. Online plan treninga i ishrane i trener uz tebe 24/7. Može svako, bilo kada, bilo gdje.">
+  <meta name="twitter:image" content="https://pecapecaa.github.io/Athlean-fast/images/og-share.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,9 +37,19 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap">
   </noscript>
-  <link rel="stylesheet" href="styles.css?v=325aa931">
+  <link rel="stylesheet" href="styles.css?v=5219aa10">
 
   <script>
+    // Microsoft Clarity: kad se upiše ID projekta (clarity.microsoft.com), tag
+    // se učitava i događaji ispod počinju da stižu. Prazno: ništa se ne šalje.
+    var CLARITY_ID = '';
+    if (CLARITY_ID) {
+      (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+        t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      })(window, document, 'clarity', 'script', CLARITY_ID);
+    }
     // Sopstveni događaji i tagovi za analitiku (Microsoft Clarity). Sve kroz
     // try/catch: bez taga, ili kad ga blokira adblocker, sajt radi normalno.
     window.clEvent = function (name) {
@@ -80,7 +90,7 @@
         <img src="images/logo.svg" alt="AthLean Fast" width="337" height="50">
       </a>
       <div class="nav-actions">
-        <button type="button" class="lang-toggle" id="langToggle" aria-label="Jezik / Language">
+        <button type="button" class="lang-toggle" id="langToggle" aria-label="SR / EN: jezik / language">
           <span class="lang-active">SR</span> / <span>EN</span>
         </button>
         <button type="button" class="nav-join" id="navJoin" data-join="meni" data-sr="Pridruži se" data-en="Join">Pridruži se</button>
@@ -95,10 +105,10 @@
       <!-- Pozadinski snimak: uspravan za telefon (videos/hero.mp4), a za šire
            ekrane isti snimak u sredini sa zamućenim stranama
            (videos/hero-wide.mp4). Dok se učitava, ili kad ne može da se
-           pusti, stoji prvi kadar (images/hero-poster.jpg, hero-wide-poster.jpg). -->
+           pusti, stoji prvi kadar (images/hero-poster.webp, hero-wide-poster.webp). -->
       <video id="heroVideo" class="hero-video"
         data-src="videos/hero.mp4" data-src-wide="videos/hero-wide.mp4"
-        data-poster="images/hero-poster.jpg" data-poster-wide="images/hero-wide-poster.jpg"
+        data-poster="images/hero-poster.webp" data-poster-wide="images/hero-wide-poster.webp"
         muted loop playsinline preload="none" aria-hidden="true"></video>
       <div class="hero-bg" id="heroBg"></div>
       <div class="hero-overlay"></div>
@@ -151,7 +161,7 @@
         </div>
         <div class="about">
           <figure class="about-media">
-            <img src="images/trener.jpg" alt="Marko Simović, trener AthLean Fast, sa dva kettlebella" width="900" height="1125" loading="lazy" decoding="async">
+            <img src="images/trener.jpg" srcset="images/trener-600.jpg 600w, images/trener.jpg 900w" sizes="(max-width: 860px) 560px, 450px" alt="Marko Simović, trener AthLean Fast, sa dva kettlebella" width="900" height="1125" loading="lazy" decoding="async">
             <figcaption>
               <strong>Marko Simović</strong>
               <span data-sr="Trener AthLean Fast" data-en="AthLean Fast coach">Trener AthLean Fast</span>
@@ -239,7 +249,7 @@
       </div>
       <div class="container">
         <a class="ig-card" href="#" data-contact="instagram-link" target="_blank" rel="noopener">
-          <span class="ig-avatar"><img src="images/trener.jpg" alt="" width="900" height="1125" loading="lazy" decoding="async"></span>
+          <span class="ig-avatar"><img src="images/trener-600.jpg" alt="" width="900" height="1125" loading="lazy" decoding="async"></span>
           <span class="ig-kicker">Instagram</span>
           <span class="ig-handle" data-contact="instagram-handle">@sima.markoo</span>
           <span class="ig-line" data-sr="Treninzi, savjeti i transformacije. Prati i budi dio ekipe." data-en="Workouts, tips and transformations. Follow and join the crew.">Treninzi, savjeti i transformacije. Prati i budi dio ekipe.</span>
@@ -446,12 +456,12 @@
     "description": "Sistem treninga sa vlastitim tijelom i kettlebellom. Online mentorstvo: plan ishrane, plan treninga, baza vježbi i podrška trenera 24/7.",
     "url": "https://pecapecaa.github.io/Athlean-fast/",
     "logo": "https://pecapecaa.github.io/Athlean-fast/images/logo-stacked.svg",
-    "image": "https://pecapecaa.github.io/Athlean-fast/images/og-share.png"
+    "image": "https://pecapecaa.github.io/Athlean-fast/images/og-share.jpg"
   }
   </script>
 
-  <script src="data.js?v=2e280a11"></script>
-  <script src="components.js?v=20b77651"></script>
-  <script src="script.js?v=db162e36"></script>
+  <script src="data.js?v=33fac14c"></script>
+  <script src="components.js?v=67cf183d"></script>
+  <script src="script.js?v=43909dcb"></script>
 </body>
 </html>

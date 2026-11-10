@@ -51,13 +51,17 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   logom (`images/logo-stacked.svg`) na plavoj, pa posle oko 2 sekunde prelazi
   u uvodni deo. Trajanje je `--intro` u `styles.css`.
 
-- Fotografija trenera: `images/trener.jpg` (uspravna, 4:5), u delu „Šta je
+- Slika uz link (WhatsApp, Viber, Instagram...): `images/og-share.jpg`,
+  1200×630, do 300 KB (WhatsApp veće ne prikaže). Aplikacije pamte pregled
+  za isti link: posle izmene prvi put poslati link sa `?v=2` na kraju.
+- Fotografija trenera: `images/trener.jpg` (uspravna, 4:5, 900 px; za
+  telefone i Instagram sličicu `images/trener-600.jpg`), u delu „Šta je
   AthLean Fast".
 
 - Uvodni video: `videos/hero.mp4` je uspravan (720×1280) za telefon,
   `videos/hero-wide.mp4` isti snimak u sredini sa zamućenim stranama
-  (1280×720) za šire ekrane. Prvi kadar svakog (`images/hero-poster.jpg`,
-  `images/hero-wide-poster.jpg`) stoji dok se video učitava, i umesto njega
+  (1280×720) za šire ekrane. Prvi kadar svakog (`images/hero-poster.webp`,
+  `images/hero-wide-poster.webp`) stoji dok se video učitava, i umesto njega
   kad ne može da se pusti (štednja baterije, manje pokreta, štednja
   podataka). Isečeno je 23 s iz Markovog snimka (1,9–25,1 s), bez zvuka,
   25 sličica u sekundi, oko 4 i 3 MB. Novi snimak se priprema isto:
@@ -67,10 +71,11 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 - Video po nivou: `videos/pocetni.mp4`, `srednji.mp4`, `napredni.mp4`
   (uspravni, 720×1280, svaki tačno 27 s, sa zvukom ujednačene jačine).
   Snimljeni su na iPhone-u u HDR-u, pa su prebačeni u obične boje (bez toga
-  na sajtu izgledaju isprano). Naslovna slika svakog je `images/nivoi/*.jpg`
+  na sajtu izgledaju isprano). Naslovna slika svakog je `images/nivoi/*.webp`
   (1080×1920): najoštriji kadar iz originala, ne iz smanjenog snimka, uz
-  malo kontrasta i boje. Stoji na kartici i na stranici nivoa, ispod
-  dugmeta za puštanje. Putanje su kod nivoa u `data.js`.
+  malo kontrasta i boje. Stoji na stranici nivoa, ispod dugmeta za
+  puštanje; na kartici je ista, manja (`*-720.webp`). Putanje su kod nivoa
+  u `data.js` (`poster`, `thumb`).
 - Transformacije: prikazuju se u traci koja polako klizi sama. Slike
   pre/posle (uspravne, 3:5) su u `images/transformacije/`, a putanje u
   `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata). Uz istu
@@ -87,6 +92,14 @@ https://pecapecaa.github.io/Athlean-fast/elegantna/
 Stil joj se ne menja (dodat je samo potpis u futeru) i ne ulazi u
 pretragu (`noindex`). `node tools-version.js` obeležava i njene stranice.
 Kad se izabere jedna verzija, fascikla se briše.
+
+## Analitika
+
+Sajt već šalje događaje (prijava otvorena, poslata, napuštena, video
+pušten, viđene sekcije...) za Microsoft Clarity, ali tag se ne učitava dok
+se ne upiše `CLARITY_ID` (ID projekta sa clarity.microsoft.com) u
+`index.html` i `nivo.html`. Testovi u `tests/analytics.spec.js` čuvaju
+nazive događaja.
 
 ## Domen
 

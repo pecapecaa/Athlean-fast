@@ -62,7 +62,8 @@ const RESULTS = [
 
 // ===== Nivoi =====
 // video: snimak primera treninga, uspravan, 27 s kao i ostali (videos/).
-// poster: kadar iz njega; stoji na kartici i dok se snimak ne pusti.
+// poster: kadar iz njega; stoji dok se snimak ne pusti. thumb: isti kadar,
+// manji, za karticu na početnoj.
 // Ova kopija ih uzima iz glavnog sajta (../).
 const LEVELS = [
   {
@@ -76,7 +77,8 @@ const LEVELS = [
     },
     duration: '30 min',
     equipment: { sr: '1–2 kettlebella', en: '1–2 kettlebells' },
-    poster: '../images/nivoi/pocetni.jpg',
+    poster: '../images/nivoi/pocetni.webp',
+    thumb: '../images/nivoi/pocetni-720.webp',
     video: '../videos/pocetni.mp4'
   },
   {
@@ -90,7 +92,8 @@ const LEVELS = [
     },
     duration: '45 min',
     equipment: { sr: '2 kettlebella', en: '2 kettlebells' },
-    poster: '../images/nivoi/srednji.jpg',
+    poster: '../images/nivoi/srednji.webp',
+    thumb: '../images/nivoi/srednji-720.webp',
     video: '../videos/srednji.mp4'
   },
   {
@@ -104,7 +107,8 @@ const LEVELS = [
     },
     duration: '60 min',
     equipment: { sr: '2 kettlebella', en: '2 kettlebells' },
-    poster: '../images/nivoi/napredni.jpg',
+    poster: '../images/nivoi/napredni.webp',
+    thumb: '../images/nivoi/napredni-720.webp',
     video: '../videos/napredni.mp4'
   }
 ];

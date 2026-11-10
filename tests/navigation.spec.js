@@ -245,8 +245,8 @@ async function run() {
   {
     console.log('\n10. Hero video');
     for (const [label, viewport, still] of [
-      ['a phone', { width: 390, height: 844 }, 'images/hero-poster.jpg'],
-      ['a wide screen', { width: 1366, height: 860 }, 'images/hero-wide-poster.jpg']
+      ['a phone', { width: 390, height: 844 }, 'images/hero-poster.webp'],
+      ['a wide screen', { width: 1366, height: 860 }, 'images/hero-wide-poster.webp']
     ]) {
       const page = await browser.newPage({ viewport });
       const loaded = [];
@@ -265,10 +265,16 @@ async function run() {
     }
   }
 
-  // ---- 11. Every level page opens on its own clip.
+  // ---- 11. Every level page opens on its own clip, and nothing jumps while
+  //          nivo.js draws it.
   {
     console.log('\n11. Level videos');
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await page.addInitScript(() => {
+      window.__shift = 0;
+      new PerformanceObserver(list => list.getEntries().forEach(e => { if (!e.hadRecentInput) window.__shift += e.value; }))
+        .observe({ type: 'layout-shift', buffered: true });
+    });
     const levels = await (async () => { await page.goto(BASE + '/'); return page.evaluate(() => LEVELS.map(l => ({ id: l.id, video: l.video, poster: l.poster }))); })();
     for (const l of levels) {
       await page.goto(`${BASE}/nivo?n=${l.id}`);
@@ -276,6 +282,8 @@ async function run() {
       const v = await page.$eval('#wpVideo', el => ({ src: el.getAttribute('src'), poster: el.getAttribute('poster') })).catch(() => null);
       const ok = !!v && v.src === l.video && v.poster === l.poster && (await page.request.head(BASE + '/' + l.video)).ok();
       check(`${l.id}: the clip is at the top, with its own first frame`, ok, JSON.stringify(v));
+      const shift = await page.evaluate(() => window.__shift);
+      check(`${l.id}: nothing jumps while the page is drawn (layout shift under 0.1)`, shift < 0.1, shift.toFixed(3));
     }
     const state = () => page.evaluate(() => ({ controls: document.getElementById('wpVideo').controls, button: !document.getElementById('wpPlay').hidden }));
     const before = await state();
