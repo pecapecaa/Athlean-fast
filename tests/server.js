@@ -51,10 +51,16 @@ http.createServer((req, res) => {
     return res.end();
   }
 
-  if (pathname === '/') pathname = '/index.html';
+  // A folder is served from its index.html, and asked for without the
+  // closing slash it is redirected to it, as Pages does (elegantna/).
+  if (pathname.endsWith('/')) pathname += 'index.html';
 
   let file = resolveSafe(pathname);
   if (!file) { res.writeHead(403); return res.end('Forbidden'); }
+  if (fs.existsSync(file) && fs.statSync(file).isDirectory() && fs.existsSync(path.join(file, 'index.html'))) {
+    res.writeHead(301, { Location: pathname + '/' + url.search });
+    return res.end();
+  }
 
   // /nivo is served from nivo.html.
   if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) {

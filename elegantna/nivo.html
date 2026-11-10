@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Naslov, opis i OG tagove prepisuje nivo.js kad zna o kom nivou je reč.
+       Ovo vidi skrejper bez JavaScript-a. -->
+  <title>Nivo treninga | AthLean Fast</title>
+  <meta name="description" content="Primjer treninga i opis nivoa utreniranosti u AthLean Fast programu.">
+  <meta name="theme-color" content="#0a0a0b">
+  <!-- Prethodni stil, samo za poređenje (glavni sajt je u korenu). -->
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/svg+xml" href="images/logo-mark.svg">
+  <link rel="apple-touch-icon" href="favicon-180.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AthLean Fast">
+  <meta property="og:locale" content="sr_RS">
+  <meta property="og:title" content="Nivo treninga | AthLean Fast">
+  <meta property="og:description" content="Primjer treninga i opis nivoa utreniranosti u AthLean Fast programu.">
+  <meta property="og:image" content="https://pecapecaa.github.io/Athlean-fast/images/og-share.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Lato:wght@400;700&display=swap">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Lato:wght@400;700&display=swap">
+  </noscript>
+  <link rel="stylesheet" href="styles.css?v=5e7e0632">
+  <link rel="stylesheet" href="detail.css?v=4f5ffc20">
+
+  <script>
+    window.clEvent = function (name) {
+      try { if (window.clarity) window.clarity('event', name); } catch (e) {}
+    };
+    window.clTag = function (key, value) {
+      try { if (window.clarity) window.clarity('set', key, String(value).slice(0, 255)); } catch (e) {}
+    };
+    window.clKeep = function (reason) {
+      try { if (window.clarity) window.clarity('upgrade', reason); } catch (e) {}
+    };
+  </script>
+</head>
+<body class="page-detail page-level">
+  <a class="skip-link" href="#main">Preskoči na sadržaj</a>
+
+  <nav class="navbar navbar--solid" id="navbar">
+    <div class="container nav-container">
+      <a href="./" class="logo" aria-label="AthLean Fast, početna">
+        <img src="images/logo.svg" alt="AthLean Fast" width="337" height="50">
+      </a>
+      <div class="nav-actions">
+        <a class="nav-join" href="./?prijava=1" data-join-link="meni_nivo">Pridruži se</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wp-progress" aria-hidden="true"><span id="wpProgressBar"></span></div>
+
+  <nav class="wp-rail" id="wpRail" aria-label="Sekcije stranice">
+    <a href="#vrh" data-rail="vrh"><i></i><em>Nivo</em></a>
+    <a href="#trening" data-rail="trening"><i></i><em>Trening</em></a>
+    <a href="#za-koga" data-rail="za-koga"><i></i><em>Za koga</em></a>
+    <a href="#fokus" data-rail="fokus"><i></i><em>Fokus</em></a>
+    <a href="#ostali" data-rail="ostali"><i></i><em>Ostali nivoi</em></a>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <!-- Sve ispod piše nivo.js na osnovu ?n= u adresi. Pogrešan ili prazan
+         nivo prikazuje blok "nije pronađen". -->
+    <div id="levelNotFound" class="wp-404" hidden>
+      <div class="container wp-404-inner">
+        <div class="section-kicker">404</div>
+        <h1 class="section-title">Ovaj nivo ne postoji</h1>
+        <p>Link je možda zastario. Pogledaj sve nivoe na početnoj stranici.</p>
+        <a href="./#levels" class="btn btn-primary">Svi nivoi</a>
+      </div>
+    </div>
+
+    <article id="levelArticle" hidden>
+      <section class="wp-hero" id="vrh">
+        <div class="container">
+          <a class="wp-back" href="./#levels">Svi nivoi</a>
+
+          <!-- Prvo video, ispod sve ostalo: jedan stub na svakom ekranu. -->
+          <div class="wp-hero-grid">
+            <div class="wp-stage" id="wpStage"></div>
+
+            <div class="wp-intro">
+              <div class="wp-type-mark" id="wpStep"></div>
+              <div class="wp-eyebrow">Primjer treninga</div>
+              <h1 class="wp-title" id="wpName"></h1>
+              <p class="wp-subtitle" id="wpSubtitle"></p>
+              <p class="wp-lead" id="wpLead"></p>
+              <dl class="wp-facts" id="wpFacts"></dl>
+              <div class="wp-buy">
+                <a class="btn btn-primary" href="./?prijava=1" data-join-link="stranica_nivoa">Pridruži se</a>
+                <a class="btn-link" href="#trening" data-scroll="trening">Pogledaj trening</a>
+              </div>
+              <ul class="wp-assurances">
+                <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Bilo kada</span></li>
+                <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg><span>Bilo gdje</span></li>
+                <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z"/></svg><span>Podrška trenera 24/7</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section wp-section" id="trening">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-kicker">Korak po korak</div>
+            <h2 class="section-title">Kako izgleda jedan trening</h2>
+          </div>
+          <ol class="wp-steps" id="wpWorkout"></ol>
+          <p class="wp-note">Ovo je primjer jednog treninga. U mentorstvu dobijaš plan treninga i ishrane, bazu vježbi i podršku trenera 24/7.</p>
+        </div>
+      </section>
+
+      <section class="section section--alt wp-section" id="za-koga">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-kicker">Za koga je</div>
+            <h2 class="section-title">Ovo je tvoj nivo ako</h2>
+          </div>
+          <ul class="wp-checklist" id="wpForYou"></ul>
+          <div class="wp-honest" id="wpNotForYou"></div>
+        </div>
+      </section>
+
+      <section class="section wp-section" id="fokus">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-kicker">Fokus</div>
+            <h2 class="section-title">Na šta se radi na ovom nivou</h2>
+          </div>
+          <div class="wp-bars" id="wpFocus"></div>
+        </div>
+      </section>
+
+      <section class="section section--alt wp-section wp-related" id="ostali">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-kicker">Uporedi</div>
+            <h2 class="section-title">Ostali nivoi</h2>
+          </div>
+          <div class="cards-grid" id="wpRelated"></div>
+          <div class="wp-related-more">
+            <a href="./#mentorship" class="btn btn-outline">Pogledaj online mentorstvo</a>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <div class="wp-sticky" id="wpSticky" hidden>
+    <div class="container wp-sticky-inner">
+      <div class="wp-sticky-info">
+        <span class="wp-sticky-name" id="wpStickyName"></span>
+        <span class="wp-sticky-sub">Online mentorstvo za tvoj nivo</span>
+      </div>
+      <a class="btn btn-primary" href="./?prijava=1" data-join-link="traka_nivoa">Pridruži se</a>
+    </div>
+  </div>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <a href="./" class="logo">
+        <img src="images/logo.svg" alt="AthLean Fast" width="337" height="50" loading="lazy">
+      </a>
+      <p class="footer-tagline">Atletski izvajano tijelo. Brzo do rezultata. Može svako, bilo kada, bilo gdje.</p>
+      <ul class="footer-contact">
+        <li><a href="#" data-contact="phone"></a></li>
+        <li><a href="#" data-contact="email"></a></li>
+        <li><a href="#" data-contact="instagram" target="_blank" rel="noopener"></a></li>
+      </ul>
+      <div class="footer-bottom">
+        <p>&copy; 2026 AthLean Fast. Sva prava zadržana.</p>
+        <p class="footer-note">Prije početka programa posavjetuj se sa ljekarom ako imaš zdravstvenih problema. Slanjem prijave ne preuzimaš nikakvu finansijsku obavezu.</p>
+      </div>
+    </div>
+  </footer>
+
+  <aside class="fab-buttons" aria-label="Brzi kontakt">
+    <a href="#" data-contact="whatsapp" class="fab-btn fab-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="#" data-contact="phone-link" class="fab-btn fab-phone" aria-label="Pozovi">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    </a>
+  </aside>
+
+  <script src="data.js?v=95686fbc"></script>
+  <script src="components.js?v=22f3d17d"></script>
+  <script src="detail.js?v=739c609d"></script>
+  <script src="nivo.js?v=cddba3db"></script>
+</body>
+</html>
