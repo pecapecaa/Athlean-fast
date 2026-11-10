@@ -839,6 +839,33 @@ button {
   background: linear-gradient(to bottom, transparent, var(--card));
 }
 
+/* Tells at a glance that the picture is a clip. */
+.card-media-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 66px;
+  height: 66px;
+  margin: -33px 0 0 -33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  background: rgba(0, 7, 45, 0.42);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: var(--white);
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.card-media-play svg { width: 24px; height: 24px; margin-left: 3px; }
+
+@media (hover: hover) {
+  .card:hover .card-media-play { transform: scale(1.1); background: var(--blue); border-color: var(--blue); }
+}
+
 .card-badge {
   position: absolute;
   top: 16px;

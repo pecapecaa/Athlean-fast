@@ -40,6 +40,7 @@ function levelCardHtml(level, lang) {
     <a class="card" href="${levelHref(level.id)}" data-level="${level.id}">
       <div class="card-media">
         <img src="${esc(level.poster)}" alt="" loading="lazy" decoding="async">
+        <span class="card-media-play" aria-hidden="true">${ICONS.play}</span>
       </div>
       <span class="card-badge">${esc(tr(UI_TEXT.level, lang))} ${level.step}</span>
       <div class="card-body">

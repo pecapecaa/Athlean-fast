@@ -277,6 +277,14 @@ async function run() {
       const ok = !!v && v.src === l.video && v.poster === l.poster && (await page.request.head(BASE + '/' + l.video)).ok();
       check(`${l.id}: the clip is at the top, with its own first frame`, ok, JSON.stringify(v));
     }
+    const state = () => page.evaluate(() => ({ controls: document.getElementById('wpVideo').controls, button: !document.getElementById('wpPlay').hidden }));
+    const before = await state();
+    check('the clip waits behind one large play button, without the player\'s bar', before.button && !before.controls, JSON.stringify(before));
+    await page.click('#wpPlay');
+    const after = await state();
+    check('a tap starts it and hands over to the player\'s controls', !after.button && after.controls, JSON.stringify(after));
+    await page.goto(`${BASE}/nivo?n=${levels[0].id}`);
+    await page.waitForTimeout(300);
     const fabs = () => page.$eval('.fab-buttons', el => getComputedStyle(el).visibility);
     await page.waitForTimeout(400);
     check('on a phone the quick-contact buttons stay off the clip\'s controls', (await fabs()) === 'hidden');

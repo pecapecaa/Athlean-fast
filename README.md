@@ -67,8 +67,10 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 - Video po nivou: `videos/pocetni.mp4`, `srednji.mp4`, `napredni.mp4`
   (uspravni, 720×1280, svaki tačno 27 s, sa zvukom ujednačene jačine).
   Snimljeni su na iPhone-u u HDR-u, pa su prebačeni u obične boje (bez toga
-  na sajtu izgledaju isprano). Kadar iz svakog je `images/nivoi/*.jpg`,
-  na kartici i dok se snimak ne pusti. Putanje su kod nivoa u `data.js`.
+  na sajtu izgledaju isprano). Naslovna slika svakog je `images/nivoi/*.jpg`
+  (1080×1920): najoštriji kadar iz originala, ne iz smanjenog snimka, uz
+  malo kontrasta i boje. Stoji na kartici i na stranici nivoa, ispod
+  dugmeta za puštanje. Putanje su kod nivoa u `data.js`.
 - Transformacije: prikazuju se u traci koja polako klizi sama. Slike
   pre/posle (uspravne, 3:5) su u `images/transformacije/`, a putanje u
   `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata). Uz istu

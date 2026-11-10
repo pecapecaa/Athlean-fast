@@ -27,11 +27,15 @@ function focusBar(key, value) {
 }
 
 // The clip when there is one, otherwise its poster.
+// The clip waits on its first frame under one large play button (the whole
+// picture is the button); the player's own controls come once it plays.
 function stageMedia(level) {
   const name = esc(level.name.sr);
   if (level.video) {
     return '<video id="wpVideo" src="' + esc(level.video) + '" poster="' + esc(level.poster) + '"'
-      + ' controls playsinline preload="metadata" aria-label="Primjer treninga: ' + name + '"></video>';
+      + ' playsinline preload="metadata" aria-label="Primjer treninga: ' + name + '"></video>'
+      + '<button type="button" class="wp-play" id="wpPlay" aria-label="Pusti primjer treninga: ' + name + '">'
+      + ICONS.play + '</button>';
   }
   return '<img src="' + esc(level.poster) + '" alt="Primjer treninga: ' + name + '">';
 }
@@ -93,9 +97,24 @@ function render(level, detail) {
   setJoinLinks({ level: level.id });
 
   const video = document.getElementById('wpVideo');
-  if (video) video.addEventListener('play', () => clEvent('video_pusten'), { once: true });
+  if (video) {
+    video.addEventListener('play', () => clEvent('video_pusten'), { once: true });
+    wirePlay(video, document.getElementById('wpPlay'));
+  }
 
   document.getElementById('levelArticle').hidden = false;
+}
+
+function wirePlay(video, button) {
+  if (!button) return;
+  button.addEventListener('click', () => {
+    video.controls = true;
+    const attempt = video.play();
+    if (attempt && attempt.catch) attempt.catch(() => { /* the player's controls are there now */ });
+    button.hidden = true;
+  });
+  video.addEventListener('play', () => { video.controls = true; button.hidden = true; });
+  video.addEventListener('ended', () => { button.hidden = false; });
 }
 
 // On a phone the quick-contact buttons sit over the clip's own controls
