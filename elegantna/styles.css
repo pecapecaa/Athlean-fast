@@ -1446,8 +1446,8 @@ button {
 
 .footer-note { opacity: 0.75; }
 
-/* Who made the site: the last and quietest line; the name turns gold only
-   under the pointer. */
+/* Who made the site: the last and quietest line; the address turns gold
+   only under the pointer. */
 .footer-credit {
   margin-top: 12px;
   font-size: 0.68rem;
@@ -1456,7 +1456,10 @@ button {
   color: rgba(243, 244, 246, 0.34);
 }
 
+/* An address reads in lower case and with its own spacing. */
 .footer-credit a {
+  text-transform: none;
+  letter-spacing: 0.5px;
   border-bottom: 1px solid transparent;
   transition: color 0.25s, border-color 0.25s;
 }
