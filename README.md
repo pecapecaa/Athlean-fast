@@ -64,8 +64,11 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 
       ffmpeg -ss POČETAK -to KRAJ -i snimak.mp4 -an -vf "fps=25,scale=720:1280" \
         -c:v libx264 -preset slower -crf 29 -movflags +faststart videos/hero.mp4
-- Video po nivou: upisati putanju u `video` kod nivoa u `data.js`
-  (npr. `videos/pocetni.mp4`), a `poster` zameniti slikom iz snimka.
+- Video po nivou: `videos/pocetni.mp4`, `srednji.mp4`, `napredni.mp4`
+  (uspravni, 720×1280, svaki tačno 27 s, sa zvukom ujednačene jačine).
+  Snimljeni su na iPhone-u u HDR-u, pa su prebačeni u obične boje (bez toga
+  na sajtu izgledaju isprano). Kadar iz svakog je `images/nivoi/*.jpg`,
+  na kartici i dok se snimak ne pusti. Putanje su kod nivoa u `data.js`.
 - Transformacije: prikazuju se u traci koja polako klizi sama. Slike
   pre/posle (uspravne, 3:5) su u `images/transformacije/`, a putanje u
   `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata). Uz istu

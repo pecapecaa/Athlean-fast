@@ -98,6 +98,16 @@ function render(level, detail) {
   document.getElementById('levelArticle').hidden = false;
 }
 
+// On a phone the quick-contact buttons sit over the clip's own controls
+// (full screen, sound), so they step aside while the clip is on screen.
+function fabsAsideOfClip() {
+  const stage = document.getElementById('wpStage');
+  if (!stage || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(([e]) => {
+    document.body.classList.toggle('clip-in-view', e.isIntersecting);
+  }, { threshold: 0.25 }).observe(stage);
+}
+
 // The focus bars fill in when the section is reached.
 function measureOnScroll() {
   const el = document.getElementById('wpFocus');
@@ -133,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   scrollChrome();
   stickyJoinBar();
   measureOnScroll();
+  fabsAsideOfClip();
   arrivals(['.wp-honest', '.wp-note', '.wp-related-more'], ['#wpWorkout', '#wpForYou', '#wpRelated']);
 
   document.querySelectorAll('[data-scroll]').forEach(a => {

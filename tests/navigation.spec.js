@@ -265,6 +265,27 @@ async function run() {
     }
   }
 
+  // ---- 11. Every level page opens on its own clip.
+  {
+    console.log('\n11. Level videos');
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const levels = await (async () => { await page.goto(BASE + '/'); return page.evaluate(() => LEVELS.map(l => ({ id: l.id, video: l.video, poster: l.poster }))); })();
+    for (const l of levels) {
+      await page.goto(`${BASE}/nivo?n=${l.id}`);
+      await page.waitForTimeout(300);
+      const v = await page.$eval('#wpVideo', el => ({ src: el.getAttribute('src'), poster: el.getAttribute('poster') })).catch(() => null);
+      const ok = !!v && v.src === l.video && v.poster === l.poster && (await page.request.head(BASE + '/' + l.video)).ok();
+      check(`${l.id}: the clip is at the top, with its own first frame`, ok, JSON.stringify(v));
+    }
+    const fabs = () => page.$eval('.fab-buttons', el => getComputedStyle(el).visibility);
+    await page.waitForTimeout(400);
+    check('on a phone the quick-contact buttons stay off the clip\'s controls', (await fabs()) === 'hidden');
+    await page.evaluate(() => window.scrollTo({ top: document.getElementById('trening').offsetTop, behavior: 'instant' }));
+    await page.waitForTimeout(600);
+    check('and come back once it is scrolled away', (await fabs()) === 'visible');
+    await page.close();
+  }
+
   await browser.close();
   console.log(`\n${pass} passed, ${fail} failed`);
   if (fail) { console.log('failed: ' + failures.join(', ')); process.exit(1); }
