@@ -630,14 +630,13 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
-/* ShredFast's icons fill an 80px square (60px on a phone) with a line a
-   twelfth of it thick. Ours are drawn with a margin inside the square, so
-   the square is a fifth larger to come out the same size and weight. */
+/* As ShredFast's: an 80px square (60px on a phone), the line a twelfth of
+   it thick. */
 .feature-icon { display: flex; color: var(--white); }
-.feature-icon svg { width: 96px; height: 96px; stroke-width: 1.7; }
+.feature-icon svg { width: 80px; height: 80px; stroke-width: 2; }
 
 .feature-big {
   font-family: var(--font-display);
@@ -1942,7 +1941,7 @@ button {
   .section-lead { font-size: 17px; }
   .hero-subtitle { font-size: 19px; }
   .btn { padding: 15px 40px; font-size: 17px; }
-  .feature-icon svg { width: 72px; height: 72px; }
+  .feature-icon svg { width: 60px; height: 60px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

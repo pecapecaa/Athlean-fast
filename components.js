@@ -20,18 +20,21 @@ const svgIcon = (paths, size) =>
   + 'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" '
   + 'aria-hidden="true" focusable="false">' + paths + '</svg>';
 
+// The result and coaching icons are drawn the way ShredFast's are: a heavy
+// rounded line filling the whole square, most of them inside a rounded
+// square of their own. The small ones (clock, check, pin...) stay light.
 const ICONS = {
   play: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>',
   check: svgIcon('<path d="M4 12.5l5 5L20 6.5"/>', 16),
   clock: svgIcon('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 14),
   kettlebell: svgIcon('<path d="M8.5 9.5a3.5 3.5 0 117 0"/><path d="M9 4.5h6"/><path d="M6.5 13a5.5 5.5 0 1111 0c0 2.8-1 5-2.2 6.5H8.7C7.5 18 6.5 15.8 6.5 13z"/>', 14),
-  trophy: svgIcon('<path d="M8 4h8v5a4 4 0 01-8 0V4z"/><path d="M16 5h3v2a3 3 0 01-3 3M8 5H5v2a3 3 0 003 3"/><path d="M12 13v4M8.5 20h7M10 17h4"/>', 34),
-  bolt: svgIcon('<path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12L13 2z"/>', 34),
-  nutrition: svgIcon('<path d="M12 7c-3-2.5-8-1-8 4.5C4 16 7.5 21 10 21c.8 0 1.3-.4 2-.4s1.2.4 2 .4c2.5 0 6-5 6-9.5C20 6 15 4.5 12 7z"/><path d="M12 7c0-2 1-3.5 3-4"/>', 34),
-  plan: svgIcon('<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>', 34),
-  library: svgIcon('<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M10 8.5v5l4.5-2.5z"/><path d="M7 21h10"/>', 34),
-  timer: svgIcon('<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 2M10 2.5h4M12 2.5V6M18.5 6.5l1.5-1.5"/>', 34),
-  calendar: svgIcon('<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8.5 15l2.2 2.2 4.8-4.7"/>', 34),
+  trophy: svgIcon('<rect x="2" y="2" width="20" height="20" rx="5.5"/><path d="M9 6.5h6v4a3 3 0 0 1-6 0z"/><path d="M9 7.6H6.2v.9a3.2 3.2 0 0 0 3 3.2M15 7.6h2.8v.9a3.2 3.2 0 0 1-3 3.2M12 13.5v2.9M9.6 17.4h4.8"/>', 34),
+  bolt: svgIcon('<rect x="2" y="2" width="20" height="20" rx="5.5"/><path d="M13.2 5.6 8.4 12.6h3.9l-1.5 5.8 4.8-7h-3.9z"/>', 34),
+  nutrition: svgIcon('<rect x="2" y="2" width="20" height="20" rx="5.5"/><path d="M12 9.4c-1.5-1.2-4.6-.7-4.6 2.6 0 2.7 2 5.8 3.5 5.8.5 0 .7-.3 1.1-.3s.6.3 1.1.3c1.5 0 3.5-3.1 3.5-5.8 0-3.3-3.1-3.8-4.6-2.6z"/><path d="M12 9.4c0-1.3.6-2.3 1.8-2.9"/>', 34),
+  plan: svgIcon('<rect x="3.5" y="4.5" width="17" height="17.5" rx="4.5"/><path d="M9 6.5V4.2A2.2 2.2 0 0 1 11.2 2h1.6A2.2 2.2 0 0 1 15 4.2v2.3z" fill="currentColor"/><path d="M9.6 12h4.8M9.6 10.6v2.8M14.4 10.6v2.8M8 12h1.6M14.4 12H16M8 16h8M8 19h5"/>', 34),
+  library: svgIcon('<rect x="2" y="2" width="20" height="20" rx="5.5"/><path d="M10 8.3v7.4l5.8-3.7z"/>', 34),
+  timer: svgIcon('<rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12.6" r="5.2"/><path d="M12 10v2.6l1.7 1.2M10.6 5.6h2.8"/>', 34),
+  calendar: svgIcon('<rect x="2" y="4" width="20" height="18" rx="5.5"/><path d="M7.5 2v4M16.5 2v4M2 9.5h20"/><path d="M8.6 15.2l2.3 2.2 4.5-4.4"/>', 34),
   pin: svgIcon('<path d="M12 21s-7-6.1-7-11.5a7 7 0 0114 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>', 22)
 };
 
