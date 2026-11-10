@@ -283,7 +283,12 @@ button {
 
 /* Over the still the blue shows as it is: white text reads on it without
    a wash, and only the bottom fades into the page. */
-.hero-bg.visible + .hero-overlay { background: linear-gradient(180deg, transparent 72%, var(--bg) 100%); }
+.hero-bg.visible:not(.has-poster) + .hero-overlay { background: linear-gradient(180deg, transparent 72%, var(--bg) 100%); }
+
+/* The clip's first frame, while it loads or when it cannot play: a photo,
+   so the satin folds stay off it and the wash over it stays. */
+.hero-bg.has-poster { background-color: var(--bg); background-position: center; background-size: cover; background-repeat: no-repeat; }
+.hero-bg.has-poster::before { display: none; }
 
 .hero-overlay {
   position: absolute;

@@ -734,13 +734,22 @@ function trackSections() {
 }
 
 // ===== Hero video =====
-// Plays videos/hero.mp4 (or .webm) when the file exists. Without it, or for
-// visitors who asked for less motion or less data, the still background
-// carries the hero instead.
+// An upright screen gets the upright clip, a wider one the clip set in the
+// middle of its own blur. Until it plays, and for visitors who asked for
+// less motion or less data, its first frame stands in as a still; with no
+// clip at all, the blue background does.
 function initHeroVideo() {
   const video = document.getElementById('heroVideo');
   const bg = document.getElementById('heroBg');
+  const wide = window.matchMedia && window.matchMedia('(min-aspect-ratio: 1/1)').matches;
+  const pickFor = name => video && ((wide && video.dataset[name + 'Wide']) || video.dataset[name]);
+  const poster = pickFor('poster');
   let settled = false;
+
+  if (bg && poster) {
+    bg.style.backgroundImage = 'url("' + poster + '")';
+    bg.classList.add('has-poster');
+  }
 
   const useStatic = () => {
     if (settled) return;
@@ -762,13 +771,14 @@ function initHeroVideo() {
   // The static background shows straight away; the video fades over it only
   // once it actually plays.
   if (bg) bg.classList.add('visible');
-  // Whichever clip is actually there: the smaller WebM first where the
-  // browser plays it, then the MP4, so uploading only hero.mp4 is enough.
-  // A missing file raises no prompt <video> error, so each is checked first.
+  // Whichever clip is actually there: a WebM first where one is given and the
+  // browser plays it, then the MP4. A missing file raises no prompt <video>
+  // error, so each is checked first.
   const probe = document.createElement('video');
   const candidates = [];
-  if (video.dataset.srcWebm && probe.canPlayType('video/webm; codecs="vp9"')) candidates.push(video.dataset.srcWebm);
-  if (video.dataset.src) candidates.push(video.dataset.src);
+  const webm = pickFor('srcWebm');
+  if (webm && probe.canPlayType('video/webm; codecs="vp9"')) candidates.push(webm);
+  if (pickFor('src')) candidates.push(pickFor('src'));
   const exists = url => fetch(url, { method: 'HEAD' }).then(res => res.ok, () => false);
   const pick = list => (list.length
     ? exists(list[0]).then(ok => (ok ? list[0] : pick(list.slice(1))))
@@ -778,7 +788,6 @@ function initHeroVideo() {
     .then(src => {
       video.addEventListener('playing', useVideo, { once: true });
       video.addEventListener('error', useStatic, { once: true });
-      if (video.dataset.poster) video.poster = video.dataset.poster;
       video.src = src;
       const attempt = video.play();
       if (attempt && attempt.catch) attempt.catch(useStatic);

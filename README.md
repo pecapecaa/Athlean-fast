@@ -54,10 +54,16 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
 - Fotografija trenera: `images/trener.jpg` (uspravna, 4:5), u delu „Šta je
   AthLean Fast".
 
-- Uvodni video: dovoljno je ubaciti `videos/hero.mp4` (po želji i manji
-  `videos/hero.webm`). Dok fajla nema, prikazuje se satenska pozadina, ništa
-  drugo ne treba menjati. Najbolje kratak (10–20 s, vrti se u krug), bez
-  zvuka (sajt ga ionako pušta bez zvuka) i do oko 10 MB, da se brzo učita.
+- Uvodni video: `videos/hero.mp4` je uspravan (720×1280) za telefon,
+  `videos/hero-wide.mp4` isti snimak u sredini sa zamućenim stranama
+  (1280×720) za šire ekrane. Prvi kadar svakog (`images/hero-poster.jpg`,
+  `images/hero-wide-poster.jpg`) stoji dok se video učitava, i umesto njega
+  kad ne može da se pusti (štednja baterije, manje pokreta, štednja
+  podataka). Isečeno je 23 s iz Markovog snimka (1,9–25,1 s), bez zvuka,
+  25 sličica u sekundi, oko 4 i 3 MB. Novi snimak se priprema isto:
+
+      ffmpeg -ss POČETAK -to KRAJ -i snimak.mp4 -an -vf "fps=25,scale=720:1280" \
+        -c:v libx264 -preset slower -crf 29 -movflags +faststart videos/hero.mp4
 - Video po nivou: upisati putanju u `video` kod nivoa u `data.js`
   (npr. `videos/pocetni.mp4`), a `poster` zameniti slikom iz snimka.
 - Transformacije: prikazuju se u traci koja polako klizi sama. Slike

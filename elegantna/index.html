@@ -39,7 +39,7 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Lato:wght@400;700&display=swap">
   </noscript>
-  <link rel="stylesheet" href="styles.css?v=6007c009">
+  <link rel="stylesheet" href="styles.css?v=42399704">
 
   <script>
     // Sopstveni događaji i tagovi za analitiku (Microsoft Clarity). Sve kroz
@@ -94,9 +94,13 @@
        za "O nama" i kontakt, sve je redom ispod. -->
   <main id="main" tabindex="-1">
     <section class="hero" id="hero">
-      <!-- Pozadinski snimak: dovoljno je ubaciti videos/hero.mp4 (i po želji
-           videos/hero.webm). Dok fajla nema, prikazuje se statična pozadina. -->
-      <video id="heroVideo" class="hero-video" data-src="videos/hero.mp4" data-src-webm="videos/hero.webm"
+      <!-- Pozadinski snimak: uspravan za telefon (videos/hero.mp4), a za šire
+           ekrane isti snimak u sredini sa zamućenim stranama
+           (videos/hero-wide.mp4). Dok se učitava, ili kad ne može da se
+           pusti, stoji prvi kadar (images/hero-poster.jpg, hero-wide-poster.jpg). -->
+      <video id="heroVideo" class="hero-video"
+        data-src="../videos/hero.mp4" data-src-wide="../videos/hero-wide.mp4"
+        data-poster="../images/hero-poster.jpg" data-poster-wide="../images/hero-wide-poster.jpg"
         muted loop playsinline preload="none" aria-hidden="true"></video>
       <div class="hero-bg" id="heroBg"></div>
       <div class="hero-overlay"></div>
@@ -450,6 +454,6 @@
 
   <script src="data.js?v=95686fbc"></script>
   <script src="components.js?v=22f3d17d"></script>
-  <script src="script.js?v=aa73cc81"></script>
+  <script src="script.js?v=db162e36"></script>
 </body>
 </html>

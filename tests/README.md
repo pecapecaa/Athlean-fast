@@ -59,6 +59,8 @@ pravoj adresi.
 - da se slike kettlebella učitaju i da padnu kad dođu na ekran, i ponovo
   pri povratku
 - da su kontakt podaci iz `data.js` upisani na svakoj stranici
+- da telefon dobija uspravni uvodni video, a širi ekran široki, i da do
+  puštanja stoji prvi kadar baš tog snimka
 - da prvi ulazak počinje zlatnim logom koji sam nestane posle par sekundi
   (ili odmah na dodir), samo jednom po poseti, i ne kad link vodi pravo na
   deo stranice ili kad posetilac traži manje pokreta

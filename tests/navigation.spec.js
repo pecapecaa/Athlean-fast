@@ -239,6 +239,32 @@ async function run() {
     await calm.close();
   }
 
+  // ---- 10. The hero clip suits the screen, and its first frame stands in.
+  //          This Chromium plays no H.264, so what is checked here is the
+  //          choice of clip and the still that stays when it cannot play.
+  {
+    console.log('\n10. Hero video');
+    for (const [label, viewport, still] of [
+      ['a phone', { width: 390, height: 844 }, 'images/hero-poster.jpg'],
+      ['a wide screen', { width: 1366, height: 860 }, 'images/hero-wide-poster.jpg']
+    ]) {
+      const page = await browser.newPage({ viewport });
+      const loaded = [];
+      page.on('response', r => { if (r.ok()) loaded.push(new URL(r.url()).pathname); });
+      await page.goto(BASE + '/');
+      await page.waitForTimeout(1500);
+      const bg = await page.$eval('#heroBg', el => el.style.backgroundImage);
+      check(`${label} gets its own first frame as the still`, bg.includes(still) && loaded.some(u => u.endsWith(still)), bg);
+      await page.close();
+    }
+    for (const clip of ['videos/hero.mp4', 'videos/hero-wide.mp4']) {
+      const page = await browser.newPage();
+      const res = await page.request.head(BASE + '/' + clip);
+      check(clip + ' is there', res.ok(), String(res.status()));
+      await page.close();
+    }
+  }
+
   await browser.close();
   console.log(`\n${pass} passed, ${fail} failed`);
   if (fail) { console.log('failed: ' + failures.join(', ')); process.exit(1); }
