@@ -26,6 +26,8 @@ const svgIcon = (paths, size) =>
 const ICONS = {
   play: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>',
   check: svgIcon('<path d="M4 12.5l5 5L20 6.5"/>', 16),
+  prev: svgIcon('<path d="M15 5l-7 7 7 7"/>', 22),
+  next: svgIcon('<path d="M9 5l7 7-7 7"/>', 22),
   clock: svgIcon('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 14),
   kettlebell: svgIcon('<path d="M8.5 9.5a3.5 3.5 0 117 0"/><path d="M9 4.5h6"/><path d="M6.5 13a5.5 5.5 0 1111 0c0 2.8-1 5-2.2 6.5H8.7C7.5 18 6.5 15.8 6.5 13z"/>', 14),
   trophy: svgIcon('<rect x="2" y="2" width="20" height="20" rx="5.5"/><path d="M9 6.5h6v4a3 3 0 0 1-6 0z"/><path d="M9 7.6H6.2v.9a3.2 3.2 0 0 0 3 3.2M15 7.6h2.8v.9a3.2 3.2 0 0 1-3 3.2M12 13.5v2.9M9.6 17.4h4.8"/>', 34),

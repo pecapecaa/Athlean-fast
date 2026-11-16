@@ -52,7 +52,7 @@ http.createServer((req, res) => {
   }
 
   // A folder is served from its index.html, and asked for without the
-  // closing slash it is redirected to it, as Pages does (elegantna/).
+  // closing slash it is redirected to it, as Pages does.
   if (pathname.endsWith('/')) pathname += 'index.html';
 
   let file = resolveSafe(pathname);

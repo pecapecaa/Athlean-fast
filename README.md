@@ -83,16 +83,6 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   „−8 kg"), utisak klijenta (`quote`), ime i napomena (`detail`), i
   pojavljuju se ispod slika.
 
-## Prethodni stil (`elegantna/`)
-
-`elegantna/` je zamrznuta kopija sajta pre prelaska na ShredFast slova
-(tanki Oswald, tanke ikonice), da se dve verzije uporede:
-https://pecapecaa.github.io/Athlean-fast/elegantna/
-
-Stil joj se ne menja (dodat je samo potpis u futeru) i ne ulazi u
-pretragu (`noindex`). `node tools-version.js` obeležava i njene stranice.
-Kad se izabere jedna verzija, fascikla se briše.
-
 ## Analitika
 
 Sajt već šalje događaje (prijava otvorena, poslata, napuštena, video

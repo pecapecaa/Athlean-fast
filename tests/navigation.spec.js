@@ -133,7 +133,7 @@ async function run() {
     const x = () => page.$eval('.tf-reel-track', t => new DOMMatrix(getComputedStyle(t).transform).m41);
     // The strip wraps by one set of cards, which looks the same; count a
     // move modulo that width.
-    const copy = await page.$eval('.tf-reel-track', t => t.scrollWidth / 2);
+    const copy = await page.$$eval('.reel-card', c => c[c.length / 2].offsetLeft - c[0].offsetLeft);
     const shift = (from, to) => ((((to - from) % copy) + copy) % copy);
     await page.waitForTimeout(300);
     const x0 = await x();
@@ -141,21 +141,61 @@ async function run() {
     const x1 = await x();
     check('the strip drifts by itself from left to right', x1 > x0 + 5, `${x0} -> ${x1}`);
 
+    // Which card is in the middle, and how far from it (px).
+    const centred = () => page.evaluate(() => {
+      const reelBox = document.querySelector('.tf-reel').getBoundingClientRect();
+      const mid = reelBox.left + reelBox.width / 2;
+      const cards = [...document.querySelectorAll('.reel-card')];
+      const n = cards.length / 2;
+      let best = null;
+      cards.forEach((c, i) => {
+        const r = c.getBoundingClientRect();
+        const off = r.left + r.width / 2 - mid;
+        if (!best || Math.abs(off) < Math.abs(best.off)) best = { i: i % n, off, n };
+      });
+      return best;
+    });
+    const settle = () => page.waitForTimeout(600);
+
     const box = await reel.boundingBox();
+    const start = await centred();
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await page.mouse.down();
     const before = await x();
     await page.mouse.move(box.x + box.width / 2 - 120, box.y + box.height / 2, { steps: 6 });
     const after = await x();
+    check('the strip follows a drag', Math.abs(shift(after, before) - 120) < 3, `${before} -> ${after}`);
     await page.mouse.up();
-    check('and can be dragged', Math.abs(shift(after, before) - 120) < 3, `${before} -> ${after}`);
+    await settle();
+    const swiped = await centred();
+    check('a swipe brings the next card to the middle, squarely',
+      swiped.i === (start.i + 1) % start.n && Math.abs(swiped.off) < 2, JSON.stringify({ start, swiped }));
 
-    const step = await page.$$eval('.reel-card', c => c[1].offsetLeft - c[0].offsetLeft);
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(box.x + box.width / 2 + 15, box.y + box.height / 2, { steps: 3 });
+    await page.mouse.up();
+    await settle();
+    const nudged = await centred();
+    check('a small nudge settles back on the same card', nudged.i === swiped.i && Math.abs(nudged.off) < 2, JSON.stringify(nudged));
+
+    await page.click('.tf-arrow--next');
+    await settle();
+    const nexted = await centred();
+    check('the right arrow brings the next card', nexted.i === (nudged.i + 1) % start.n && Math.abs(nexted.off) < 2, JSON.stringify(nexted));
+    await page.click('.tf-arrow--prev');
+    await page.click('.tf-arrow--prev');
+    await settle();
+    const preved = await centred();
+    check('the left arrow goes back, as often as pressed', preved.i === (nexted.i - 2 + start.n) % start.n && Math.abs(preved.off) < 2, JSON.stringify(preved));
+
     await reel.focus();
-    const k0 = await x();
     await page.keyboard.press('ArrowRight');
-    const k1 = await x();
-    check('the arrow keys step it a card at a time', Math.abs(shift(k1, k0) - step) < 3, `${k0} -> ${k1}, step ${step}`);
+    await settle();
+    const keyed = await centred();
+    check('the arrow keys step it a card at a time', keyed.i === (preved.i + 1) % start.n && Math.abs(keyed.off) < 2, JSON.stringify(keyed));
+    await page.waitForTimeout(1500);
+    check('and it waits there instead of drifting off', Math.abs((await centred()).off) < 2);
     await page.close();
   }
 

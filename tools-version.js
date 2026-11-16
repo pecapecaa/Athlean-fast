@@ -13,11 +13,10 @@ const path = require('path');
 const crypto = require('crypto');
 
 const ROOT = __dirname;
-const PAGES = ['index.html', 'nivo.html', '404.html', 'elegantna/index.html', 'elegantna/nivo.html'];
+const PAGES = ['index.html', 'nivo.html', '404.html'];
 const ASSET = /(href|src)="([\w.-]+\.(?:css|js))\?v=([\w]+)"/g;
 
-// A page's assets sit next to it: elegantna/index.html loads
-// elegantna/styles.css.
+// A page's assets sit next to it.
 const hashOf = (page, file) => crypto.createHash('sha1')
   .update(fs.readFileSync(path.join(ROOT, path.dirname(page), file)))
   .digest('hex')

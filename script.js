@@ -13,9 +13,11 @@ const MSG = {
   before: { sr: 'Prije', en: 'Before' },
   after: { sr: 'Poslije', en: 'After' },
   reel: {
-    sr: 'AthLean Fast rezultati: povuci ili koristi strelice',
-    en: 'AthLean Fast results: drag or use the arrow keys'
+    sr: 'AthLean Fast rezultati: prevuci ili koristi strelice',
+    en: 'AthLean Fast results: swipe or use the arrow keys'
   },
+  reelPrev: { sr: 'Prethodna transformacija', en: 'Previous transformation' },
+  reelNext: { sr: 'Sljedeća transformacija', en: 'Next transformation' },
   fillContact: { sr: 'Popuni ime, email i telefon', en: 'Please fill in your name, email and phone' },
   badEmail: { sr: 'Unesi ispravnu email adresu', en: 'Please enter a valid email address' },
   badPhone: { sr: 'Unesi ispravan broj telefona', en: 'Please enter a valid phone number' },
@@ -87,42 +89,57 @@ function renderTransformations() {
   if (!el || !TRANSFORMATIONS.length) return;
   const cards = copy => TRANSFORMATIONS.map(item => reelCardHtml(item, copy)).join('');
   el.innerHTML = `
-    <div class="tf-reel" tabindex="0" aria-roledescription="carousel" aria-label="${esc(t(MSG.reel))}">
-      <div class="tf-reel-track">${cards(false)}${cards(true)}</div>
+    <div class="tf-reel-wrap">
+      <div class="tf-reel" tabindex="0" aria-roledescription="carousel" aria-label="${esc(t(MSG.reel))}">
+        <div class="tf-reel-track">${cards(false)}${cards(true)}</div>
+      </div>
+      <button type="button" class="tf-arrow tf-arrow--prev" aria-label="${esc(t(MSG.reelPrev))}">${ICONS.prev}</button>
+      <button type="button" class="tf-arrow tf-arrow--next" aria-label="${esc(t(MSG.reelNext))}">${ICONS.next}</button>
     </div>`;
-  runReel(el.querySelector('.tf-reel'));
+  runReel(el.querySelector('.tf-reel'), el.querySelector('.tf-arrow--prev'), el.querySelector('.tf-arrow--next'));
 }
 
 // ===== Moving strip =====
-// The cards drift slowly from left to right on their own and can be dragged
-// either way, or stepped a card at a time with the arrow keys; either pauses
-// the drift for a moment. The card nearest the
-// middle is shown full size, the ones towards the edges smaller and dimmer.
-// The track holds the cards twice and wraps by one copy's width, so it
-// never runs out. Only moves while it is on screen.
-const REEL_SPEED = 28; // px per second
-const REEL_HOLD = 2500; // ms the drift waits after a drag or a key
+// The cards drift slowly from left to right on their own. A swipe, the
+// arrows on either side or the arrow keys move it one card at a time, as a
+// photo carousel does: whatever card it lands on glides to the middle. Any
+// of them pauses the drift long enough to look. The card nearest the middle
+// is shown full size, the ones towards the edges smaller and dimmer. The
+// track holds the cards twice and wraps by one copy's width, so it never
+// runs out. Only moves while it is on screen.
+const REEL_SPEED = 28;       // px per second
+const REEL_HOLD = 6000;      // ms the drift waits after the visitor moves it
+const REEL_GLIDE = 380;      // ms a card takes to glide to the middle
+const REEL_SWIPE = 40;       // px of travel that counts as a swipe
+const REEL_FLICK = 0.35;     // px per ms that counts as a swipe though short...
+const REEL_FLICK_MIN = 20;   // ...once it has travelled this far (px)
 const LESS_MOTION = window.matchMedia
   && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function runReel(reel) {
+function runReel(reel, prevButton, nextButton) {
   const track = reel.querySelector('.tf-reel-track');
   const cards = Array.from(track.children);
   let copy = 0;          // width of one set of cards
   let offset = 0;        // how far the strip has moved to the right
+  let shift = 0;         // where the track is drawn, from offset
   let visible = false;
   let heldUntil = 0;
   let last = 0;
   let centers = [];
+  let glide = null;      // { delta, start, done }: a card on its way to the middle
 
   const measure = () => {
-    copy = track.scrollWidth / 2;
     centers = cards.map(c => c.offsetLeft + c.offsetWidth / 2);
+    // One set's period: from a card to the same card in the second set.
+    // (Half the track's width falls half a gap short, and the strip would
+    // jump by that each time it wraps.)
+    const half = cards.length / 2;
+    copy = half >= 1 ? centers[half] - centers[0] : track.scrollWidth / 2;
   };
   const place = () => {
     if (!copy) return;
     offset = ((offset % copy) + copy) % copy;
-    const shift = offset - copy;
+    shift = offset - copy;
     track.style.transform = `translate3d(${shift}px, 0, 0)`;
     const mid = reel.clientWidth / 2;
     const reach = reel.clientWidth / 2 + 1;
@@ -131,11 +148,21 @@ function runReel(reel) {
       card.style.setProperty('--near', (1 - d).toFixed(3));
     });
   };
+  const ease = p => 1 - Math.pow(1 - p, 3);
   const frame = now => {
     if (!reel.isConnected) return;
     const dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
     last = now;
-    if (!LESS_MOTION && now > heldUntil) offset += REEL_SPEED * dt;
+    if (glide) {
+      // Moved by the change in eased progress, so wrapping round never
+      // disturbs a glide.
+      const p = Math.min((now - glide.start) / REEL_GLIDE, 1);
+      offset += (ease(p) - glide.done) * glide.delta;
+      glide.done = ease(p);
+      if (p >= 1) glide = null;
+    } else if (!LESS_MOTION && now > heldUntil) {
+      offset += REEL_SPEED * dt;
+    }
     place();
     if (visible) requestAnimationFrame(frame);
   };
@@ -146,42 +173,101 @@ function runReel(reel) {
     requestAnimationFrame(frame);
   };
 
-  // Dragging, with a pointer or a finger; an upward swipe still scrolls.
-  let dragX = null;
+  const mid = () => reel.clientWidth / 2;
+  const step = () => (centers.length > 1 ? centers[1] - centers[0] : reel.clientWidth);
+  // Where the card nearest the middle is, or will be once a glide ends.
+  const nearestX = () => {
+    const pending = glide ? glide.delta * (1 - glide.done) : 0;
+    let best = Infinity;
+    centers.forEach(c => {
+      const x = c + shift + pending;
+      if (Math.abs(x - mid()) < Math.abs(best - mid())) best = x;
+    });
+    return best;
+  };
+  const glideBy = delta => {
+    const pending = glide ? glide.delta * (1 - glide.done) : 0;
+    heldUntil = performance.now() + REEL_HOLD;
+    if (LESS_MOTION) {
+      glide = null;
+      offset += delta + pending;
+      place();
+      return;
+    }
+    glide = { delta: delta + pending, start: performance.now(), done: 0 };
+  };
+  // dir +1: the next card (from the right) to the middle; -1: the previous.
+  const goBy = dir => glideBy(mid() - (nearestX() + dir * step()));
+
+  // Swiping, with a finger or a mouse. A finger's first few pixels decide:
+  // mostly sideways moves the strip (and the page stays put), mostly
+  // upwards scrolls the page as usual.
+  let drag = null;
   reel.addEventListener('pointerdown', e => {
     if (e.button) return;
-    dragX = e.clientX;
+    const pending = glide ? glide.delta * (1 - glide.done) : 0;
+    glide = null;
+    offset += pending;      // a glide cut short lands where it was going
+    place();
+    drag = {
+      x0: e.clientX, y0: e.clientY, x: e.clientX, t: e.timeStamp, vx: 0,
+      axis: e.pointerType === 'mouse' ? 'x' : null,
+      anchor: nearestX()
+    };
     heldUntil = Infinity;
-    reel.classList.add('is-dragging');
     reel.setPointerCapture(e.pointerId);
   });
   reel.addEventListener('pointermove', e => {
-    if (dragX === null) return;
-    offset += e.clientX - dragX;
-    dragX = e.clientX;
+    if (!drag) return;
+    if (!drag.axis) {
+      const dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+      if (Math.hypot(dx, dy) < 6) return;
+      drag.axis = Math.abs(dx) >= Math.abs(dy) * 0.7 ? 'x' : 'y';
+      if (drag.axis === 'y') { drag = null; heldUntil = performance.now() + REEL_HOLD; return; }
+      drag.x = e.clientX;  // the strip starts following from here
+    }
+    const moved = e.clientX - drag.x;
+    const dt = Math.max(e.timeStamp - drag.t, 1);
+    drag.vx = 0.7 * (moved / dt) + 0.3 * drag.vx;
+    drag.t = e.timeStamp;
+    drag.x = e.clientX;
+    drag.travel = (drag.travel || 0) + moved;
+    offset += moved;
+    reel.classList.add('is-dragging');
     place();
   });
+  // Once the strip has the gesture, the page does not scroll under it.
+  reel.addEventListener('touchmove', e => {
+    if (drag && drag.axis === 'x' && e.cancelable) e.preventDefault();
+  }, { passive: false });
   const release = () => {
-    if (dragX === null) return;
-    dragX = null;
-    heldUntil = performance.now() + REEL_HOLD;
+    if (!drag) return;
+    const { axis, vx, anchor } = drag;
+    const travel = drag.travel || 0;
+    drag = null;
     reel.classList.remove('is-dragging');
+    heldUntil = performance.now() + REEL_HOLD;
+    if (axis !== 'x') return;
+    const flick = Math.abs(travel) >= REEL_FLICK_MIN;
+    const dir = travel < -REEL_SWIPE || (flick && vx < -REEL_FLICK) ? 1
+      : travel > REEL_SWIPE || (flick && vx > REEL_FLICK) ? -1 : 0;
+    // The card that was in the middle has moved by the travel; the one
+    // the swipe asks for glides to the middle.
+    glideBy(mid() - (anchor + travel + dir * step()));
   };
   reel.addEventListener('pointerup', release);
   reel.addEventListener('pointercancel', release);
   // Resting a mouse on it holds it still, to look closer. Only a real
   // mouse: after a tap a phone reports an "enter" that never leaves.
-  reel.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && dragX === null) heldUntil = Infinity; });
-  reel.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && dragX === null) heldUntil = 0; });
-  // The arrow keys bring the next card from that side towards the middle.
+  reel.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && !drag) heldUntil = Infinity; });
+  reel.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !drag) heldUntil = performance.now() + 800; });
   reel.addEventListener('keydown', e => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     e.preventDefault();
-    const step = centers.length > 1 ? centers[1] - centers[0] : reel.clientWidth / 2;
-    offset += e.key === 'ArrowRight' ? -step : step;
-    heldUntil = performance.now() + REEL_HOLD;
-    place();
+    goBy(e.key === 'ArrowRight' ? 1 : -1);
   });
+  if (prevButton) prevButton.addEventListener('click', () => goBy(-1));
+  if (nextButton) nextButton.addEventListener('click', () => goBy(1));
 
   measure();
   place();
