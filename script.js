@@ -626,6 +626,7 @@ function switchLanguage(lang) {
     : '<span>SR</span> / <span class="lang-active">EN</span>';
   try { localStorage.setItem(LANG_KEY, currentLang); } catch (err) { /* storage off: not remembered */ }
   clTag('jezik', currentLang);
+  applyContact();
   renderAll();
   setJoinStep(join.step);
 }

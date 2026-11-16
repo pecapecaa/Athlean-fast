@@ -238,6 +238,9 @@ async function run() {
         els.filter(el => el.getAttribute('href') === '#' || (el.dataset.contact.indexOf('link') < 0
           && el.dataset.contact !== 'chat' && !el.textContent.trim())).length);
       check(`${url}: every contact link is filled in`, empty === 0, `${empty} empty`);
+      const chat = await page.$eval('.fab-chat', el => el.getAttribute('href'));
+      check(`${url}: the message button opens the chat with a greeting already typed`,
+        /(draft|text)=Zdravo%20Marko!%20/.test(chat), chat);
     }
     await page.close();
   }

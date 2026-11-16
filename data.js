@@ -20,6 +20,12 @@ const CONTACT = {
   phoneHref: '+38765263009',
   chat: 'viber',
   chatNumber: '38765263009',
+  // Poruka koja je već upisana kad se otvori Viber/WhatsApp; posetilac može
+  // da je izmeni pre slanja.
+  chatText: {
+    sr: 'Zdravo Marko! Pišem sa sajta, zanima me AthLean Fast trening.',
+    en: "Hi Marko! I'm writing from the website, I'm interested in AthLean Fast training."
+  },
   email: 'markosima14@gmail.com',
   instagram: { handle: '@sima.markoo', url: 'https://www.instagram.com/sima.markoo/' }
 };
