@@ -286,16 +286,19 @@ const TRANSFORMATIONS = [
 ];
 
 // ===== Lokacije =====
+// map: link na Google Maps; kartica tada otvara mapu u novom tabu.
 const LOCATIONS = [
   {
     name: { sr: 'Bregovački bazen', en: 'Bregovački bazen' },
     place: { sr: 'Trebinje', en: 'Trebinje' },
-    note: { sr: 'Treninzi uživo', en: 'In-person training' }
+    note: { sr: 'Treninzi uživo', en: 'In-person training' },
+    map: 'https://maps.app.goo.gl/M5jqAGuiTdX4imGPA'
   },
   {
     name: { sr: 'Dom mladih', en: 'Dom mladih' },
     place: { sr: 'Trebinje', en: 'Trebinje' },
-    note: { sr: 'Treninzi uživo', en: 'In-person training' }
+    note: { sr: 'Treninzi uživo', en: 'In-person training' },
+    map: 'https://maps.app.goo.gl/Pm7R3fqBqetHPowz8'
   },
   {
     name: { sr: 'Srbija', en: 'Serbia' },

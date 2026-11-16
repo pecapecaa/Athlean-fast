@@ -204,6 +204,8 @@ async function run() {
     check('the maker\'s credit is not counted as a client mail', !(await events(page)).includes('email_kliknut'));
     await page.evaluate(() => document.querySelector('.footer-contact a[href^="mailto:"]').click());
     check('a click on the AthLean Fast mail still is', (await events(page)).includes('email_kliknut'));
+    await page.evaluate(() => document.querySelector('a.location--map').click());
+    check('opening a location on the map is counted', (await events(page)).includes('mapa_kliknuta'));
     await page.close();
   }
 

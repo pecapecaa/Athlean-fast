@@ -80,16 +80,24 @@ function featureHtml(item, lang) {
     </div>`;
 }
 
+const MAP_LABEL = { sr: 'Otvori mapu', en: 'Open map' };
+
+// A location with a map link is one big link to it, opened in a new tab so
+// the site stays where the visitor left it.
 function locationHtml(loc, lang) {
-  return `
-    <div class="location">
+  const body = `
       <span class="location-icon">${ICONS.pin}</span>
       <div>
         <h3>${esc(tr(loc.name, lang))}</h3>
         <p>${esc(tr(loc.place, lang))}</p>
         <small>${esc(tr(loc.note, lang))}</small>
-      </div>
-    </div>`;
+      </div>`;
+  if (!loc.map) return `<div class="location">${body}\n    </div>`;
+  return `
+    <a class="location location--map" href="${esc(loc.map)}" target="_blank" rel="noopener"
+       aria-label="${esc(tr(loc.name, lang) + ', ' + tr(loc.place, lang) + ': ' + tr(MAP_LABEL, lang))}">${body}
+      <span class="location-map">${esc(tr(MAP_LABEL, lang))}</span>
+    </a>`;
 }
 
 // The message already typed into the chat when it opens, in the page's

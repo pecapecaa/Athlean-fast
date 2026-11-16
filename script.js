@@ -994,6 +994,10 @@ document.addEventListener('DOMContentLoaded', () => {
       clEvent(CONTACT.chat + '_kliknut');
       return;
     }
+    if (e.target.closest('a.location--map')) {
+      clEvent('mapa_kliknuta');
+      return;
+    }
     const contact = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
     if (contact && !contact.closest('.footer-credit')) clEvent(contact.getAttribute('href').startsWith('tel:') ? 'telefon_kliknut' : 'email_kliknut');
   });

@@ -1452,6 +1452,28 @@ button {
   color: var(--gold);
 }
 
+.location--map { transition: background 0.25s, transform 0.25s; }
+
+.location-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--line-strong);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+  transition: border-color 0.25s;
+}
+
+.location-map::after { content: '↗'; font-size: 0.9rem; }
+
+@media (hover: hover) {
+  .location--map:hover { background: var(--card-2); transform: translateY(-3px); }
+  .location--map:hover .location-map { border-color: var(--gold); }
+}
+
 /* ===== CONTACT ===== */
 .contact-grid {
   display: grid;

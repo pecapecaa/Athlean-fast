@@ -242,6 +242,11 @@ async function run() {
       check(`${url}: the message button opens the chat with a greeting already typed`,
         /(draft|text)=Zdravo%20Marko!%20/.test(chat), chat);
     }
+    await page.goto(BASE + '/');
+    const maps = await page.$$eval('#locationsGrid a.location--map', els =>
+      els.map(el => el.target === '_blank' && /^https:\/\/maps\.app\.goo\.gl\//.test(el.href)));
+    check('both Trebinje locations open on Google Maps in a new tab',
+      maps.length === 2 && maps.every(Boolean), JSON.stringify(maps));
     await page.close();
   }
 
