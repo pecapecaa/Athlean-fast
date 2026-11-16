@@ -266,6 +266,12 @@ const TRANSFORMATIONS = [
     period: { sr: '2 mjeseca', en: '2 months' },
     result: { sr: '−5 kg', en: '−5 kg' },
     detail: { sr: '60+ godina', en: 'Age 60+' }
+  },
+  {
+    before: '../images/transformacije/transformacija-8-prije.jpg',
+    after: '../images/transformacije/transformacija-8-poslije.jpg',
+    period: { sr: '3 mjeseca', en: '3 months' },
+    detail: { sr: '39 godina · 3 djece · 2 posla', en: 'Age 39 · 3 kids · 2 jobs' }
   }
 ];
 
