@@ -92,15 +92,18 @@ function heroReveal() {
 }
 
 // The sticky bar shows only once the hero's own join button has scrolled away.
+// The watched area reaches far below the screen, so the button counts as
+// "still there" anywhere below the top bar and only flips once it has gone up
+// past it, even when a jump skips straight over it.
 function stickyJoinBar() {
   const anchor = document.querySelector('.wp-buy');
   const sticky = document.getElementById('wpSticky');
   if (!anchor || !sticky || !('IntersectionObserver' in window)) return;
   new IntersectionObserver(entries => {
-    const show = !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0;
+    const show = !entries[0].isIntersecting;
     sticky.hidden = !show;
     document.body.classList.toggle('has-sticky', show);
-  }, { rootMargin: '-72px 0px 0px 0px' }).observe(anchor);
+  }, { rootMargin: '-72px 0px 100000px 0px' }).observe(anchor);
 }
 
 // Marks what should arrive on scroll, so the HTML stays a description of the

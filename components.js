@@ -81,6 +81,22 @@ function featureHtml(item, lang) {
     </div>`;
 }
 
+// A photo frame still waiting for its photo shimmers softly (.img-wait in
+// styles.css) until the photo is there, so a slow connection never shows an
+// empty box. Without JavaScript nothing shimmers and the photo simply comes.
+const PHOTO_FRAMES = '.about-media, .card-media';
+
+function watchPhotos(root) {
+  (root || document).querySelectorAll(PHOTO_FRAMES).forEach(frame => {
+    const img = frame.querySelector('img');
+    if (!img || (img.complete && img.naturalWidth)) return;
+    const done = () => frame.classList.remove('img-wait');
+    frame.classList.add('img-wait');
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', done, { once: true });
+  });
+}
+
 const MAP_LABEL = { sr: 'Otvori mapu', en: 'Open map' };
 
 // A location with a map link is one big link to it, opened in a new tab so

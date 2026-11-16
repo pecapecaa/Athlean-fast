@@ -199,6 +199,39 @@ async function run() {
     await page.close();
   }
 
+  // ---- 6b. A photo in the strip is never an empty box: every one is fetched
+  //          ahead, and a frame still waiting shows the wings until it comes.
+  {
+    console.log('\n6b. Photos in the strip');
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    // Photos held back, as on a slow connection.
+    let release;
+    const held = new Promise(resolve => { release = resolve; });
+    await page.route(/transformacije\//, async route => { await held; await route.continue(); });
+    await page.goto(BASE + '/#transformations');
+    await page.waitForTimeout(800);
+    const total = await page.$$eval('.transformation-shot', els => els.length);
+    const waiting = await page.$$eval('.transformation-shot', els => els.filter(e =>
+      e.classList.contains('img-wait') && getComputedStyle(e).backgroundImage.includes('logo-mark')).length);
+    check('while a photo is on its way its frame shows the wings, not an empty box', waiting === total, `${waiting}/${total}`);
+    release();
+    await page.waitForTimeout(2000);
+    const arrived = await page.$$eval('.transformation-shot', els => els.filter(e =>
+      e.classList.contains('is-loaded') && !e.classList.contains('img-wait')).length);
+    check('then every photo arrives, the ones off to the side included', arrived === total, `${arrived}/${total}`);
+    await page.close();
+  }
+  {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const asked = new Set();
+    page.on('request', r => { if (/transformacije\//.test(r.url())) asked.add(new URL(r.url()).pathname); });
+    await page.goto(BASE + '/', { waitUntil: 'load' });
+    await page.waitForTimeout(3800);
+    const want = await page.evaluate(() => new Set(TRANSFORMATIONS.flatMap(t => [t.before, t.after])).size);
+    check('they are fetched soon after the page loads, before anyone scrolls down to them', asked.size === want, `${asked.size}/${want}`);
+    await page.close();
+  }
+
   // ---- 7. The kettlebells are plain images and drop each time they arrive.
   {
     console.log('\n7. Kettlebells');
@@ -313,6 +346,30 @@ async function run() {
       check(clip + ' is there', res.ok(), String(res.status()));
       await page.close();
     }
+    {
+      // Off screen the clip must not hold the connection the photos need.
+      const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+      await page.goto(BASE + '/');
+      await page.waitForFunction(() => {
+        const v = document.getElementById('heroVideo');
+        return v && v.classList.contains('active');
+      }, null, { timeout: 10000 }).catch(() => {});
+      const state = () => page.evaluate(() => {
+        const v = document.getElementById('heroVideo');
+        if (!v) return { gone: true };
+        const all = v.buffered.length === 1 && v.duration && v.buffered.end(0) >= v.duration - 0.5;
+        return { paused: v.paused, downloading: !!v.getAttribute('src') && !all };
+      });
+      await page.evaluate(() => scrollTo({ top: 3000, behavior: 'instant' }));
+      await page.waitForTimeout(600);
+      const away = await state();
+      check('scrolled away from, the hero clip pauses and stops downloading', away.paused && !away.downloading, JSON.stringify(away));
+      await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+      await page.waitForTimeout(2000);
+      const back = await state();
+      check('and plays on once the hero is back', back.paused === false, JSON.stringify(back));
+      await page.close();
+    }
   }
 
   // ---- 11. Every level page opens on its own clip, and nothing jumps while
@@ -349,6 +406,16 @@ async function run() {
     await page.evaluate(() => window.scrollTo({ top: document.getElementById('trening').offsetTop, behavior: 'instant' }));
     await page.waitForTimeout(600);
     check('and come back once it is scrolled away', (await fabs()) === 'visible');
+    // The join bar: off while the page's own button is in sight, on once it
+    // has gone up, even when a jump skips straight over it.
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.waitForTimeout(400);
+    const bar = () => page.$eval('#wpSticky', el => !el.hidden);
+    const atTop = await bar();
+    await page.evaluate(() => window.scrollTo({ top: document.getElementById('fokus').offsetTop, behavior: 'instant' }));
+    await page.waitForTimeout(400);
+    const down = await bar();
+    check('the join bar stays off at the top and comes up after a jump down the page', !atTop && down, JSON.stringify({ atTop, down }));
     await page.close();
   }
 

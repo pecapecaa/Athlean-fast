@@ -1137,6 +1137,39 @@ button {
   height: 100%;
   object-fit: cover;
   object-position: 50% 15%;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.transformation-shot.is-loaded img { opacity: 1; }
+
+/* Until a photo is there, its frame shows the AthLean wings, dimmed, and
+   shimmers softly instead of standing empty (watchPhotos in components.js,
+   loadReelPhotos in script.js). The dim layer is the card colour laid over
+   the mark. */
+.img-wait {
+  background-image:
+    linear-gradient(rgba(31, 31, 35, 0.8), rgba(31, 31, 35, 0.8)),
+    url('images/logo-mark.webp');
+  background-position: center;
+  background-size: auto, 34% auto;
+  background-repeat: no-repeat;
+}
+
+.img-wait::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 25%, rgba(255, 255, 255, 0.07) 50%, transparent 75%);
+  transform: translateX(-100%);
+  animation: photo-shimmer 1.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes photo-shimmer { to { transform: translateX(100%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .img-wait::before { animation: none; transform: none; background: rgba(255, 255, 255, 0.03); }
 }
 
 .shot-label {

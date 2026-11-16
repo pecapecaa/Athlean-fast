@@ -68,8 +68,8 @@ function reelCaptionHtml(item) {
 
 function shotHtml(src, label, after, hidden) {
   return `
-        <div class="transformation-shot">
-          <img src="${esc(src)}" alt="${hidden ? '' : esc(t(label))}" loading="lazy" decoding="async">
+        <div class="transformation-shot img-wait">
+          <img data-src="${esc(src)}" alt="${hidden ? '' : esc(t(label))}" decoding="async">
           <span class="shot-label shot-label--${after ? 'after' : 'before'}">${esc(t(label))}</span>
         </div>`;
 }
@@ -97,6 +97,65 @@ function renderTransformations() {
       <button type="button" class="tf-arrow tf-arrow--next" aria-label="${esc(t(MSG.reelNext))}">${ICONS.next}</button>
     </div>`;
   runReel(el.querySelector('.tf-reel'), el.querySelector('.tf-arrow--prev'), el.querySelector('.tf-arrow--next'));
+  loadReelPhotos(el);
+}
+
+// ===== The strip's photos =====
+// The browser's own lazy loading asks for a photo only once it is nearly on
+// screen, and in a strip that moves sideways (iPhone above all) that is too
+// late on a slow connection: the card arrives empty. So every photo in the
+// strip is fetched while the strip is still a few screens away, and in any
+// case a few seconds after the page has loaded. Until a photo is there its
+// frame shimmers softly; then the photo fades in. A failed photo is asked for
+// once more.
+const REEL_AHEAD = '300% 0px';  // how far ahead of the strip loading starts
+const REEL_PREFETCH = 3000;     // ms after the page has loaded, at the latest
+const PHOTO_RETRY = 1500;       // ms before a failed photo is asked for again
+
+function loadReelPhotos(root) {
+  const photos = Array.from(root.querySelectorAll('img[data-src]'));
+  if (!photos.length) return;
+  let started = false;
+
+  const arrived = img => {
+    img.parentElement.classList.remove('img-wait');
+    img.parentElement.classList.add('is-loaded');
+  };
+  const fetchPhoto = img => {
+    const src = img.dataset.src;
+    img.removeAttribute('data-src');
+    img.addEventListener('load', () => arrived(img));
+    img.addEventListener('error', () => {
+      if (img.dataset.retried) { img.parentElement.classList.remove('img-wait'); return; }
+      img.dataset.retried = '1';
+      setTimeout(() => { img.src = src + (src.indexOf('?') < 0 ? '?' : '&') + 'retry=1'; }, PHOTO_RETRY);
+    });
+    img.src = src;
+    // Already in the cache: no load event may follow.
+    if (img.complete && img.naturalWidth) arrived(img);
+  };
+  const start = () => {
+    if (started) return;
+    started = true;
+    photos.forEach(fetchPhoto);
+  };
+
+  if ('IntersectionObserver' in window) {
+    const near = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      near.disconnect();
+      start();
+    }, { rootMargin: REEL_AHEAD });
+    near.observe(root);
+  } else {
+    start();
+  }
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (!saveData) {
+    const later = () => setTimeout(start, REEL_PREFETCH);
+    if (document.readyState === 'complete') later();
+    else window.addEventListener('load', later, { once: true });
+  }
 }
 
 // ===== Moving strip =====
@@ -308,6 +367,7 @@ function renderAll() {
   renderLocations();
   renderQuestions();
   observeFadeElements();
+  watchPhotos();
 }
 
 // ===== Join (questionnaire) =====
@@ -895,8 +955,52 @@ function initHeroVideo() {
       const attempt = video.play();
       if (attempt && attempt.catch) attempt.catch(useStatic);
       setTimeout(() => { if (!settled) useStatic(); }, 12000);
+      pauseHeroOffScreen(video, bg, src);
     })
     .catch(useStatic);
+}
+
+// Scrolled away from, the hero clip pauses, and if it is still downloading
+// the download stops too: on a slow connection it would otherwise take the
+// whole line from the photos further down. Its still covers for it, and once
+// the hero is back the clip carries on where it was.
+function pauseHeroOffScreen(video, bg, src) {
+  if (!('IntersectionObserver' in window)) return;
+  const hero = video.closest('.hero') || video.parentElement;
+  let resumeAt = -1;
+  const loadedAll = () => video.buffered.length === 1 && video.duration
+    && video.buffered.end(0) >= video.duration - 0.5;
+
+  const watch = new IntersectionObserver(([e]) => {
+    // The still took over for good (no clip, or it never started).
+    if (!video.isConnected) { watch.disconnect(); return; }
+    if (!e.isIntersecting) {
+      video.pause();
+      if (!loadedAll()) {
+        resumeAt = video.currentTime || 0;
+        if (bg) bg.classList.add('visible');
+        video.classList.remove('active');
+        video.removeAttribute('src');
+        video.load();
+      }
+      return;
+    }
+    if (resumeAt >= 0) {
+      const at = resumeAt;
+      resumeAt = -1;
+      video.addEventListener('loadedmetadata', () => {
+        try { video.currentTime = at; } catch (err) { /* starts from the top */ }
+      }, { once: true });
+      video.addEventListener('playing', () => {
+        video.classList.add('active');
+        if (bg) bg.classList.remove('visible');
+      }, { once: true });
+      video.src = src;
+    }
+    const attempt = video.play();
+    if (attempt && attempt.catch) attempt.catch(() => { /* the still stays */ });
+  });
+  watch.observe(hero);
 }
 
 // ===== Logo on arrival =====

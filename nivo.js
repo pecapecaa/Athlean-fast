@@ -93,6 +93,7 @@ function render(level, detail) {
   document.getElementById('wpRelated').innerHTML = LEVELS
     .filter(l => l.id !== level.id)
     .map(l => levelCardHtml(l, 'sr')).join('');
+  watchPhotos(document.getElementById('wpRelated'));
 
   document.getElementById('wpStickyName').textContent = name;
   setJoinLinks({ level: level.id });

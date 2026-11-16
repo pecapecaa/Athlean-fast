@@ -219,67 +219,67 @@ const MENTORSHIP = [
 //   detail: npr. { sr: 'Trener', en: 'Coach' }
 const TRANSFORMATIONS = [
   {
-    before: 'images/transformacije/marko-prije.jpg',
-    after: 'images/transformacije/marko-poslije.jpg',
+    before: 'images/transformacije/marko-prije.webp',
+    after: 'images/transformacije/marko-poslije.webp',
     name: { sr: 'Marko Simović', en: 'Marko Simović' },
     detail: { sr: 'Osnivač AthLean Fast', en: 'Founder of AthLean Fast' },
     period: { sr: '6 mjeseci', en: '6 months' }
   },
   {
-    before: 'images/transformacije/transformacija-1-prije.jpg',
-    after: 'images/transformacije/transformacija-1-poslije.jpg',
+    before: 'images/transformacije/transformacija-1-prije.webp',
+    after: 'images/transformacije/transformacija-1-poslije.webp',
     period: { sr: '12 mjeseci', en: '12 months' },
     result: { sr: '−20 kg', en: '−20 kg' }
   },
   {
-    before: 'images/transformacije/transformacija-2-prije.jpg',
-    after: 'images/transformacije/transformacija-2-poslije.jpg',
+    before: 'images/transformacije/transformacija-2-prije.webp',
+    after: 'images/transformacije/transformacija-2-poslije.webp',
     period: { sr: '6 mjeseci', en: '6 months' },
     result: { sr: '−9 kg', en: '−9 kg' },
     detail: { sr: 'Trening nakon trudnoće', en: 'Training after pregnancy' }
   },
   {
-    before: 'images/transformacije/transformacija-3-prije.jpg',
-    after: 'images/transformacije/transformacija-3-poslije.jpg',
+    before: 'images/transformacije/transformacija-3-prije.webp',
+    after: 'images/transformacije/transformacija-3-poslije.webp',
     period: { sr: '4 mjeseca', en: '4 months' },
     result: { sr: '−8 kg', en: '−8 kg' }
   },
   {
     // Ista klijentkinja i ista slika pre, posle 7 meseci
-    before: 'images/transformacije/transformacija-3-prije.jpg',
-    after: 'images/transformacije/transformacija-3b-poslije.jpg',
+    before: 'images/transformacije/transformacija-3-prije.webp',
+    after: 'images/transformacije/transformacija-3b-poslije.webp',
     period: { sr: '7 mjeseci', en: '7 months' },
     result: { sr: '−10 kg', en: '−10 kg' }
   },
   {
-    before: 'images/transformacije/transformacija-4-prije.jpg',
-    after: 'images/transformacije/transformacija-4-poslije.jpg',
+    before: 'images/transformacije/transformacija-4-prije.webp',
+    after: 'images/transformacije/transformacija-4-poslije.webp',
     period: { sr: '3 mjeseca', en: '3 months' },
     result: { sr: '+10 kg', en: '+10 kg' }
   },
   {
-    before: 'images/transformacije/transformacija-5-prije.jpg',
-    after: 'images/transformacije/transformacija-5-poslije.jpg',
+    before: 'images/transformacije/transformacija-5-prije.webp',
+    after: 'images/transformacije/transformacija-5-poslije.webp',
     period: { sr: '6 mjeseci', en: '6 months' },
     result: { sr: '−11 kg', en: '−11 kg' }
   },
   {
-    before: 'images/transformacije/transformacija-6-prije.jpg',
-    after: 'images/transformacije/transformacija-6-poslije.jpg',
+    before: 'images/transformacije/transformacija-6-prije.webp',
+    after: 'images/transformacije/transformacija-6-poslije.webp',
     period: { sr: '3 mjeseca', en: '3 months' },
     result: { sr: '+1 kg', en: '+1 kg' },
     detail: { sr: 'Zategnuto tijelo', en: 'A toned body' }
   },
   {
-    before: 'images/transformacije/transformacija-7-prije.jpg',
-    after: 'images/transformacije/transformacija-7-poslije.jpg',
+    before: 'images/transformacije/transformacija-7-prije.webp',
+    after: 'images/transformacije/transformacija-7-poslije.webp',
     period: { sr: '2 mjeseca', en: '2 months' },
     result: { sr: '−5 kg', en: '−5 kg' },
     detail: { sr: '60+ godina', en: 'Age 60+' }
   },
   {
-    before: 'images/transformacije/transformacija-8-prije.jpg',
-    after: 'images/transformacije/transformacija-8-poslije.jpg',
+    before: 'images/transformacije/transformacija-8-prije.webp',
+    after: 'images/transformacije/transformacija-8-poslije.webp',
     period: { sr: '3 mjeseca', en: '3 months' },
     detail: { sr: '39 godina · 3 djece · 2 posla', en: 'Age 39 · 3 kids · 2 jobs' }
   }

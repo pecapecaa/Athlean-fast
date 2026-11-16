@@ -80,7 +80,9 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   puštanje; na kartici je ista, manja (`*-720.webp`). Putanje su kod nivoa
   u `data.js` (`poster`, `thumb`).
 - Transformacije: prikazuju se u traci koja polako klizi sama. Slike
-  pre/posle (uspravne, 3:5) su u `images/transformacije/`, a putanje u
+  pre/posle (uspravne, 3:5, WebP širine 600 px, oko 25 KB) su u
+  `images/transformacije/`. Sve se učitavaju čim je traka par ekrana
+  daleko, da kartica nikad ne bude prazna. Putanje su u
   `TRANSFORMATIONS` u `data.js` (samo uz dozvolu klijenata). Uz istu
   transformaciju se dopisuju trajanje (`period`), rezultat (`result`, npr.
   „−8 kg"), utisak klijenta (`quote`), ime i napomena (`detail`), i
