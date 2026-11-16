@@ -236,7 +236,7 @@ async function run() {
       await page.waitForTimeout(150);
       const empty = await page.$$eval('[data-contact]', els =>
         els.filter(el => el.getAttribute('href') === '#' || (el.dataset.contact.indexOf('link') < 0
-          && el.dataset.contact !== 'whatsapp' && !el.textContent.trim())).length);
+          && el.dataset.contact !== 'chat' && !el.textContent.trim())).length);
       check(`${url}: every contact link is filled in`, empty === 0, `${empty} empty`);
     }
     await page.close();
@@ -253,7 +253,9 @@ async function run() {
     });
 
     const page = await browser.newPage();
-    await page.goto(BASE + '/');
+    // Checked as soon as the page is drawn: waiting for every image could
+    // outlast the logo's two seconds on a slow machine.
+    await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
     check('a first visit opens on the logo', await shown(page));
     await page.waitForTimeout(3500);
     check('which gives way to the page by itself', !(await shown(page)));

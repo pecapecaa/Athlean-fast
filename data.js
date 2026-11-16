@@ -13,13 +13,14 @@ const SITE_ORIGIN = 'https://pecapecaa.github.io/Athlean-fast/';
 const BRAND = 'AthLean Fast';
 
 // ===== Kontakt =====
-// PRIVREMENO: broj i mail (Instagram je pravi). Upisuje se na sve stranice
-// odavde.
+// Upisuje se na sve stranice odavde. chat: 'viber' ili 'whatsapp', aplikacija
+// na koju vodi zeleno/ljubičasto dugme za poruku (broj je chatNumber).
 const CONTACT = {
-  phone: '+387 XX XXX XXX',
-  phoneHref: '+38700000000',
-  whatsapp: '38700000000',
-  email: 'upiti@example.com',
+  phone: '+387 65 263 009',
+  phoneHref: '+38765263009',
+  chat: 'viber',
+  chatNumber: '38765263009',
+  email: 'markosima14@gmail.com',
   instagram: { handle: '@sima.markoo', url: 'https://www.instagram.com/sima.markoo/' }
 };
 
@@ -30,8 +31,8 @@ const RESULTS = [
     icon: 'timer',
     title: { sr: 'Treniraj pametno', en: 'Train smart' },
     text: {
-      sr: 'Ne rasipaj slobodno vrijeme. 30, 45 ili 60 minuta treninga.',
-      en: 'Don\'t waste your free time. 30, 45 or 60 minutes of training.'
+      sr: 'Ne rasipaj slobodno vrijeme. 30, 45 ili 60 minuta treninga, kod kuće, u teretani ili na putovanju.',
+      en: 'Don\'t waste your free time. 30, 45 or 60 minutes of training, at home, in the gym or on the road.'
     }
   },
   {
@@ -112,7 +113,8 @@ const LEVELS = [
   }
 ];
 
-// Sadržaj stranice nivoa (samo srpski).
+// Sadržaj stranice nivoa (samo srpski). U fokusu su tehnika i mobilnost
+// uvek 5, na svakom nivou: to je osnova.
 // PRIVREMENO: primeri treninga dok ne stignu pravi.
 const LEVEL_DETAILS = {
   pocetni: {
@@ -132,7 +134,7 @@ const LEVEL_DETAILS = {
       'Imaš malo vremena i treba ti jasan, kratak trening'
     ],
     notForYou: 'Ako redovno treniraš i osnovne pokrete sa kettlebellom radiš bez problema, srednji nivo će ti dati više.',
-    focus: { snaga: 2, kondicija: 3, tehnika: 5, mobilnost: 4, intenzitet: 2 }
+    focus: { snaga: 2, kondicija: 2, tehnika: 5, mobilnost: 5, intenzitet: 2 }
   },
   srednji: {
     lead: 'Osnova je tu, sada gradimo mišić i podižemo tempo. Pokreti postaju složeniji, a trening zahtjevniji iz sedmice u sedmicu.',
@@ -151,7 +153,7 @@ const LEVEL_DETAILS = {
       'Želiš vidljivije rezultate u snazi i izgledu'
     ],
     notForYou: 'Ako tek počinješ, kreni od početnog nivoa: najbrži napredak dolazi iz dobre osnove.',
-    focus: { snaga: 4, kondicija: 4, tehnika: 3, mobilnost: 3, intenzitet: 4 }
+    focus: { snaga: 4, kondicija: 4, tehnika: 5, mobilnost: 5, intenzitet: 3 }
   },
   napredni: {
     lead: 'Trening kao kod sportista. Teški kompleksi sa 2 kettlebella, eksplozivni pokreti i metabolički finiš za atletski izvajano tijelo.',
@@ -170,7 +172,7 @@ const LEVEL_DETAILS = {
       'Zahtjevni treninzi i disciplina te ne plaše'
     ],
     notForYou: 'Ako nemaš ozbiljnu osnovu, ovaj intenzitet nosi rizik od povrede. Kreni nivo niže, stići ćeš brže nego što misliš.',
-    focus: { snaga: 5, kondicija: 5, tehnika: 4, mobilnost: 3, intenzitet: 5 }
+    focus: { snaga: 5, kondicija: 5, tehnika: 5, mobilnost: 5, intenzitet: 5 }
   }
 };
 
@@ -214,7 +216,7 @@ const TRANSFORMATIONS = [
     before: 'images/transformacije/marko-prije.jpg',
     after: 'images/transformacije/marko-poslije.jpg',
     name: { sr: 'Marko Simović', en: 'Marko Simović' },
-    detail: { sr: 'Trener AthLean Fast', en: 'AthLean Fast coach' },
+    detail: { sr: 'Osnivač AthLean Fast', en: 'Founder of AthLean Fast' },
     period: { sr: '6 mjeseci', en: '6 months' }
   },
   {
@@ -240,7 +242,8 @@ const TRANSFORMATIONS = [
     // Ista klijentkinja i ista slika pre, posle 7 meseci
     before: 'images/transformacije/transformacija-3-prije.jpg',
     after: 'images/transformacije/transformacija-3b-poslije.jpg',
-    period: { sr: '7 mjeseci', en: '7 months' }
+    period: { sr: '7 mjeseci', en: '7 months' },
+    result: { sr: '−10 kg', en: '−10 kg' }
   },
   {
     before: 'images/transformacije/transformacija-4-prije.jpg',
@@ -257,7 +260,9 @@ const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/transformacija-6-prije.jpg',
     after: 'images/transformacije/transformacija-6-poslije.jpg',
-    period: { sr: '3 mjeseca', en: '3 months' }
+    period: { sr: '3 mjeseca', en: '3 months' },
+    result: { sr: '+1 kg', en: '+1 kg' },
+    detail: { sr: 'Zategnuto tijelo', en: 'A toned body' }
   },
   {
     before: 'images/transformacije/transformacija-7-prije.jpg',
@@ -275,16 +280,20 @@ const TRANSFORMATIONS = [
 ];
 
 // ===== Lokacije =====
-// PRIVREMENO: prave lokacije treninga.
 const LOCATIONS = [
   {
-    name: { sr: 'Lokacija 1', en: 'Location 1' },
-    place: { sr: 'Grad, adresa', en: 'City, address' },
+    name: { sr: 'Bregovački bazen', en: 'Bregovački bazen' },
+    place: { sr: 'Trebinje', en: 'Trebinje' },
     note: { sr: 'Treninzi uživo', en: 'In-person training' }
   },
   {
-    name: { sr: 'Lokacija 2', en: 'Location 2' },
-    place: { sr: 'Grad, adresa', en: 'City, address' },
+    name: { sr: 'Dom mladih', en: 'Dom mladih' },
+    place: { sr: 'Trebinje', en: 'Trebinje' },
+    note: { sr: 'Treninzi uživo', en: 'In-person training' }
+  },
+  {
+    name: { sr: 'Srbija', en: 'Serbia' },
+    place: { sr: 'Uskoro', en: 'Coming soon' },
     note: { sr: 'Treninzi uživo', en: 'In-person training' }
   },
   {
@@ -296,19 +305,22 @@ const LOCATIONS = [
 
 // ===== Upitnik za prijavu =====
 // Drugi korak prijave se crta iz ove liste, pa se pitanja menjaju samo
-// ovde. type: 'choice' (jedan odgovor) ili 'text' (slobodan unos).
+// ovde. type: 'choice' (jedan odgovor), 'multi' (jedan ili više) ili 'text'
+// (slobodan unos).
 // Pitanje 'nivo' dobija odgovore iz LEVELS.
 const JOIN_QUESTIONS = [
   {
     id: 'cilj',
-    type: 'choice',
+    type: 'multi',
     required: true,
-    label: { sr: 'Koji ti je glavni cilj?', en: 'What is your main goal?' },
+    label: { sr: 'Koji su ti ciljevi?', en: 'What are your goals?' },
     options: [
       { value: 'misic', label: { sr: 'Izgraditi mišić', en: 'Build muscle' } },
       { value: 'salo', label: { sr: 'Istopiti salo', en: 'Melt fat' } },
       { value: 'definicija', label: { sr: 'Izdefinisati tijelo', en: 'Define my body' } },
-      { value: 'energija', label: { sr: 'Više energije i kondicije', en: 'More energy and conditioning' } }
+      { value: 'energija', label: { sr: 'Više energije i kondicije', en: 'More energy and conditioning' } },
+      { value: 'zdravlje', label: { sr: 'Očuvati zdravlje', en: 'Stay healthy' } },
+      { value: 'funkcionalnost', label: { sr: 'Funkcionalnost u realnom životu', en: 'Strength for everyday life' } }
     ]
   },
   {
@@ -357,7 +369,7 @@ const JOIN_QUESTIONS = [
     type: 'text',
     required: false,
     label: { sr: 'Povrede, zdravstvena ograničenja ili napomene', en: 'Injuries, health limitations or notes' },
-    placeholder: { sr: 'Npr. bol u koljenu, astma, radim u smjenama…', en: 'E.g. knee pain, asthma, shift work…' }
+    placeholder: { sr: 'Npr. bol u leđima, insulinska rezistencija, anemija…', en: 'E.g. back pain, insulin resistance, anaemia…' }
   }
 ];
 

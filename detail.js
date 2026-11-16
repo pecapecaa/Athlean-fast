@@ -11,6 +11,10 @@ function wireNav() {
       clEvent('instagram_kliknut');
       return;
     }
+    if (e.target.closest('a[data-contact="chat"]')) {
+      clEvent(CONTACT.chat + '_kliknut');
+      return;
+    }
     const contact = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
     if (contact && !contact.closest('.footer-credit')) clEvent(contact.getAttribute('href').startsWith('tel:') ? 'telefon_kliknut' : 'email_kliknut');
   });

@@ -1,8 +1,8 @@
 // ===== AthLean Fast: homepage =====
 
-// PRIVREMENO: mail na koji stižu prijave i poruke. FormSubmit pri prvoj
-// prijavi šalje jednokratni link za potvrdu na tu adresu.
-const RECIPIENT_EMAIL = 'upiti@example.com';
+// Mail na koji stižu prijave i poruke. FormSubmit pri prvoj prijavi šalje
+// jednokratni link za potvrdu na tu adresu: dok se ne klikne, ništa ne stiže.
+const RECIPIENT_EMAIL = 'markosima14@gmail.com';
 const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/' + RECIPIENT_EMAIL;
 
 const LANG_KEY = 'afLang';
@@ -314,10 +314,13 @@ function renderAll() {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 const join = { step: 1, source: '', opener: null, sent: false };
 
+// A 'multi' question's answer is the list of what was ticked.
 function readAnswers() {
   const answers = {};
   JOIN_QUESTIONS.forEach(q => {
-    if (q.type === 'choice') {
+    if (q.type === 'multi') {
+      answers[q.id] = Array.from(document.querySelectorAll('input[name="q_' + q.id + '"]:checked')).map(i => i.value);
+    } else if (q.type === 'choice') {
       const checked = document.querySelector('input[name="q_' + q.id + '"]:checked');
       answers[q.id] = checked ? checked.value : '';
     } else {
@@ -331,9 +334,11 @@ function readAnswers() {
 function setAnswer(id, value) {
   const q = JOIN_QUESTIONS.find(x => x.id === id);
   if (!q || !value) return;
-  if (q.type === 'choice') {
-    const input = document.querySelector('input[name="q_' + id + '"][value="' + CSS.escape(value) + '"]');
-    if (input) input.checked = true;
+  if (q.type === 'choice' || q.type === 'multi') {
+    [].concat(value).forEach(v => {
+      const input = document.querySelector('input[name="q_' + id + '"][value="' + CSS.escape(v) + '"]');
+      if (input) input.checked = true;
+    });
   } else {
     const field = document.getElementById('q_' + id);
     if (field) field.value = value;
@@ -348,14 +353,15 @@ function renderQuestions() {
   const kept = readAnswers();
   el.innerHTML = JOIN_QUESTIONS.map(q => {
     const optional = q.required ? '' : ' <span class="field-optional">(' + esc(currentLang === 'sr' ? 'nije obavezno' : 'optional') + ')</span>';
-    if (q.type === 'choice') {
+    const many = q.type === 'multi' ? ' <span class="field-optional">(' + esc(currentLang === 'sr' ? 'može više odgovora' : 'pick any') + ')</span>' : '';
+    if (q.type === 'choice' || q.type === 'multi') {
       return `
         <fieldset class="join-question" data-question="${q.id}">
-          <legend>${esc(t(q.label))}${optional}</legend>
+          <legend>${esc(t(q.label))}${optional}${many}</legend>
           <div class="choice-group">
             ${questionOptions(q).map(o => `
               <label class="choice">
-                <input type="radio" name="q_${q.id}" value="${esc(o.value)}">
+                <input type="${q.type === 'multi' ? 'checkbox' : 'radio'}" name="q_${q.id}" value="${esc(o.value)}">
                 <span>${esc(t(o.label))}</span>
               </label>`).join('')}
           </div>
@@ -465,15 +471,20 @@ function goToQuestions() {
   if (firstInput) firstInput.focus({ preventScroll: true });
 }
 
+const answered = value => (Array.isArray(value) ? value.length > 0 : !!value);
+
 function missingAnswers(answers) {
-  return JOIN_QUESTIONS.filter(q => q.required && !answers[q.id]);
+  return JOIN_QUESTIONS.filter(q => q.required && !answered(answers[q.id]));
 }
 
+// What the coach reads in the email: the labels, several joined by commas.
 function answerLabel(q, value) {
-  if (!value) return '';
-  if (q.type !== 'choice') return value;
-  const option = questionOptions(q).find(o => o.value === value);
-  return option ? option.label.sr : value;
+  if (!answered(value)) return '';
+  if (q.type !== 'choice' && q.type !== 'multi') return value;
+  return [].concat(value).map(v => {
+    const option = questionOptions(q).find(o => o.value === v);
+    return option ? option.label.sr : v;
+  }).join(', ');
 }
 
 async function submitJoin(e) {
@@ -547,7 +558,7 @@ async function submitJoin(e) {
   join.sent = true;
   clKeep('prijava_poslata');
   clTag('nivo', answers.nivo || '');
-  clTag('cilj', answers.cilj || '');
+  clTag('cilj', [].concat(answers.cilj || []).join(','));
   clEvent('prijava_poslata');
   submitBtn.disabled = false;
   submitBtn.textContent = originalText;
@@ -912,6 +923,23 @@ function endIntroOnInput() {
   });
 }
 
+// ===== "Čitaj dalje" =====
+function aboutReadMore() {
+  const button = document.getElementById('aboutToggle');
+  const more = document.getElementById('aboutMore');
+  if (!button || !more) return;
+  const labels = { false: { sr: 'Čitaj dalje', en: 'Read more' }, true: { sr: 'Prikaži manje', en: 'Show less' } };
+  button.addEventListener('click', () => {
+    const open = more.hidden;
+    more.hidden = !open;
+    button.setAttribute('aria-expanded', String(open));
+    button.dataset.sr = labels[open].sr;
+    button.dataset.en = labels[open].en;
+    button.textContent = t(labels[open]);
+    if (open) clEvent('tekst_otvoren');
+  });
+}
+
 // ===== Init =====
 // The band moves by half its width, so it carries its words twice; the
 // copy is made here to keep the HTML to one list.
@@ -961,6 +989,10 @@ document.addEventListener('DOMContentLoaded', () => {
       clEvent('instagram_kliknut');
       return;
     }
+    if (e.target.closest('a[data-contact="chat"]')) {
+      clEvent(CONTACT.chat + '_kliknut');
+      return;
+    }
     const contact = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
     if (contact && !contact.closest('.footer-credit')) clEvent(contact.getAttribute('href').startsWith('tel:') ? 'telefon_kliknut' : 'email_kliknut');
   });
@@ -996,6 +1028,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Serbian stays the default; only an explicit switch is remembered.
   switchLanguage(saved === 'en' ? 'en' : 'sr');
 
+  aboutReadMore();
   landOnHash();
   openJoinFromUrl();
   animateCounters();

@@ -24,8 +24,8 @@ const isOpen = page => page.evaluate(() =>
 const step = page => page.evaluate(() =>
   document.getElementById('joinStep2').hidden ? 1 : 2);
 const checked = (page, q) => page.evaluate(id => {
-  const el = document.querySelector('input[name="q_' + id + '"]:checked');
-  return el ? el.value : null;
+  const els = [...document.querySelectorAll('input[name="q_' + id + '"]:checked')].map(el => el.value);
+  return els.length ? els.join(',') : null;
 }, q);
 
 // Records what would have been sent, and answers like FormSubmit does.
@@ -46,7 +46,7 @@ async function fillContact(page, over) {
 }
 
 async function answerAll(page) {
-  for (const label of ['Izdefinisati tijelo', 'Srednji nivo', '45 minuta', 'Da, dva', 'Kod kuće']) {
+  for (const label of ['Izdefinisati tijelo', 'Očuvati zdravlje', 'Srednji nivo', '45 minuta', 'Da, dva', 'Kod kuće']) {
     await page.click(`#joinQuestions label.choice:has-text("${label}")`);
   }
 }
@@ -134,7 +134,7 @@ async function run() {
     check('it carries the contact details',
       s['Ime i prezime'] === 'Test Klijent' && s['Email'] === 'test@example.com' && s['Telefon'] === '065 123 4567');
     check('answers arrive as readable labels, not codes',
-      s['Koji ti je glavni cilj?'] === 'Izdefinisati tijelo' &&
+      s['Koji su ti ciljevi?'] === 'Izdefinisati tijelo, Očuvati zdravlje' &&
       s['Koji nivo ti odgovara?'] === 'Srednji nivo' &&
       s['Koliko vremena imaš za trening?'] === '45 minuta' &&
       s['Imaš li kettlebell?'] === 'Da, dva', JSON.stringify(s));
@@ -190,7 +190,7 @@ async function run() {
     await page.waitForTimeout(400);
     check('no success is claimed',
       await page.evaluate(() => document.getElementById('joinSuccess').hidden));
-    check('the answers are still there', await checked(page, 'cilj') === 'definicija');
+    check('the answers are still there', await checked(page, 'cilj') === 'definicija,zdravlje');
     check('the send button works again',
       await page.evaluate(() => !document.getElementById('joinSubmit').disabled));
     await page.close();
@@ -208,7 +208,7 @@ async function run() {
     await page.evaluate(() => switchLanguage('en'));
     check('the questions are in English',
       await page.evaluate(() => document.querySelector('#joinQuestions legend').textContent.includes('goal')));
-    check('the answers survived', await checked(page, 'cilj') === 'definicija' && await checked(page, 'nivo') === LEVEL);
+    check('the answers survived', await checked(page, 'cilj') === 'definicija,zdravlje' && await checked(page, 'nivo') === LEVEL);
     check('and it is still on the questionnaire', await step(page) === 2);
     await page.close();
   }

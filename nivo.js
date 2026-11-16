@@ -86,6 +86,7 @@ function render(level, detail) {
   document.getElementById('wpNotForYou').innerHTML =
     '<span class="wp-honest-label">Nije za tebe ako</span><p>' + esc(detail.notForYou) + '</p>';
 
+  document.getElementById('wpFocusTitle').textContent = name;
   document.getElementById('wpFocus').innerHTML = Object.keys(FOCUS_LABELS)
     .map(key => focusBar(key, detail.focus[key])).join('');
 

@@ -543,6 +543,20 @@ button {
 
 .section-cta { text-align: center; margin-top: 60px; }
 
+/* A short line of points under a title, as under the hero. */
+.section-points {
+  display: flex;
+  justify-content: center;
+  margin-top: -4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.section-points span + span::before { content: '|'; margin: 0 12px; color: var(--blue-bright); }
+
 /* ===== ABOUT ===== */
 /* The coach beside what the programme is; one above the other on a phone. */
 .about {
@@ -593,6 +607,14 @@ button {
 }
 
 .about p strong { color: var(--white); font-weight: 700; }
+
+/* "Čitaj dalje": the arrow turns once the rest of the text is open. */
+.read-more { margin-top: -4px; padding-left: 0; }
+.read-more::after { transition: transform 0.25s ease; }
+.read-more[aria-expanded="true"]::after { transform: rotate(180deg); }
+.about-more:not([hidden]) { animation: openDown 0.45s ease both; }
+
+@keyframes openDown { from { opacity: 0; transform: translateY(-6px); } }
 
 /* ShredFast's stat block: the figure big and blue on its own dark panel. */
 .about-stats {
@@ -1389,7 +1411,7 @@ button {
 /* ===== LOCATIONS ===== */
 .locations {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
 }
 
@@ -1538,6 +1560,7 @@ button {
 .footer .logo { margin-bottom: 18px; }
 .footer .logo img { height: 46px; }
 .footer-tagline { max-width: 40ch; margin: 0 auto 24px; }
+.footer-tagline span { display: block; }
 
 .footer-contact {
   display: flex;
@@ -1852,11 +1875,11 @@ button {
     border-radius: 50%;
   }
 
-  .mobile-join-whatsapp { background: #25d366; }
+  .mobile-join-chat svg { width: 26px; height: 26px; }
   .mobile-join-phone { background: var(--card-2); border: 1px solid var(--line-strong); }
 
   /* One "Pridruži se" on screen at a time: the bar replaces the one up top.
-     Past the hero, WhatsApp and the call button live in the bar, so the
+     Past the hero, the message and call buttons live in the bar, so the
      floating pair stays away instead of hovering over the text; where the
      bar steps aside (the join card, contact) the page has its own. */
   .fab-buttons { transition: opacity 0.25s, visibility 0.25s; }
@@ -1888,7 +1911,9 @@ button {
 }
 
 .fab-btn:hover { transform: scale(1.08); }
-.fab-whatsapp { background: #25d366; }
+.fab-chat svg { width: 28px; height: 28px; }
+[data-app="whatsapp"] { background: #25d366; }
+[data-app="viber"] { background: #7360f2; }
 .fab-phone { background: var(--blue); }
 
 /* ===== MOTION ===== */
@@ -1983,7 +2008,8 @@ button {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
-  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-grid,
+  .locations { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ShredFast's tablet step. */
