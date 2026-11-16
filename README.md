@@ -40,15 +40,18 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   - bela je za kontrast, zlatna (`--gold`) samo za sitne detalje
   - font je Figtree, besplatna zamena za Proxima Nova koji koristi ShredFast;
     veličine i debljine su prepisane sa njihovog sajta
-- **Logo:** vektorski, u `images/`:
-  - `logo.svg` je horizontalni (gornja traka i futer)
-  - `logo-stacked.svg` je uspravni
-  - `logo-mark.svg` su samo krila (početna, ikonica sajta, stranica 404)
+- **Logo:** originalni zlatni 3D logo, isečen sa Markove fotografije (bez
+  plave pozadine), u `images/` kao WebP i PNG (za starije pregledače):
+  - `logo-stacked` je uspravni, kao original (ulaz, stranica 404, pretraga)
+  - `logo` su ista krila i natpis jedno pored drugog (gornja traka, futer)
+  - `logo-mark` su samo krila (početna, pokretna traka)
+  - `favicon-32.png`, `favicon-180.png`, `icon-192.png` su ikonice sajta
+  Ako stigne originalni fajl od dizajnera, menja se samo ovaj skup slika.
 
 ## Snimci i slike
 
 - Logo na ulasku: pri prvom ulasku u posetu početna se otvara samo zlatnim
-  logom (`images/logo-stacked.svg`) na plavoj, pa posle oko 2 sekunde prelazi
+  logom (`images/logo-stacked.webp`) na plavoj, pa posle oko 2 sekunde prelazi
   u uvodni deo. Trajanje je `--intro` u `styles.css`.
 
 - Slika uz link (WhatsApp, Viber, Instagram...): `images/og-share.jpg`,
