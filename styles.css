@@ -1454,24 +1454,35 @@ button {
 
 .location--map { transition: background 0.25s, transform 0.25s; }
 
+/* A small gold pill; it fills in when the card is pointed at or tapped. */
 .location-map {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 16px;
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--line-strong);
-  font-size: 0.85rem;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 9px 16px 9px 13px;
+  border: 1px solid rgba(214, 170, 85, 0.35);
+  border-radius: 999px;
+  background: rgba(214, 170, 85, 0.08);
+  color: var(--gold-light);
+  font-size: 0.82rem;
   font-weight: 600;
-  color: var(--white);
-  transition: border-color 0.25s;
+  letter-spacing: 0.2px;
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
 }
 
-.location-map::after { content: '↗'; font-size: 0.9rem; }
+.location-map svg { flex-shrink: 0; transition: transform 0.25s; }
+
+.location--map:active .location-map {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--bg);
+}
 
 @media (hover: hover) {
   .location--map:hover { background: var(--card-2); transform: translateY(-3px); }
-  .location--map:hover .location-map { border-color: var(--gold); }
+  .location--map:hover .location-map { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+  .location--map:hover .location-map svg { transform: translate(2px, -2px); }
 }
 
 /* ===== CONTACT ===== */
