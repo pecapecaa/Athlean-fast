@@ -141,10 +141,27 @@ async function run() {
     check('the free-text note is included',
       s['Povrede, zdravstvena ograničenja ili napomene'] === 'Bol u desnom koljenu');
     check('the reply goes to the person who signed up', s._replyto === 'test@example.com');
+    check('a person leaves the bots\' trap empty, so FormSubmit passes the sign-up on', s._honey === '', JSON.stringify(s._honey));
+    check('the reply to the person is signed by Marko', /Marko Simović/.test(s._autoresponse || ''));
     check('the subject names the person and the level',
       /Test Klijent/.test(s._subject) && /Srednji nivo/.test(s._subject), s._subject);
     check('the success screen shows',
       await page.evaluate(() => !document.getElementById('joinSuccess').hidden));
+
+    // A bot fills every field it finds, the hidden trap too.
+    {
+      const bot = await browser.newPage();
+      const botSent = await stubFormSubmit(bot);
+      await bot.goto(BASE + '/');
+      await bot.evaluate(() => { document.querySelectorAll('input[name="_honey"]').forEach(i => { i.value = 'http://spam.example'; }); });
+      await bot.fill('#cName', 'Bot'); await bot.fill('#cEmail', 'bot@example.com'); await bot.fill('#cMessage', 'Buy now');
+      await bot.click('#contactForm button[type="submit"]');
+      await bot.waitForTimeout(400);
+      check('a bot that fills the hidden trap is flagged for FormSubmit to drop', (botSent[0] || {})._honey === 'http://spam.example');
+      check('the trap is never seen nor reached by tab',
+        await bot.evaluate(() => [...document.querySelectorAll('input[name="_honey"]')].every(i => i.tabIndex === -1 && i.getBoundingClientRect().right < 0)));
+      await bot.close();
+    }
 
     await page.click('#joinDone');
     await page.click('#navJoin');

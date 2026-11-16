@@ -37,7 +37,7 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap">
   </noscript>
-  <link rel="stylesheet" href="styles.css?v=3e313c6a">
+  <link rel="stylesheet" href="styles.css?v=cf7aed05">
 
   <script>
     // Microsoft Clarity: kad se upiše ID projekta (clarity.microsoft.com), tag
@@ -80,14 +80,14 @@
 </head>
 <body>
   <div class="intro" id="intro" aria-hidden="true">
-    <picture><source srcset="images/logo-stacked.webp" type="image/webp"><img src="images/logo-stacked.png" alt="" width="900" height="682"></picture>
+    <picture><source type="image/webp" srcset="images/logo-stacked-600.webp 600w, images/logo-stacked.webp 900w" sizes="(max-width: 387px) 240px, (max-width: 742px) 62vw, 460px"><img src="images/logo-stacked.png" alt="" width="900" height="682"></picture>
   </div>
   <a class="skip-link" href="#main" data-sr="Preskoči na sadržaj" data-en="Skip to content">Preskoči na sadržaj</a>
 
-  <nav class="navbar" id="navbar">
+  <nav class="navbar" id="navbar" aria-label="Glavni meni" data-sr-label="Glavni meni" data-en-label="Main menu">
     <div class="container nav-container">
       <a href="#hero" class="logo">
-        <picture><source srcset="images/logo.webp" type="image/webp"><img src="images/logo.png" alt="AthLean Fast" width="1000" height="239"></picture>
+        <picture><source type="image/webp" srcset="images/logo-600.webp 600w, images/logo.webp 1000w" sizes="200px"><img src="images/logo.png" alt="AthLean Fast" width="1000" height="239"></picture>
       </a>
       <div class="nav-actions">
         <button type="button" class="lang-toggle" id="langToggle" aria-label="SR / EN: jezik / language">
@@ -129,7 +129,7 @@
           <li data-sr="Bilo gdje" data-en="Anywhere">Bilo gdje</li>
         </ul>
       </div>
-      <a href="#about" class="scroll-indicator" aria-label="Nastavi niže"><span class="scroll-arrow"></span></a>
+      <a href="#about" class="scroll-indicator" aria-label="Nastavi niže" data-sr-label="Nastavi niže" data-en-label="Scroll down"><span class="scroll-arrow"></span></a>
     </section>
 
     <!-- Pokretna traka: ukras, isti tekst je i drugde na stranici. -->
@@ -163,7 +163,7 @@
           <figure class="about-media">
             <picture>
               <source type="image/webp" srcset="images/trener-600.webp 600w, images/trener.webp 900w" sizes="(max-width: 860px) min(calc(100vw - 40px), 560px), 450px">
-              <img src="images/trener.jpg" srcset="images/trener-600.jpg 600w, images/trener.jpg 900w" sizes="(max-width: 860px) min(calc(100vw - 40px), 560px), 450px" alt="Marko Simović, osnivač AthLean Fast, sa dva kettlebella" width="900" height="1125" loading="lazy" decoding="async">
+              <img src="images/trener.jpg" srcset="images/trener-600.jpg 600w, images/trener.jpg 900w" sizes="(max-width: 860px) min(calc(100vw - 40px), 560px), 450px" alt="Marko Simović, osnivač AthLean Fast, sa dva kettlebella" data-sr-alt="Marko Simović, osnivač AthLean Fast, sa dva kettlebella" data-en-alt="Marko Simović, founder of AthLean Fast, with two kettlebells" width="900" height="1125" loading="lazy" decoding="async">
             </picture>
             <figcaption>
               <strong>Marko Simović</strong>
@@ -293,7 +293,7 @@
         <div class="join-band">
           <p class="join-kicker slam" style="--delay: 0.6s" data-sr="2 kettlebella · 30 minuta · iskren rad" data-en="2 kettlebells · 30 minutes · honest work">2 kettlebella · 30 minuta · iskren rad</p>
           <h2 data-sr="Pridruži se" data-en="Join us">Pridruži se</h2>
-          <p data-sr="Popuni kratak upitnik o cilju, nivou i vremenu koje imaš. Na osnovu njega pravim tvoj plan." data-en="Fill in a short questionnaire about your goal, your level and the time you have. Your plan is built from it.">Popuni kratak upitnik o cilju, nivou i vremenu koje imaš. Na osnovu njega pravim tvoj plan.</p>
+          <p data-sr="Popuni kratak upitnik o cilju, nivou i vremenu koje imaš. Na osnovu njega pravim tvoj plan." data-en="Fill in a short questionnaire about your goal, your level and the time you have. I'll build your plan from it.">Popuni kratak upitnik o cilju, nivou i vremenu koje imaš. Na osnovu njega pravim tvoj plan.</p>
           <button type="button" class="btn btn-primary btn-lg" data-join="poziv" data-sr="Popuni upitnik" data-en="Fill in the questionnaire">Popuni upitnik</button>
         </div>
       </div>
@@ -341,13 +341,16 @@
           </div>
         </div>
         <form class="contact-form" id="contactForm" novalidate>
+          <!-- Zamka za botove: čovek ovo polje ne vidi, pa ga popuni samo program,
+               a FormSubmit takvu prijavu ne prosleđuje. -->
+          <input type="text" name="_honey" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
           <h3 data-sr="Pošalji poruku" data-en="Send a message">Pošalji poruku</h3>
           <div class="form-row">
-            <input type="text" id="cName" autocomplete="name" data-clarity-mask="true" placeholder="Ime" data-sr-ph="Ime" data-en-ph="Name" aria-label="Ime" required>
+            <input type="text" id="cName" autocomplete="name" data-clarity-mask="true" placeholder="Ime" data-sr-ph="Ime" data-en-ph="Name" aria-label="Ime" data-sr-label="Ime" data-en-label="Name" required>
             <input type="email" id="cEmail" autocomplete="email" data-clarity-mask="true" placeholder="Email" aria-label="Email" required>
           </div>
-          <input type="text" id="cSubject" data-clarity-mask="true" placeholder="Naslov" data-sr-ph="Naslov" data-en-ph="Subject" aria-label="Naslov">
-          <textarea id="cMessage" data-clarity-mask="true" rows="5" placeholder="Tvoja poruka" data-sr-ph="Tvoja poruka" data-en-ph="Your message" aria-label="Poruka" required></textarea>
+          <input type="text" id="cSubject" data-clarity-mask="true" placeholder="Naslov" data-sr-ph="Naslov" data-en-ph="Subject" aria-label="Naslov" data-sr-label="Naslov" data-en-label="Subject">
+          <textarea id="cMessage" data-clarity-mask="true" rows="5" placeholder="Tvoja poruka" data-sr-ph="Tvoja poruka" data-en-ph="Your message" aria-label="Poruka" data-sr-label="Poruka" data-en-label="Message" required></textarea>
           <button type="submit" class="btn btn-primary btn-full" data-sr="Pošalji" data-en="Send">Pošalji</button>
           <p class="form-privacy-note" data-sr="Podaci se koriste isključivo da bismo ti odgovorili i ne čuvaju se trajno." data-en="Your details are used only to reply to you and are not stored permanently.">Podaci se koriste isključivo da bismo ti odgovorili i ne čuvaju se trajno.</p>
         </form>
@@ -358,7 +361,7 @@
   <footer class="footer" id="footer">
     <div class="container">
       <a href="#hero" class="logo">
-        <picture><source srcset="images/logo.webp" type="image/webp"><img src="images/logo.png" alt="AthLean Fast" width="1000" height="239" loading="lazy"></picture>
+        <picture><source type="image/webp" srcset="images/logo-600.webp 600w, images/logo.webp 1000w" sizes="240px"><img src="images/logo.png" alt="AthLean Fast" width="1000" height="239" loading="lazy"></picture>
       </a>
       <p class="footer-tagline"><span data-sr="Atletski izvajano tijelo. Brzo do rezultata." data-en="An athletic, sculpted body. Results, fast.">Atletski izvajano tijelo. Brzo do rezultata.</span><span data-sr="Može svako, bilo kada, bilo gdje." data-en="Anyone, any time, anywhere.">Može svako, bilo kada, bilo gdje.</span></p>
       <ul class="footer-contact">
@@ -376,7 +379,7 @@
 
   <div class="join-overlay" id="joinOverlay" role="dialog" aria-modal="true" aria-labelledby="joinTitle" inert>
     <div class="join-modal" id="joinModal">
-      <button type="button" class="join-close" id="joinClose" aria-label="Zatvori">&times;</button>
+      <button type="button" class="join-close" id="joinClose" aria-label="Zatvori" data-sr-label="Zatvori" data-en-label="Close">&times;</button>
       <div class="join-progress" id="joinProgress">
         <div class="jp-step jp-step--active" id="jpStep1">
           <span class="jp-num">1</span>
@@ -392,6 +395,9 @@
         <h2 class="join-title" id="joinTitle">Pridruži se</h2>
         <p class="join-desc" id="joinDesc"></p>
         <form id="joinForm" novalidate>
+          <!-- Zamka za botove: čovek ovo polje ne vidi, pa ga popuni samo program,
+               a FormSubmit takvu prijavu ne prosleđuje. -->
+          <input type="text" name="_honey" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div id="joinStep1">
             <label class="field">
               <span data-sr="Ime i prezime" data-en="Full name">Ime i prezime</span>
@@ -441,16 +447,16 @@
   <div class="mobile-join" id="mobileJoin" aria-hidden="true">
     <button type="button" class="btn btn-primary" data-join="traka" tabindex="-1" data-sr="Pridruži se" data-en="Join now">Pridruži se</button>
     <a href="#" data-contact="chat" class="mobile-join-icon mobile-join-chat" aria-label="Poruka" tabindex="-1"></a>
-    <a href="#" data-contact="phone-link" class="mobile-join-icon mobile-join-phone" aria-label="Pozovi" tabindex="-1">
+    <a href="#" data-contact="phone-link" class="mobile-join-icon mobile-join-phone" aria-label="Pozovi" data-sr-label="Pozovi" data-en-label="Call" tabindex="-1">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     </a>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <aside class="fab-buttons" aria-label="Brzi kontakt">
+  <aside class="fab-buttons" aria-label="Brzi kontakt" data-sr-label="Brzi kontakt" data-en-label="Quick contact">
     <a href="#" data-contact="chat" class="fab-btn fab-chat" aria-label="Poruka"></a>
-    <a href="#" data-contact="phone-link" class="fab-btn fab-phone" aria-label="Pozovi">
+    <a href="#" data-contact="phone-link" class="fab-btn fab-phone" aria-label="Pozovi" data-sr-label="Pozovi" data-en-label="Call">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     </a>
   </aside>
@@ -467,8 +473,8 @@
   }
   </script>
 
-  <script src="data.js?v=bcb22eeb"></script>
-  <script src="components.js?v=2823a0a7"></script>
-  <script src="script.js?v=634f6d20"></script>
+  <script src="data.js?v=d6c9e139"></script>
+  <script src="components.js?v=598fd016"></script>
+  <script src="script.js?v=e054f749"></script>
 </body>
 </html>

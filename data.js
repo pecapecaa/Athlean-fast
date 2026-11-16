@@ -281,7 +281,7 @@ const TRANSFORMATIONS = [
     before: 'images/transformacije/transformacija-8-prije.webp',
     after: 'images/transformacije/transformacija-8-poslije.webp',
     period: { sr: '3 mjeseca', en: '3 months' },
-    detail: { sr: '39 godina · 3 djece · 2 posla', en: 'Age 39 · 3 kids · 2 jobs' }
+    detail: { sr: '39 godina · troje djece · dva posla', en: 'Age 39 · 3 kids · 2 jobs' }
   }
 ];
 

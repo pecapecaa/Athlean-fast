@@ -547,6 +547,10 @@ function answerLabel(q, value) {
   }).join(', ');
 }
 
+// The trap field a person never sees; a bot fills it, and FormSubmit drops
+// any submission that carries it.
+const honey = form => (form.querySelector('[name="_honey"]') || {}).value || '';
+
 async function submitJoin(e) {
   e.preventDefault();
   if (join.step !== 2) return goToQuestions();
@@ -577,9 +581,11 @@ async function submitJoin(e) {
     _subject: BRAND + ' | Nova prijava | ' + d.name + (levelLabel ? ' | ' + levelLabel : ''),
     _template: 'table',
     _captcha: 'false',
+    _honey: honey(document.getElementById('joinForm')),
     _replyto: d.email,
     _autoresponse: 'Zdravo ' + d.name + ',\n\nhvala ti na prijavi za ' + BRAND + ' online mentorstvo.\n\n'
-      + 'Tvoj upitnik je stigao. Pregledaću ga i javiti ti se sa sljedećim koracima.\n\n' + BRAND,
+      + 'Tvoj upitnik je stigao. Pregledaću ga i javiti ti se sa sljedećim koracima.\n\n'
+      + 'Marko Simović\n' + BRAND,
     'Datum i vrijeme': timestamp,
     'Ime i prezime': d.name,
     'Email': d.email,
@@ -651,6 +657,7 @@ async function submitContact(e) {
         _subject: BRAND + ' | Poruka: ' + subject,
         _template: 'table',
         _captcha: 'false',
+        _honey: honey(form),
         _replyto: email,
         'Ime': name, 'Email': email, 'Naslov': subject, 'Poruka': message
       })
@@ -680,6 +687,13 @@ function switchLanguage(lang) {
   });
   document.querySelectorAll('[data-sr-ph]').forEach(el => {
     el.placeholder = el.dataset[currentLang === 'sr' ? 'srPh' : 'enPh'];
+  });
+  // What a screen reader says: button names and the photo's description.
+  document.querySelectorAll('[data-sr-label]').forEach(el => {
+    el.setAttribute('aria-label', el.dataset[currentLang === 'sr' ? 'srLabel' : 'enLabel']);
+  });
+  document.querySelectorAll('[data-sr-alt]').forEach(el => {
+    el.alt = el.dataset[currentLang === 'sr' ? 'srAlt' : 'enAlt'];
   });
   document.getElementById('langToggle').innerHTML = currentLang === 'sr'
     ? '<span class="lang-active">SR</span> / <span>EN</span>'
@@ -947,7 +961,10 @@ function initHeroVideo() {
     ? exists(list[0]).then(ok => (ok ? list[0] : pick(list.slice(1))))
     : Promise.reject(new Error('no clip')));
 
-  pick(candidates)
+  // The clip is by far the largest file on the page. It starts only once the
+  // page itself (logo, still, photos on screen) has loaded, so on a phone it
+  // never holds those up; the still covers the wait.
+  const startClip = () => pick(candidates)
     .then(src => {
       video.addEventListener('playing', useVideo, { once: true });
       video.addEventListener('error', useStatic, { once: true });
@@ -958,6 +975,8 @@ function initHeroVideo() {
       pauseHeroOffScreen(video, bg, src);
     })
     .catch(useStatic);
+  if (document.readyState === 'complete') startClip();
+  else window.addEventListener('load', startClip, { once: true });
 }
 
 // Scrolled away from, the hero clip pauses, and if it is still downloading

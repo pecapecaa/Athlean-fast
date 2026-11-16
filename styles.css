@@ -1518,6 +1518,15 @@ button {
   .location--map:hover .location-map svg { transform: translate(2px, -2px); }
 }
 
+/* The bots' trap in each form: off screen, never seen or reached by tab. */
+.hp-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* ===== CONTACT ===== */
 .contact-grid {
   display: grid;

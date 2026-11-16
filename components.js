@@ -112,7 +112,7 @@ function locationHtml(loc, lang) {
   if (!loc.map) return `<div class="location">${body}\n    </div>`;
   return `
     <a class="location location--map" href="${esc(loc.map)}" target="_blank" rel="noopener"
-       aria-label="${esc(tr(loc.name, lang) + ', ' + tr(loc.place, lang) + ': ' + tr(MAP_LABEL, lang))}">${body}
+       aria-label="${esc(tr(loc.name, lang) + ', ' + tr(loc.place, lang) + ': ' + tr(MAP_LABEL, lang).toLowerCase())}">${body}
       <span class="location-map">${ICONS.navigate}${esc(tr(MAP_LABEL, lang))}</span>
     </a>`;
 }

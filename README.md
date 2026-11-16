@@ -46,6 +46,8 @@ Zajedničko: `data.js` (sav sadržaj), `components.js` (kartice i kontakt),
   - `logo` su ista krila i natpis jedno pored drugog (gornja traka, futer)
   - `logo-mark` su samo krila (početna, pokretna traka)
   - `favicon-32.png`, `favicon-180.png`, `icon-192.png` su ikonice sajta
+  - `logo-600.webp` i `logo-stacked-600.webp` su manje verzije za ekrane
+    kojima je to dovoljno; telefon sa oštrim ekranom (iPhone) uzima veću
   Ako stigne originalni fajl od dizajnera, menja se samo ovaj skup slika.
 
 ## Snimci i slike
