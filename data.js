@@ -221,8 +221,6 @@ const TRANSFORMATIONS = [
   {
     before: 'images/transformacije/marko-prije.webp',
     after: 'images/transformacije/marko-poslije.webp',
-    name: { sr: 'Marko Simović', en: 'Marko Simović' },
-    detail: { sr: 'Osnivač AthLean Fast', en: 'Founder of AthLean Fast' },
     period: { sr: '6 mjeseci', en: '6 months' }
   },
   {
